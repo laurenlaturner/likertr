@@ -1,1 +1,1 @@
-# For the "likert" class
+# For the "likertr" class
