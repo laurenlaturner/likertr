@@ -1,0 +1,1 @@
+# For generic usage of plot() with "likertr" class
