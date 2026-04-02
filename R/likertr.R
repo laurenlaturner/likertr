@@ -13,4 +13,5 @@ likertr <- function(data) {
   # Inference and Reporting
   # inference(data)
 
+  # new_likertr()
 }
