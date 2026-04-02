@@ -2,3 +2,5 @@
   # omega
   # alpha
   # RII
+
+# reliability <- function(data) {}
