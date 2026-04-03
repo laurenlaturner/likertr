@@ -17,7 +17,7 @@ preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE) {
     ipsatize <- ipsatize(cleaner_data, ipsatize_decision)
 
     num_people <- colSums(!is.na(cleaner_data))
-    cleanest_data <- adjusting_small_n(cleaner_data, num_people)
+    cleanest_data <- noting_small_n(cleaner_data, num_people)
     
     return(list(cleanest_data, questions, num_questions, num_people, ipsatize))
 }
@@ -70,8 +70,10 @@ adjust_nas <- function(data, na_decision, neutrals) {
     return(data)
 }
 
-adjusting_small_n <-function(data, num_people) {
-    if (num_people < 20) {
-        
+noting_small_n <-function(data, num_people) {
+    if (any(num_people < 20)) {
+        message("Warning: Some groups have N < 20. Results may be unstable or non-representative.")
+        data <- data[num_people >= 20, ]
     }
+    return(data)
 }
