@@ -24,9 +24,40 @@
 # - Do the EFA
 # - Spit out loadings and also spit out variance explained (like fa function)
 
-efa <- function(data) {
+efa <- function(data, n = 2) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
+
+  # Warning for sphericity pvalue > 0.05
+  if (sphericity_results$p.value > 0.05) {
+      # The variables in the data are not sufficiently correlated
+      warning(paste("Bartlett's sphericity test resulted in a non-significant",
+                    "(p<0.05) value, variables may not be correlated enough",
+                    "for EFA"),
+              call. = FALSE)
+  }
+
+  kmo_validity <- kmo_results$MSAi |>
+    unname() |>
+    lapply(function(x) x > 0.6) |>
+    unlist()
+
+  # Warning for kmo value < 0.6
+  if (all(kmo_validity) != TRUE) {
+    warning(paste("At least one KMO value is less than 0.6 and possibly",
+                  "problematic, the indicated feature or features share",
+                  "little variance with the rest of the data"),
+            call. = FALSE)
+  }
+
+  # Warning for worrisome polychloric correlation matrix results
+  # (tell them to check the plot)
+
+  # Question: Should we return the kmo and sphericity or just store and check
+  # them for the user? (give them a warning if something's not right)
+
+  # Should we have n be an estimate of which ones' the best?
+  # Or just have the default be 2?
 }
 
 
@@ -75,6 +106,7 @@ kmo <- function(data) {
   results
 }
 
-# sphericity(before)
-# kmo(before)
+sphericity_results <- sphericity(before)
+kmo_results <- kmo(before)
 
+sphericity_results$p.value <- 0.9
