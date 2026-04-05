@@ -5,3 +5,5 @@
 # Heat maps for correlations
 # Comparison plots (group to group)
 # Ridge Plots to show density of responses
+# EFA Skree plot
+# EFA Polychloric correlation matrix
