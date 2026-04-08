@@ -24,12 +24,22 @@ preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE, s
 
     num_people <- colSums(!is.na(cleaner_data))
     cleanest_data <- noting_small_n(cleaner_data, num_people, small_n_decision)
+
+    perc_by_question <- split_question(cleanest_data)
     
-    return(list(cleanest_data, questions, num_questions, num_people, ipsatize))
+    return(list(cleanest_data, questions, num_questions, num_people, ipsatize, perc_by_question))
 }
 
 general_cleaning <- function(data) {
     numeric_data <- data[, sapply(data, is.numeric), drop = FALSE]
+    
+    is_likert <- sapply(numeric_data, function(x) {
+        vals <- x[!is.na(x)]
+        if (length(vals) == 0) return(FALSE)
+        all(vals >= 1 & vals <= 10) && all(vals %% 1 == 0)
+    })
+    numeric_data <- numeric_data[, is_likert, drop = FALSE]
+
     questions <- colnames(numeric_data)
 
     rownames(numeric_data) <- NULL
@@ -87,3 +97,16 @@ noting_small_n <-function(data, num_people, small_n_decision) {
     }
     return(data)
 }
+
+split_question <- function(data) {
+    results <- lapply(data, converting_to_percentage)
+    return(results)
+}
+
+converting_to_percentage <- function(col) {
+    clean_vals <- col[!is.na(col)]
+    if (length(clean_vals) == 0) return(NULL)
+    scale_range <- min(clean_vals):max(clean_vals)
+    counts <- table(factor(col, levels = scale_range))
+    return(round((counts / length(clean_vals)) * 100))
+  }
