@@ -23,12 +23,13 @@ preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE, s
 }
 
 general_cleaning <- function(data) {
-    questions <- colnames(data)
+    numeric_data <- data[, sapply(data, is.numeric), drop = FALSE]
+    questions <- colnames(numeric_data)
 
-    rownames(data) <- NULL
-    colnames(data) <- paste0("Q", 1:ncol(data))
+    rownames(numeric_data) <- NULL
+    colnames(numeric_data) <- paste0("Q", 1:ncol(numeric_data))
 
-    return(list(data, questions))
+    return(list(numeric_data, questions))
 }
 
 bias_handling <- function(data, neutrals, col_mins, col_maxs) {
