@@ -1,5 +1,11 @@
-# Preparation and Cleaning
-
+#' Preparation and Cleaning
+#' 
+#' @param data
+#' @param na_decision
+#' @param ipsatize_decision
+#' @param small_n_decision
+#' 
+#' @export
 preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE, small_n_decision = "nothing") {
     data <- general_cleaning(data)
     clean_data <- data[[1]]

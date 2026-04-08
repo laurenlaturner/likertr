@@ -2,16 +2,16 @@
 
 likertr <- function(data) {
   # Preparation and Cleaning
-  # preparation(data)
+  clean_data <- preparation(data)
 
   # Reliability and Structure
-  # reliability(data)
+  # reliability(clean_data)
 
   # EFA
   # efa(data)
 
   # Inference and Reporting
-  # inference(data)
+  # inference(clean_data)
 
-  # new_likertr()
+  new_likertr(clean_data)
 }
