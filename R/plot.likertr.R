@@ -9,7 +9,10 @@
 # EFA Polychloric correlation matrix
 
 plot.likertr <- function(likertr, ...) {
-
+  data <- attr(likertr, "data")
+  
+  stacked_bar(data[[6]], data[[2]])
+  diverging_bar(data[[6]], data[[2]])
 }
 
 align_likert_data <- function(perc_by_question) {
