@@ -106,7 +106,9 @@ split_question <- function(data) {
 converting_to_percentage <- function(col) {
     clean_vals <- col[!is.na(col)]
     if (length(clean_vals) == 0) return(NULL)
+    
     scale_range <- min(clean_vals):max(clean_vals)
     counts <- table(factor(col, levels = scale_range))
+    
     return(round((counts / length(clean_vals)) * 100))
-  }
+}
