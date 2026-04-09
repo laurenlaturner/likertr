@@ -1,6 +1,12 @@
-# Preparation and Cleaning
-
-preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE) {
+#' Preparation and Cleaning
+#' 
+#' @param data
+#' @param na_decision
+#' @param ipsatize_decision
+#' @param small_n_decision
+#' 
+#' @export
+preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE, small_n_decision = "nothing") {
     data <- general_cleaning(data)
     clean_data <- data[[1]]
     questions <- data[[2]]
@@ -17,18 +23,29 @@ preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE) {
     ipsatize <- ipsatize(cleaner_data, ipsatize_decision)
 
     num_people <- colSums(!is.na(cleaner_data))
-    cleanest_data <- noting_small_n(cleaner_data, num_people)
+    cleanest_data <- noting_small_n(cleaner_data, num_people, small_n_decision)
+
+    perc_by_question <- split_question(cleanest_data)
     
-    return(list(cleanest_data, questions, num_questions, num_people, ipsatize))
+    return(list(cleanest_data, questions, num_questions, num_people, ipsatize, perc_by_question))
 }
 
 general_cleaning <- function(data) {
-    questions <- colnames(data)
+    numeric_data <- data[, sapply(data, is.numeric), drop = FALSE]
+    
+    is_likert <- sapply(numeric_data, function(x) {
+        vals <- x[!is.na(x)]
+        if (length(vals) == 0) return(FALSE)
+        all(vals >= 1 & vals <= 10) && all(vals %% 1 == 0)
+    })
+    numeric_data <- numeric_data[, is_likert, drop = FALSE]
 
-    rownames(data) <- NULL
-    colnames(data) <- paste0("Q", 1:ncol(data))
+    questions <- colnames(numeric_data)
 
-    return(list(data, questions))
+    rownames(numeric_data) <- NULL
+    colnames(numeric_data) <- paste0("Q", 1:ncol(numeric_data))
+
+    return(list(numeric_data, questions))
 }
 
 bias_handling <- function(data, neutrals, col_mins, col_maxs) {
@@ -70,10 +87,26 @@ adjust_nas <- function(data, na_decision, neutrals) {
     return(data)
 }
 
-noting_small_n <-function(data, num_people) {
+noting_small_n <-function(data, num_people, small_n_decision) {
     if (any(num_people < 20)) {
         message("Warning: Some groups have N < 20. Results may be unstable or non-representative.")
+    }
+
+    if (small_n_decision != "nothing") {
         data <- data[num_people >= 20, ]
     }
     return(data)
 }
+
+split_question <- function(data) {
+    results <- lapply(data, converting_to_percentage)
+    return(results)
+}
+
+converting_to_percentage <- function(col) {
+    clean_vals <- col[!is.na(col)]
+    if (length(clean_vals) == 0) return(NULL)
+    scale_range <- min(clean_vals):max(clean_vals)
+    counts <- table(factor(col, levels = scale_range))
+    return(round((counts / length(clean_vals)) * 100))
+  }

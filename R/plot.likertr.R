@@ -7,3 +7,19 @@
 # Ridge Plots to show density of responses
 # EFA Skree plot
 # EFA Polychloric correlation matrix
+
+plot.likertr <- function(likertr, ...) {
+
+}
+
+regular_bar <- function(perc_by_question, questions) {
+  # Needs work because of possible 1-7 and 1-5 likert
+  barplot(perc_by_question,
+          horiz = TRUE,
+          las = 1,
+          beside = FALSE,
+          xlab = "Percentage (%)", 
+          names.arg = questions,
+          col = c("#D7191C", "#FDAE61", "#FFFFBF", "#ABD9E9", "#2C7BB6"),
+  )
+}
