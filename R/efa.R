@@ -24,7 +24,7 @@
 # - Do the EFA
 # - Spit out loadings and also spit out variance explained (like fa function)
 
-efa <- function(data, n = 2) {
+efa <- function(data, n=None, efa_args) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
 
@@ -58,6 +58,27 @@ efa <- function(data, n = 2) {
 
   # Should we have n be an estimate of which ones' the best?
   # Or just have the default be 2?
+
+  pa_results <- pa(data)
+
+  # Don't show warnings, but give them a way to look at them
+
+  if (missing(n)) {
+    n = pa_results[[1]]
+    message(paste0("No 'n' argument was given and number of factors (",
+                  print(n),
+                  ") was determined using parallel analysis",
+                  "\n",
+                  "Check parallel analysis Skree plot using plot.likertr"),
+            call. = FALSE)
+
+  }
+
+  print(n)
+
+  diagnostics <- list(sphericity_results, kmo_results)
+
+  # total_results <-
 }
 
 
@@ -106,7 +127,33 @@ kmo <- function(data) {
   results
 }
 
-sphericity_results <- sphericity(before)
-kmo_results <- kmo(before)
+pa <- function(data) {
+  pa <- psych::fa.parallel(data, fm = "minres", fa = "fa")
 
-sphericity_results$p.value <- 0.9
+  n_fact <- pa$nfact
+  fa_real <- pa$fa.values
+  fa_sim <- pa$fa.sim
+  fa_resamp <- pa$fa.simr
+
+  list(n_fact, fa_real, fa_sim, fa_resamp)
+  # Don't show warnings, but give them a way to look at them
+}
+
+
+
+
+# sphericity_results <- sphericity(before)
+# kmo_results <- kmo(before)
+#
+# pa <- psych::fa.parallel(before, fm = "minres", fa = "fa")
+#
+# n_fact <- pa$nfact
+# fa_real <- pa$fa.values
+# fa_sim <- pa$fa.sim
+# fa_resamp <- pa$fa.simr
+#
+# fa(before, nfactors = 2, rotate = "oblimin", fm= "minres")
+#
+# sphericity_results$p.value <- 0.9
+
+# efa(before)
