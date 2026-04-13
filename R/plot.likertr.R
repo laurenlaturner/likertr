@@ -58,6 +58,14 @@ stacked_bar <- function(perc_by_question, questions) {
   par(mar = c(5, 15, 5, 2), xpd = TRUE)
   barplot(prep$matrix, horiz = TRUE, col = cols, names.arg = questions, 
           las = 1, xlab = "Percentage (%)")
+  
+  legend("left", 
+         legend = 1:prep$max_w, 
+         fill = cols, 
+         horiz = FALSE, 
+         inset = c(-0.45, 0),
+         bty = "n", 
+         title = "Response Scale")
 }
 
 diverging_bar <- function(perc_by_question, questions) {
@@ -76,6 +84,14 @@ diverging_bar <- function(perc_by_question, questions) {
           xlab = "Negative <--- Neutral ---> Positive")
   
   abline(v = 0, lty = 2, col = "gray40")
+
+  legend("right", 
+         legend = 1:prep$max_w, 
+         fill = cols, 
+         horiz = FALSE, 
+         inset = c(-0.15, 0), 
+         bty = "n", 
+         title = "Response Scale")
 }
 
 ridge_plot <- function(clean_data, questions) {
