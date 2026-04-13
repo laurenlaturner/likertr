@@ -10,9 +10,10 @@
 
 plot.likertr <- function(likertr, ...) {
   data <- attr(likertr, "data")
-  
+
   stacked_bar(data[[6]], data[[2]])
   diverging_bar(data[[6]], data[[2]])
+  ridge_plot(data[[1]], data[[2]])
 }
 
 align_likert_data <- function(perc_by_question) {
@@ -75,4 +76,45 @@ diverging_bar <- function(perc_by_question, questions) {
           xlab = "Negative <--- Neutral ---> Positive")
   
   abline(v = 0, lty = 2, col = "gray40")
+}
+
+ridge_plot <- function(clean_data, questions) {
+  n <- ncol(clean_data)
+  overlap <- 1.6
+  
+  global_min <- min(clean_data, na.rm = TRUE)
+  global_max <- max(clean_data, na.rm = TRUE)
+
+  cols <- colorRampPalette(c("#D7191C", "#FFFFBF", "#2C7BB6"))(n)
+
+  densities <- lapply(1:n, function(i) {
+    density(clean_data[[i]], from = global_min, to = global_max, na.rm = TRUE, bw = 0.4)
+  })
+  
+  max_h <- max(sapply(densities, function(d) max(d$y)))
+  
+  par(mar = c(5, 12, 4, 2) + 0.1) 
+  
+  plot(NULL, 
+       xlim = c(global_min, global_max), 
+       ylim = c(1, n + overlap), 
+       type = "n", yaxt = "n", bty = "n",
+       xlab = "Response Value", ylab = "",
+       main = "Response Density by Question")
+
+  axis(2, at = 1:n, labels = questions, las = 1, cex.axis = 0.8, tick = FALSE)
+
+  for (i in n:1) {
+    d <- densities[[i]]
+    
+    y_vals <- (d$y / max_h) * overlap + i
+
+    polygon(d$x, y_vals, 
+            col = adjustcolor(cols[i], alpha.f = 0.7), 
+            border = "white", lwd = 0.5)
+    
+    lines(d$x, y_vals, col = "black", lwd = 1)
+
+    abline(h = i, col = "gray90", lwd = 0.5)
+  }
 }
