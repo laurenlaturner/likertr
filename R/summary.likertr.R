@@ -8,6 +8,6 @@ summary.likertr <- function(likertr, ...) {
   cat("================================================\n")
   cat("LIKERTR OBJECT SUMMARY REPORT\n")
   cat("================================================\n")
-  cat(paste0("This dataset contains ", n_items, " questions with ", n_obs, " total observations.\n"))
+  cat(paste0("This dataset contains ", n_q, " questions with ", n_obs, " total observations.\n"))
 
 }

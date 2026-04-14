@@ -5,13 +5,25 @@ likertr <- function(data) {
   clean_data <- preparation(data)
 
   # Reliability and Structure
-  # reliability(clean_data)
+  alpha <- cronbachs_alpha(clean_data)
+  omega <- mcdonalds_omega(clean_data)
+  rii <- rii(clean_data)
 
   # EFA
-  # efa(data)
+  efa <- efa(clean_data)
 
   # Inference and Reporting
-  # inference(clean_data)
+  inference <- inference(clean_data)
 
-  new_likertr(clean_data)
+  new_likertr(
+    data = clean_data,
+    alpha = alpha,
+    omega = omega,
+    rii = rii,
+    polychoric = polychoric,
+    sphericity = sphericity,
+    kmo = kmo,
+    nonparam = nonparam,
+    effect_size = effect_size
+  )
 }
