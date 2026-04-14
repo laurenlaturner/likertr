@@ -16,7 +16,7 @@
 #'
 #' @returns numeric representing McDonald's Omega for the given data and
 #'     loadings
-mcdonalds_omega <- function(data, loadings, std = TRUE, empirical = TRUE) {
+mcdonalds_omega <- function(data, loadings, std, empirical) {
 
   # ADD SUPPORT FOR MULTIFACTOR MODELS ?
 

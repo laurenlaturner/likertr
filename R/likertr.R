@@ -1,16 +1,17 @@
 # This is the overall wrapper function that will run everything
 
-likertr <- function(data, na_decision = "drop", ipsatize_decision = FALSE, small_n_decision = "nothing") {
+likertr <- function(data, max_val, na_decision = "drop", ipsatize_decision = FALSE, small_n_decision = "nothing", groups = numeric(0), std = TRUE, empirical = TRUE) {
   # Preparation and Cleaning
   clean_data <- preparation(data, na_decision, ipsatize_decision, small_n_decision)
 
-  # Reliability and Structure
-  alpha <- cronbachs_alpha(clean_data)
-  omega <- mcdonalds_omega(clean_data)
-  rii <- rii(clean_data)
-
   # EFA
   efa <- efa(clean_data)
+
+
+  # Reliability and Structure
+  alpha <- cronbachs_alpha(clean_data, groups)
+  omega <- mcdonalds_omega(clean_data, loadings, std, empirical)
+  rii <- rii(clean_data, max_val)
 
   # Inference and Reporting
   inference <- inference(clean_data)
