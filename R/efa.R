@@ -24,7 +24,7 @@
 # - Do the EFA
 # - Spit out loadings and also spit out variance explained (like fa function)
 
-efa <- function(data, n = 2) {
+efa <- function(data, n=None, efa_args) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
 
@@ -50,14 +50,57 @@ efa <- function(data, n = 2) {
             call. = FALSE)
   }
 
+  # POLYCHLORIC CORRELATION MATRIX
+
   # Warning for worrisome polychloric correlation matrix results
   # (tell them to check the plot)
 
-  # Question: Should we return the kmo and sphericity or just store and check
-  # them for the user? (give them a warning if something's not right)
 
-  # Should we have n be an estimate of which ones' the best?
-  # Or just have the default be 2?
+  pa_results <- pa(data)
+
+  # If n is missing, it's an estimate of which one's the best
+
+  if (missing(n)) {
+    n = pa_results$n_fact
+    message(paste0("No 'n' argument was given and number of factors (",
+                  n,
+                  ") was determined using parallel analysis",
+                  "\n",
+                  "Check parallel analysis Skree plot using plot.likertr")
+            )
+
+  }
+
+  # ACTUAL EFA
+  # - Loadings
+  # - Variance Explained
+
+
+  # POST EFA DIAGNOSTICS?
+  # - communality
+  # - uniqueness
+  # - vaccounted
+
+
+
+
+  pre_efa_diagnostics <- list(sphericity = sphericity_results,
+                      kmo = kmo_results,
+                      pa = pa_results)
+
+
+  # efa <- list()
+
+  # post_efa_diagnostics <- list()
+
+  total_results <- list(pre_efa_diagnostics = pre_efa_diagnostics)
+
+  # Values that will be needed for plotting later
+  # plotting <- list(pa_results$fa_real,
+  #                  pa_results$fa_sim,
+  #                  pa_results$fa_resamp)
+
+  total_results
 }
 
 
@@ -77,7 +120,7 @@ sphericity <- function(data) {
   df <- p * (p-1)/2
   pval <- pchisq(statistic,df,lower.tail=FALSE)
 
-  bartlett <- list(chisq = statistic, p.value =pval, df =df)
+  bartlett <- list(chisq = statistic, p.value = pval, df = df)
   bartlett
 
 }
@@ -102,11 +145,47 @@ kmo <- function(data) {
   sumr2 <- sum(data^2)
   MSA <- sumr2/(sumr2 + sumQ2)
   MSAi <- colSums(data^2)/(colSums(data^2) + colSums(Q^2))
-  results <- list(MSA =MSA,MSAi = MSAi) # , Image=Image,ImCov = IC,Call=cl)
+  results <- list(MSA = MSA,MSAi = MSAi) # , Image=Image,ImCov = IC,Call=cl)
   results
 }
 
-sphericity_results <- sphericity(before)
-kmo_results <- kmo(before)
+pa <- function(data) {
+  invisible(
+    capture.output(
+      pa <- suppressWarnings(
+        psych::fa.parallel(data, fm = "minres", fa = "fa")
+        )
+    )
+  )
 
-sphericity_results$p.value <- 0.9
+  list(rec_n_fact = pa$nfact,
+       fa_real = pa$fa.values,
+       fa_sim = pa$fa.sim,
+       fa_resamp = pa$fa.simr)
+
+  # Don't show warnings, but give them a way to look at them??
+  # Actually, pa warnings don't really matter a ton
+  # A suppress warning option on the overall likertr function is also a good idea
+}
+
+
+
+
+# sphericity_results <- sphericity(before)
+# kmo_results <- kmo(before)
+#
+# pa <- psych::fa.parallel(before, fm = "minres", fa = "fa")
+#
+# n_fact <- pa$nfact
+# fa_real <- pa$fa.values
+# fa_sim <- pa$fa.sim
+# fa_resamp <- pa$fa.simr
+#
+# fa(before, nfactors = 2, rotate = "oblimin", fm= "minres")
+#
+# sphericity_results$p.value <- 0.9
+
+# efa(before)
+
+pa_results <- pa(before)
+pa_results
