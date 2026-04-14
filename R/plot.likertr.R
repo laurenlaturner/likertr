@@ -2,11 +2,10 @@
 
 # Diverging stacked bar charts
 # Confidence Intervals on bar charts to show how "extreme responders" affect mean
-# Heat maps for correlations
+# Heat maps for polychloric correlations
 # Comparison plots (group to group)
 # Ridge Plots to show density of responses
 # EFA Skree plot
-# EFA Polychloric correlation matrix
 
 plot.likertr <- function(likertr, ...) {
   data <- attr(likertr, "data")

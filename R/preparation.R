@@ -6,7 +6,7 @@
 #' @param small_n_decision
 #' 
 #' @export
-preparation <- function(data, na_decision = "drop", ipsatize_decision = FALSE, small_n_decision = "nothing") {
+preparation <- function(data, na_decision, ipsatize_decision, small_n_decision) {
     data <- general_cleaning(data)
     clean_data <- data[[1]]
     questions <- data[[2]]
