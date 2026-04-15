@@ -20,10 +20,9 @@
 #'     as well as the Cronbach's alpha when each item (question) is left out.
 cronbachs_alpha <- function(data, groups) {
   if (length(groups) == 0) {
-    groups <- rep(1, num_items)
-    warning(
-      "No item grouping specified. Cronbach's Alpha calculated assuming all items in same group.",
-      call. = FALSE
+    groups <- rep(1, ncol(data))
+    message(
+      "No item grouping specified. Cronbach's Alpha calculated assuming all items in same group."
     )
   }
 
@@ -43,7 +42,7 @@ cronbachs_alpha <- function(data, groups) {
     item_names <- character(num_group_items)
 
     for (j in seq_len(num_group_items)) {
-      sub_group_data <- group_data[-j]
+      sub_group_data <- sub_group_data <- group_data[, -j, drop = FALSE]
       sub_group_alphas[j] <- c_alpha_calc(sub_group_data)
       item_names[j] <- names(group_data)[j]
     }
@@ -86,3 +85,4 @@ c_alpha_calc <- function(data) {
   # Calculate and return Cronbach's Alpha
   (num_items / (num_items - 1)) * ((tot_var - sum_item_var) / tot_var)
 }
+

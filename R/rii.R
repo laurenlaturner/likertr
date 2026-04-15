@@ -20,5 +20,8 @@ rii <- function(data, max_val) {
 
   # ADD MORE ERROR HANDLING :)
 
-  colSums(data) / (max_val * nrow(data))
+  data.frame(
+    item = names(data),
+    rii = colSums(data) / (max_val * nrow(data))
+  )
 }
