@@ -55,6 +55,8 @@ efa <- function(data, n=0, efa_args) {
   # Warning for worrisome polychloric correlation matrix results
   # (tell them to check the plot)
 
+  pm_results <- polychoric_matrix(data)
+
 
   pa_results <- pa(data)
 
@@ -74,9 +76,10 @@ efa <- function(data, n=0, efa_args) {
 
   pre_efa_diagnostics <- list(sphericity = sphericity_results,
                               kmo = kmo_results,
-                              pa = pa_results)
+                              pa = pa_results,
+                              pc_matrix = pm_results)
 
-  print(n)
+
   efa_results <- run_efa(data, n)
 
   # ACTUAL EFA
@@ -142,6 +145,18 @@ kmo <- function(data) {
   results
 }
 
+
+# instead of correlations of responses, correlations of the underlying continuous
+# variables (true anxiety, true stress. etc.)
+
+polychoric_matrix <- function(data) {
+  matrix <- psych::polychoric(data)
+
+  list(polychoric_matrix = matrix$rho)
+}
+
+
+
 pa <- function(data) {
   invisible(
     capture.output(
@@ -191,7 +206,6 @@ run_efa <- function(data, n_fact) {
        var_exp = var_exp,
        communality  = communality)
 }
-
 
 
 
