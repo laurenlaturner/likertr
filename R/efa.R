@@ -71,6 +71,8 @@ efa <- function(data, n=None, efa_args) {
 
   }
 
+
+
   # ACTUAL EFA
   # - Loadings
   # - Variance Explained
@@ -166,6 +168,11 @@ pa <- function(data) {
   # Don't show warnings, but give them a way to look at them??
   # Actually, pa warnings don't really matter a ton
   # A suppress warning option on the overall likertr function is also a good idea
+}
+
+
+run_efa <- function(data) {
+  psych::fa(before, nfactors = 2, rotate = "oblimin", fm= "minres")
 }
 
 
