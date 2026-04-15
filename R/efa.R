@@ -24,7 +24,7 @@
 # - Do the EFA
 # - Spit out loadings and also spit out variance explained (like fa function)
 
-efa <- function(data, n=None, efa_args) {
+efa <- function(data, n=0, efa_args) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
 
@@ -61,7 +61,7 @@ efa <- function(data, n=None, efa_args) {
   # If n is missing, it's an estimate of which one's the best
 
   if (missing(n)) {
-    n = pa_results$n_fact
+    n = pa_results$rec_n_fact
     message(paste0("No 'n' argument was given and number of factors (",
                   n,
                   ") was determined using parallel analysis",
@@ -72,30 +72,21 @@ efa <- function(data, n=None, efa_args) {
   }
 
 
+  pre_efa_diagnostics <- list(sphericity = sphericity_results,
+                              kmo = kmo_results,
+                              pa = pa_results)
+
+  print(n)
+  efa_results <- run_efa(data, n)
 
   # ACTUAL EFA
   # - Loadings
   # - Variance Explained
+  # - Communality
 
 
-  # POST EFA DIAGNOSTICS?
-  # - communality
-  # - uniqueness
-  # - vaccounted
-
-
-
-
-  pre_efa_diagnostics <- list(sphericity = sphericity_results,
-                      kmo = kmo_results,
-                      pa = pa_results)
-
-
-  # efa <- list()
-
-  # post_efa_diagnostics <- list()
-
-  total_results <- list(pre_efa_diagnostics = pre_efa_diagnostics)
+  total_results <- list(pre_efa_diagnostics = pre_efa_diagnostics,
+                        efa_results = efa_results)
 
   # Values that will be needed for plotting later
   # plotting <- list(pa_results$fa_real,
@@ -171,8 +162,34 @@ pa <- function(data) {
 }
 
 
-run_efa <- function(data) {
-  psych::fa(before, nfactors = 2, rotate = "oblimin", fm= "minres")
+run_efa <- function(data, n_fact) {
+  efa <- psych::fa(before, nfactors = n_fact, rotate = "oblimin", fm= "minres")
+
+  # Maybe give a cutoff option for the loadings?
+  # What is a good default?
+
+  loadings <- efa$loadings[,]
+  # When we print these, we'll only show above a certain level
+  # Should we only use above a certain level?
+  # For McDonald's Omega as well?
+
+  if (n_fact == 1) {
+    var_exp <- efa$Vaccounted[2,]
+  } else {
+    var_exp <- efa$Vaccounted[2:3,]
+  }
+
+  # Recommend to get rid of variables with a communality < 0.2
+  # in future runs of the likertr workflow
+
+
+  # We want variables with a high communality that contribute strongly to the
+  # common factors
+  communality <- efa$communality
+
+  list(loadings = loadings,
+       var_exp = var_exp,
+       communality  = communality)
 }
 
 
@@ -193,6 +210,6 @@ run_efa <- function(data) {
 # sphericity_results$p.value <- 0.9
 
 # efa(before)
-
-pa_results <- pa(before)
-pa_results
+#
+# pa_results <- pa(before)
+# pa_results
