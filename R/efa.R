@@ -52,8 +52,9 @@ efa <- function(data, n=0, efa_args) {
 
   # POLYCHLORIC CORRELATION MATRIX
 
-  # Warning for worrisome polychloric correlation matrix results
-  # (tell them to check the plot)
+  # Tell them they can check the plot
+  # - Lots of low loadings indicate low factorability
+  # - Lots of high loadings indicate redundant variables
 
   pm_results <- polychoric_matrix(data)
 
