@@ -1,7 +1,7 @@
 # For generic usage of summary() with "likertr" class
 
-summary.likertr <- function(likertr, ...) {
-  data <- attr(likertr, "data")
+summary.likertr <- function(x, ...) {
+  data <- attr(x, "data")
   n_q <- data[[3]]
   n_obs <- max(data[[4]])
 

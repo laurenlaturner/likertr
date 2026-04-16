@@ -12,13 +12,13 @@
 #' @description A S3 method for objects of class \code{likertr}. 
 #'   This function automatically generates a set of visualizations.
 #' 
-#' @param likertr An object of class \code{likertr}, typically the output from 
+#' @param x An object of class \code{likertr}, typically the output from 
 #'   the \code{preparation} function
 #' @param ... Additional arguments passed to the underlying plotting functions.
 #' 
 #' @export
-plot.likertr <- function(likertr, ...) {
-  data <- attr(likertr, "data")
+plot.likertr <- function(x, ...) {
+  data <- attr(x, "data")
 
   stacked_bar(data[[6]], data[[2]])
   diverging_bar(data[[6]], data[[2]])

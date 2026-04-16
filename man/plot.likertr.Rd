@@ -4,10 +4,10 @@
 \alias{plot.likertr}
 \title{Plot Method for Likertr Objects}
 \usage{
-\method{plot}{likertr}(likertr, ...)
+\method{plot}{likertr}(x, ...)
 }
 \arguments{
-\item{likertr}{An object of class \code{likertr}, typically the output from
+\item{x}{An object of class \code{likertr}, typically the output from
 the \code{preparation} function}
 
 \item{...}{Additional arguments passed to the underlying plotting functions.}
