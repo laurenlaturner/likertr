@@ -17,7 +17,7 @@
 mcdonalds_omega <- function(data, n_fact, flip, plot) {
 
   psych_omega <- psych::omega(m = data,
-                              nfactors = nfact,
+                              nfactors = n_fact,
                               flip = flip,
                               plot = plot)
 
