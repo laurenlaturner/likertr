@@ -44,7 +44,7 @@ likertr <- function(
     inference_vars2 = NA,
     flip = FALSE,
     plot = FALSE
-  )
+  ) {
 
   # Preparation and Cleaning
   clean_data <- preparation(data, na_decision, ipsatize_decision, small_n_decision)
@@ -55,7 +55,7 @@ likertr <- function(
 
   # Reliability and Structure
   alpha <- cronbachs_alpha(clean_data, groups)
-  omega <- mcdonalds_omega(clean_data, _______, flip, plot)
+  omega <- mcdonalds_omega(clean_data, efa$efa_results$n_fact, flip, plot)
   rii <- rii(clean_data, max_val)
 
   # Inference and Reporting
