@@ -58,7 +58,7 @@ likertr <- function(
     efa <- efa(clean_data, n_fact)
   }
 
-  pre_efa_diagnostics = efa$pre_efa_diagnostics,
+  pre_efa_diagnostics = efa$pre_efa_diagnostics
   efa_results = efa$efa_results
 
 
