@@ -2,10 +2,12 @@
 % Please edit documentation in R/mcdonalds_omega.R
 \name{mcdonalds_omega}
 \alias{mcdonalds_omega}
-\title{ADD DOCUMENTATION :)}
+\title{mcdonalds_omega}
 \usage{
-mcdonalds_omega(data, loadings, std = TRUE, empirical = TRUE)
+mcdonalds_omega(data, fm, flip, plot, rotate)
 }
 \description{
-ADD DOCUMENTATION :)
+function for calculating McDonald's Omega for likert survey data
+
+DOCUMENTATION :)
 }

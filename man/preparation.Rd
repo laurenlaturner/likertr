@@ -2,18 +2,36 @@
 % Please edit documentation in R/preparation.R
 \name{preparation}
 \alias{preparation}
-\title{Preparation and Cleaning}
+\title{Pipeline for Cleaning and Preparing Likert Data}
 \usage{
-preparation(
-  data,
-  na_decision = "drop",
-  ipsatize_decision = FALSE,
-  small_n_decision = "nothing"
-)
+preparation(data, na_decision, ipsatize_decision, small_n_decision)
 }
 \arguments{
-\item{small_n_decision}{}
+\item{data}{A data frame containing survey responses.}
+
+\item{na_decision}{Character. Strategy for handling \code{NA} values; if "neutral",
+missing values are replaced with the scale midpoint.}
+
+\item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
+centered by respondent (person-mean centering).}
+
+\item{small_n_decision}{Character. If not "nothing", questions/groups with
+fewer than 20 responses are dropped.}
+}
+\value{
+A list containing:
+\itemize{
+\item \strong{cleanest_data}: The final numeric data frame after all filters.
+\item \strong{questions}: Original column names (question text).
+\item \strong{num_questions}: Total count of Likert questions identified.
+\item \strong{num_people}: Vector of response counts per question.
+\item \strong{ipsatize}: The ipsatized data frame (or NULL if not requested).
+\item \strong{perc_by_question}: List of percentage distributions for plotting.
+}
 }
 \description{
-Preparation and Cleaning
+This is the primary entry point for processing raw survey data. It performs
+a sequence of cleaning steps including type conversion, handle-missing-data
+strategies, bias removal (fence-sitting/straight-lining), ipsatization,
+and sample size validation.
 }
