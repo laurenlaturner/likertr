@@ -58,6 +58,9 @@ likertr <- function(
     efa <- efa(clean_data, n_fact)
   }
 
+  pre_efa_diagnostics = efa$pre_efa_diagnostics,
+  efa_results = efa$efa_results
+
 
   # Reliability and Structure
   alpha <- cronbachs_alpha(clean_data, groups)
@@ -73,8 +76,8 @@ likertr <- function(
     alpha = alpha,
     omega = omega,
     rii = rii,
-    pre_efa_diagnostics = efa$pre_efa_diagnostics,
-    efa_results = efa$efa_results,
+    pre_efa_diagnostics = pre_efa_diagnostics,
+    efa_results = efa_results,
     nonparam = nonparam,
     effect_size = effect_size
   )
