@@ -34,7 +34,6 @@
 
 likertr <- function(
     data,
-    max_val,
     na_drop = FALSE,
     n_fact,
     ipsatize_decision = FALSE,
@@ -50,6 +49,7 @@ likertr <- function(
   # Preparation and Cleaning
   clean_data_list <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
   clean_data <- clean_data_list[[1]]
+  max_val <- clean_data_list[[7]]
 
   # EFA
   if (missing(n_fact)) {

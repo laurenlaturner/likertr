@@ -22,6 +22,7 @@
 #'   \item \strong{num_people}: Vector of response counts per question.
 #'   \item \strong{ipsatize}: The ipsatized data frame (or NULL if not requested).
 #'   \item \strong{perc_by_question}: List of percentage distributions for plotting.
+#'   \item \strong{col_maxs}: List of largest answered value from each question.
 #' }
 #' 
 #' @export
@@ -46,7 +47,7 @@ preparation <- function(data, na_drop, ipsatize_decision, small_n_drop) {
 
     perc_by_question <- split_question(cleanest_data)
     
-    return(list(cleanest_data, questions, num_questions, num_people, ipsatize, perc_by_question))
+    return(list(cleanest_data, questions, num_questions, num_people, ipsatize, perc_by_question, col_maxs))
 }
 
 #'Initial Data Filtering and Question Extraction
