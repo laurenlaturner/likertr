@@ -7,6 +7,16 @@
 # Ridge Plots to show density of responses
 # EFA Skree plot
 
+#' Plot Method for Likertr Objects
+#' 
+#' @description A S3 method for objects of class \code{likertr}. 
+#'   This function automatically generates a set of visualizations.
+#' 
+#' @param likertr An object of class \code{likertr}, typically the output from 
+#'   the \code{preparation} function
+#' @param ... Additional arguments passed to the underlying plotting functions.
+#' 
+#' @export
 plot.likertr <- function(likertr, ...) {
   data <- attr(likertr, "data")
 
@@ -15,6 +25,23 @@ plot.likertr <- function(likertr, ...) {
   ridge_plot(data[[1]], data[[2]])
 }
 
+#' Align the data for graphing
+#' @description Processes a list of Likert scale percentages to ensure they are centered and 
+#'   aligned for visualization. The function pads varying response lengths to a 
+#'   uniform width and calculates the necessary horizontal offset for diverging 
+#'   stacked bar charts. This ensures that the "neutral" category (or the center 
+#'   of the scale) is positioned at a consistent zero-point across different questions.
+#' 
+#' @param perc_by_question A list of numeric vectors, where each vector represents 
+#'   the percentage distribution of responses for a single question.
+#' 
+#' @return A list containing:
+#' \itemize{
+#'   \item \strong{matrix}: A numeric matrix where each column is a padded question vector.
+#'   \item \strong{offsets}: A numeric vector of calculated offsets used to shift the bars.
+#'   \item \strong{max_w}: The maximum number of response categories found across all questions.
+#'   \item \strong{mid_idx}: The index identified as the midpoint/neutral category.
+#' }
 align_likert_data <- function(perc_by_question) {
   widths <- sapply(perc_by_question, length)
   max_w  <- max(widths)
@@ -48,6 +75,17 @@ align_likert_data <- function(perc_by_question) {
   ))
 }
 
+#' Standard Stacked Bar Chart for Likert Data
+#' 
+#' @description 
+#' Generates a horizontal stacked bar chart where each bar represents a question 
+#' and the segments represent the percentage distribution of responses. This 
+#' visualization uses a color gradient to distinguish between response levels 
+#' and places a legend on the left side of the plot.
+#' 
+#' @param perc_by_question A list of numeric vectors containing percentage 
+#' distributions for each question.
+#' @param questions A character vector of labels/questions to display on the y-axis.
 stacked_bar <- function(perc_by_question, questions) {
   prep <- align_likert_data(perc_by_question)
 
@@ -67,6 +105,15 @@ stacked_bar <- function(perc_by_question, questions) {
          title = "Response Scale")
 }
 
+#' Diverging Bar Chart for Likert Data
+#' @description Generates a centered Likert scale visualization. Unlike a standard stacked 
+#'   bar, this function uses calculated offsets to align the neutral midpoint of 
+#'   each question at zero. This makes it easier to compare the "lean" of 
+#'   responses toward the positive or negative ends of the scale.
+#' 
+#' @param perc_by_question A list of numeric vectors containing percentage 
+#'   distributions for each question.
+#' @param questions A character vector of labels/questions to display on the y-axis.
 diverging_bar <- function(perc_by_question, questions) {
   prep <- align_likert_data(perc_by_question)
 
@@ -93,6 +140,16 @@ diverging_bar <- function(perc_by_question, questions) {
          title = "Response Scale")
 }
 
+#' A Ridgeline Density Plot for Likert Data
+#' 
+#' @description Visualizes the distribution of Likert responses using overlapping density 
+#'   plots. This is particularly useful for seeing the "shape" of 
+#'   the data and identifying whether responses are unimodal, bimodal, or 
+#'   skewed across different questions.
+#' 
+#' @param clean_data A data frame or list containing the raw numeric response values.
+#' @param questions A character vector of labels/questions to display on the y-axis.
+#'
 ridge_plot <- function(clean_data, questions) {
   n <- ncol(clean_data)
   overlap <- 1.6
