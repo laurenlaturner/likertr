@@ -153,7 +153,7 @@ run_efa <- function(data, n_fact, user_n_fact) {
 
 
   efa <- suppressWarnings(
-    psych::fa(before, nfactors = n_fact, rotate = "oblimin", fm= "minres")
+    psych::fa(data, nfactors = n_fact, rotate = "oblimin", fm= "minres")
   )
 
   # Maybe give a cutoff option for the loadings?
