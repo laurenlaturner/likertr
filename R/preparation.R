@@ -5,13 +5,14 @@
 #'   strategies, bias removal (fence-sitting/straight-lining), ipsatization, 
 #'   and sample size validation.
 #' 
-#' @param data A data frame containing survey responses.
+#' @param data a dataframe where each column is a likert survey question (item)
+#'     and each row is a response.
 #' @param na_decision Character. Strategy for handling `NA` values; if "neutral", 
-#' missing values are replaced with the scale midpoint.
+#'   missing values are replaced with the scale midpoint.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data 
-#' centered by respondent (person-mean centering).
+#'   centered by respondent (person-mean centering).
 #' @param small_n_decision Character. If not "nothing", questions/groups with 
-#' fewer than 20 responses are dropped.
+#'   fewer than 20 responses are dropped.
 #' 
 #' @return A list containing:
 #' \itemize{

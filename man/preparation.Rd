@@ -7,7 +7,8 @@
 preparation(data, na_decision, ipsatize_decision, small_n_decision)
 }
 \arguments{
-\item{data}{A data frame containing survey responses.}
+\item{data}{a dataframe where each column is a likert survey question (item)
+and each row is a response.}
 
 \item{na_decision}{Character. Strategy for handling \code{NA} values; if "neutral",
 missing values are replaced with the scale midpoint.}

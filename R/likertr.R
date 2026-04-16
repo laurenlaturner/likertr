@@ -2,12 +2,24 @@
 #' 
 #' @description
 #' 
-#' @param data
-#' @param max_val
-#' @param na_decision
-#' @param ipsatize_decision
-#' @param small_n_decision
-#' @param groups
+#' @param data a dataframe where each column is a likert survey question (item)
+#'     and each row is a response.
+#' @param max_val a numeric vector with length equal to the number of items in
+#'   the dataframe. Specifies the point scale of each question by providing
+#'   the max value answerable (eg. if a question is on a five point scale
+#'   the value provided in max_val should be five).
+#' @param na_decision Character. Strategy for handling `NA` values; if "neutral", 
+#'   missing values are replaced with the scale midpoint.
+#' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data 
+#'   centered by respondent (person-mean centering).
+#' @param small_n_decision Character. If not "nothing", questions/groups with 
+#'   fewer than 20 responses are dropped.
+#' @param groups a numeric vector specifying groups of questions.
+#'   Cronbach's alpha information will be calculated separately for each
+#'   group. The vector must be the same length as the number of items
+#'   (columns) in the dataframe. Ex. c(1, 1, 2, 2) i.e questions 1-2 are in
+#'   a group and questions 2-4 are in a group. Groups should be numbered
+#'   1, 2, 3, ... , n.
 #' @param std
 #' @param empirical
 #' 
