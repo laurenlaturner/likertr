@@ -6,31 +6,29 @@
 \usage{
 likertr(
   data,
-  max_val,
-  na_decision = "drop",
+  na_drop = FALSE,
+  n_fact,
   ipsatize_decision = FALSE,
-  small_n_decision = "nothing",
+  small_n_drop = FALSE,
   groups = numeric(0),
-  std = TRUE,
-  empirical = TRUE
+  factor_inference = NA,
+  inference_vars = NA,
+  inference_vars2 = NA,
+  flip = FALSE,
+  plot = FALSE
 )
 }
 \arguments{
 \item{data}{a dataframe where each column is a likert survey question (item)
 and each row is a response.}
 
-\item{max_val}{a numeric vector with length equal to the number of items in
-the dataframe. Specifies the point scale of each question by providing
-the max value answerable (eg. if a question is on a five point scale
-the value provided in max_val should be five).}
-
-\item{na_decision}{Character. Strategy for handling \code{NA} values; if "neutral",
+\item{na_drop}{Character. Strategy for handling \code{NA} values; if "neutral",
 missing values are replaced with the scale midpoint.}
 
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
 
-\item{small_n_decision}{Character. If not "nothing", questions/groups with
+\item{small_n_drop}{Character. If not "nothing", questions/groups with
 fewer than 20 responses are dropped.}
 
 \item{groups}{a numeric vector specifying groups of questions.
@@ -39,6 +37,19 @@ group. The vector must be the same length as the number of items
 (columns) in the dataframe. Ex. c(1, 1, 2, 2) i.e questions 1-2 are in
 a group and questions 2-4 are in a group. Groups should be numbered
 1, 2, 3, ... , n.}
+
+\item{factor_inference}{column index referencing a factor variable to split
+data on for inference.}
+
+\item{inference_vars}{A vector of column indices to perform inference on}
+
+\item{inference_vars2}{A vector of column indices to compare
+to inference_vars.}
+
+\item{max_val}{a numeric vector with length equal to the number of items in
+the dataframe. Specifies the point scale of each question by providing
+the max value answerable (eg. if a question is on a five point scale
+the value provided in max_val should be five).}
 
 \item{empirical}{}
 }

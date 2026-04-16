@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{x}{An object of class \code{likertr}, typically the output from
-the \code{preparation} function}
+the \code{likertr} function}
 
 \item{...}{Additional arguments passed to the underlying plotting functions.}
 }

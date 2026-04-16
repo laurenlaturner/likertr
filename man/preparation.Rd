@@ -4,19 +4,19 @@
 \alias{preparation}
 \title{Pipeline for Cleaning and Preparing Likert Data}
 \usage{
-preparation(data, na_decision, ipsatize_decision, small_n_decision)
+preparation(data, na_drop, ipsatize_decision, small_n_drop)
 }
 \arguments{
 \item{data}{a dataframe where each column is a likert survey question (item)
 and each row is a response.}
 
-\item{na_decision}{Character. Strategy for handling \code{NA} values; if "neutral",
+\item{na_drop}{Logical. Strategy for handling \code{NA} values; if \code{FALSE},
 missing values are replaced with the scale midpoint.}
 
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
 
-\item{small_n_decision}{Character. If not "nothing", questions/groups with
+\item{small_n_drop}{Logical. If \code{TRUE}, questions/groups with
 fewer than 20 responses are dropped.}
 }
 \value{
@@ -28,6 +28,7 @@ A list containing:
 \item \strong{num_people}: Vector of response counts per question.
 \item \strong{ipsatize}: The ipsatized data frame (or NULL if not requested).
 \item \strong{perc_by_question}: List of percentage distributions for plotting.
+\item \strong{col_maxs}: List of largest answered value from each question.
 }
 }
 \description{

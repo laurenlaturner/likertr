@@ -4,14 +4,14 @@
 \alias{noting_small_n}
 \title{Sample Size Validation}
 \usage{
-noting_small_n(data, num_people, small_n_decision)
+noting_small_n(data, num_people, small_n_drop)
 }
 \arguments{
 \item{data}{the raw data}
 
 \item{num_people}{the number of people's responses per question}
 
-\item{small_n_decision}{a determination by the user if questions with
+\item{small_n_drop}{a determination by the user if questions with
 low numbers of responses should be dropped.}
 }
 \description{

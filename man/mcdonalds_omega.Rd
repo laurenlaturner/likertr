@@ -4,10 +4,23 @@
 \alias{mcdonalds_omega}
 \title{mcdonalds_omega}
 \usage{
-mcdonalds_omega(data, fm, flip, plot, rotate)
+mcdonalds_omega(data, n_fact, flip, plot)
+}
+\arguments{
+\item{data}{a dataframe where each column is a likert survey question (item)
+and each row is a response.}
+
+\item{n_fact}{Number of factors believed to be group factors}
+
+\item{flip}{If flip is TRUE, then items are automatically flipped to have
+positive correlations on the general factor (recommended to do this
+manually before)}
+
+\item{plot}{Whether or not to call omega.diagram}
+}
+\value{
+list containing omega hierarchical and omega total values
 }
 \description{
 function for calculating McDonald's Omega for likert survey data
-
-DOCUMENTATION :)
 }

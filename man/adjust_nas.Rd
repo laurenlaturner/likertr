@@ -4,12 +4,12 @@
 \alias{adjust_nas}
 \title{Impute Missing Values}
 \usage{
-adjust_nas(data, na_decision, neutrals)
+adjust_nas(data, na_drop, neutrals)
 }
 \arguments{
 \item{data}{the raw data}
 
-\item{na_decision}{a determination by the user if NAs should be
+\item{na_drop}{a determination by the user if NAs should be
 removed or replaced}
 
 \item{neutrals}{the average integer value between the maximum and the minimum
