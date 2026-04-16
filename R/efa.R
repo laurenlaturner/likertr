@@ -24,6 +24,8 @@
 # - Do the EFA
 # - Spit out loadings and also spit out variance explained (like fa function)
 
+########################### Main function ######################################
+
 efa <- function(data, n=0, efa_args) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
@@ -99,6 +101,9 @@ efa <- function(data, n=0, efa_args) {
 
   total_results
 }
+
+
+################# Smaller helper functions ############################################
 
 
 sphericity <- function(data) {
@@ -179,6 +184,9 @@ pa <- function(data) {
 
 
 run_efa <- function(data, n_fact) {
+  # Do we want to suppress warnings on this??
+
+
   efa <- psych::fa(before, nfactors = n_fact, rotate = "oblimin", fm= "minres")
 
   # Maybe give a cutoff option for the loadings?

@@ -2,7 +2,7 @@
 
 # "likertr" needs to following properties to be called in summary/plot
 
-new_likertr <- function(data, alpha, omega, rii, polychoric, 
+new_likertr <- function(data, alpha, omega, rii, polychoric,
   sphericity, kmo, nonparam, effect_size) {
   structure(
     class = "likertr",
@@ -10,9 +10,8 @@ new_likertr <- function(data, alpha, omega, rii, polychoric,
     alpha = alpha,
     omega = omega,
     rii = rii,
-    polychoric = polychoric,
-    sphericity = sphericity,
-    kmo = kmo,
+    pre_efa_diagnostics = pre_efa_diagnostics,
+    efa_results = efa_results,
     nonparam = nonparam,
     effect_size = effect_size
   )
