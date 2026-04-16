@@ -30,27 +30,27 @@ efa <- function(data, n=0, efa_args) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
 
-  # Warning for sphericity pvalue > 0.05
-  if (sphericity_results$p.value > 0.05) {
-      # The variables in the data are not sufficiently correlated
-      warning(paste("Bartlett's sphericity test resulted in a non-significant",
-                    "(p<0.05) value, variables may not be correlated enough",
-                    "for EFA"),
-              call. = FALSE)
-  }
+  # # Warning for sphericity pvalue > 0.05
+  # if (sphericity_results$p_value > 0.05) {
+  #     # The variables in the data are not sufficiently correlated
+  #     warning(paste("Bartlett's sphericity test resulted in a non-significant",
+  #                   "(p<0.05) value, variables may not be correlated enough",
+  #                   "for EFA"),
+  #             call. = FALSE)
+  # }
 
-  kmo_validity <- kmo_results$MSAi |>
-    unname() |>
-    lapply(function(x) x > 0.6) |>
-    unlist()
+  # kmo_validity <- kmo_results$MSAi |>
+  #   unname() |>
+  #   lapply(function(x) x > 0.6) |>
+  #   unlist()
 
   # Warning for kmo value < 0.6
-  if (all(kmo_validity) != TRUE) {
-    warning(paste("At least one KMO value is less than 0.6 and possibly",
-                  "problematic, the indicated feature or features share",
-                  "little variance with the rest of the data"),
-            call. = FALSE)
-  }
+  # if (all(kmo_validity) != TRUE) {
+  #   warning(paste("At least one KMO value is less than 0.6 and possibly",
+  #                 "problematic, the indicated feature or features share",
+  #                 "little variance with the rest of the data"),
+  #           call. = FALSE)
+  # }
 
   # POLYCHLORIC CORRELATION MATRIX
 
@@ -63,7 +63,10 @@ efa <- function(data, n=0, efa_args) {
 
   pa_results <- pa(data)
 
-  # If n is missing, it's an estimate of which one's the best
+  # Variable that represents whether the user gave a number of factors or not
+  user_n_fact <- !missing(n)
+
+  # If n is missing, we use an estimate of which one's the best
 
   if (missing(n)) {
     n = pa_results$rec_n_fact
@@ -77,13 +80,15 @@ efa <- function(data, n=0, efa_args) {
   }
 
 
+
+
   pre_efa_diagnostics <- list(sphericity = sphericity_results,
                               kmo = kmo_results,
                               pa = pa_results,
                               pc_matrix = pm_results)
 
 
-  efa_results <- run_efa(data, n)
+  efa_results <- run_efa(data, n, user_n_fact)
 
   # ACTUAL EFA
   # - Loadings
@@ -122,7 +127,7 @@ sphericity <- function(data) {
   df <- p * (p-1)/2
   pval <- pchisq(statistic,df,lower.tail=FALSE)
 
-  bartlett <- list(chisq = statistic, p.value = pval, df = df)
+  bartlett <- list(chi_squared = statistic, p_value = pval, df = df)
   bartlett
 
 }
@@ -147,7 +152,7 @@ kmo <- function(data) {
   sumr2 <- sum(data^2)
   MSA <- sumr2/(sumr2 + sumQ2)
   MSAi <- colSums(data^2)/(colSums(data^2) + colSums(Q^2))
-  results <- list(MSA = MSA,MSAi = MSAi) # , Image=Image,ImCov = IC,Call=cl)
+  results <- list(MSA = MSA, MSAi = MSAi) # , Image=Image,ImCov = IC,Call=cl)
   results
 }
 
@@ -158,12 +163,15 @@ kmo <- function(data) {
 polychoric_matrix <- function(data) {
   matrix <- psych::polychoric(data)
 
-  list(polychoric_matrix = matrix$rho)
+  # list(polychoric_matrix = matrix$rho)
+  matrix$rho
 }
 
 
 
 pa <- function(data) {
+  # Supress plot, output, and warnings
+  pdf(file = tempfile())
   invisible(
     capture.output(
       pa <- suppressWarnings(
@@ -171,6 +179,7 @@ pa <- function(data) {
         )
     )
   )
+  dev.off()
 
   list(rec_n_fact = pa$nfact,
        fa_real = pa$fa.values,
@@ -183,7 +192,7 @@ pa <- function(data) {
 }
 
 
-run_efa <- function(data, n_fact) {
+run_efa <- function(data, n_fact, user_n_fact) {
   # Do we want to suppress warnings on this??
 
 
@@ -215,7 +224,9 @@ run_efa <- function(data, n_fact) {
 
   list(loadings = loadings,
        var_exp = var_exp,
-       communality  = communality)
+       communality  = communality,
+       n_fact = n_fact,
+       user_n_fact = user_n_fact)
 }
 
 

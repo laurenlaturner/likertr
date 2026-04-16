@@ -1,17 +1,77 @@
 
 
-test_summary <- function(obj) {
-  cat("\n\n")
+test_efa_summary <- function(obj) {
   cat("================================================\n")
   cat("Exploratory Factor Analysis (EFA)\n")
-  cat("================================================\n")
+  cat("================================================\n\n")
 
-  cat("\n\n")
   cat("================================================\n")
   cat("Pre-EFA Diagnostics\n")
   cat("================================================\n\n")
 
-  if (obj$)
+  sph_p_val <- obj$pre_efa_diagnostics$sphericity$p_value
+  MSAi <- obj$pre_efa_diagnostics$kmo$MSAi
+  user_n_fact <- obj$efa_results$user_n_fact
+  n_fact <- obj$efa_results$n_fact
+
+  kmo_validity <- MSAi |>
+    unname() |>
+    lapply(function(x) x > 0.6) |>
+    unlist()
+
+  if (sph_p_val > 0.05) {
+    cat(paste0("Bartlett's sphericity test resulted in a non-significant ",
+              "(p<0.05) p-value of ",
+              sph_p_val,
+              ", variables may not be correlated enough for EFA\n\n")
+        )
+  } else {
+    cat(paste("Bartlett's sphericity test does not show problematic results",
+              "\n\n")
+        )
+  }
+
+
+  if (all(kmo_validity) != TRUE) {
+    # invalid_kmo <- list(attributes(MSAi)$names['FALSE'])
+    invalid_kmo <- MSAi[!kmo_validity]
+    # row.names(invalid_kmo) <- c("Feature", "MSAi")
+    cat(paste("At least one MSAi value from the KMO test is less than 0.6 and",
+              "possibly problematic, the following feature or features share",
+              "little variance with the rest of the data:\n")
+        )
+    print(invalid_kmo)
+    cat("\n")
+  } else {
+    cat(paste("The KMO test does not show problematic results",
+              "\n\n")
+        )
+  }
+
+
+  cat(paste("Polychoric correlation matrix results can be viewed using the",
+            "'plot' function\n - Lots of very low coefficients in the matrix",
+            "indicate low factorability\n - Lots of very high loadings",
+            "indicate redundant variables\n\n"))
+
+
+  if (user_n_fact) {
+    cat(paste0("User-supplied number of factors (",
+               n_fact,
+               ") was used for EFA\n\n"))
+  } else {
+    cat(paste0("No 'n' argument was given and number of factors (",
+           n_fact,
+           ") used in EFA was determined using parallel analysis\n\n",
+           "Check parallel analysis Skree plot using 'plot' function for more ",
+           "details\n\n")
+        )
+  }
+
+
+  cat("================================================\n")
+  cat("EFA Results\n")
+  cat("================================================\n\n")
 
 
 
