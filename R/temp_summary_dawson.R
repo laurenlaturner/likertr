@@ -1,6 +1,6 @@
 
 
-test_efa_summary <- function(obj) {
+test_efa_summary <- function(x) {
   cat("================================================\n")
   cat("Exploratory Factor Analysis (EFA)\n")
   cat("================================================\n\n")
@@ -9,10 +9,10 @@ test_efa_summary <- function(obj) {
   cat("Pre-EFA Diagnostics\n")
   cat("================================================\n\n")
 
-  sph_p_val <- obj$pre_efa_diagnostics$sphericity$p_value
-  MSAi <- obj$pre_efa_diagnostics$kmo$MSAi
-  user_n_fact <- obj$efa_results$user_n_fact
-  n_fact <- obj$efa_results$n_fact
+  sph_p_val <- x$pre_efa_diagnostics$sphericity$p_value
+  MSAi <- x$pre_efa_diagnostics$kmo$MSAi
+  user_n_fact <- x$efa_results$user_n_fact
+  n_fact <- x$efa_results$n_fact
 
   kmo_validity <- MSAi |>
     unname() |>
@@ -59,21 +59,13 @@ test_efa_summary <- function(obj) {
   cat("EFA Results\n")
   cat("================================================\n\n")
 
-  # loadings <- obj$efa_results$loadings
-  # var_exp <- obj$efa_results$var_exp
-  # communality <- obj$efa_results$communality
-  # fc_matrix <- obj$efa_results$fc_matrix
-  # RMSEA <- obj$efa_results$RMSEA
-  # TLI <- obj$efa_results$TLI
-  # CFI <- obj$efa_results$CFI
-
-  loadings <- round(obj$efa_results$loadings, 4)
-  var_exp <- round(obj$efa_results$var_exp, 4)
-  communality <- round(obj$efa_results$communality, 4)
-  fc_matrix <- round(obj$efa_results$fc_matrix, 4)
-  RMSEA <- round(obj$efa_results$RMSEA, 4)
-  TLI <- round(obj$efa_results$TLI, 4)
-  CFI <- round(obj$efa_results$CFI, 4)
+  loadings <- round(x$efa_results$loadings, 4)
+  var_exp <- round(x$efa_results$var_exp, 4)
+  communality <- round(x$efa_results$communality, 4)
+  fc_matrix <- round(x$efa_results$fc_matrix, 4)
+  RMSEA <- round(x$efa_results$RMSEA, 4)
+  TLI <- round(x$efa_results$TLI, 4)
+  CFI <- round(x$efa_results$CFI, 4)
 
 
   if (user_n_fact) {
@@ -177,7 +169,6 @@ test_efa_summary <- function(obj) {
 
 
   cat(paste("Keep in mind that the interpretation of many of these statistics",
-            "will depend on the context of your problem"))
-
+            "will depend on the context of your problem and your data"))
 
 }
