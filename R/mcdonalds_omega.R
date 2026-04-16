@@ -7,13 +7,12 @@
 #'
 #' DOCUMENTATION :)
 #'
-mcdonalds_omega <- function(data, fm, flip, plot, rotate) {
+mcdonalds_omega <- function(data, n_fact, flip, plot) {
 
   psych_omega <- psych::omega(m = data,
-                              fm = fm,
+                              nfactors = nfact,
                               flip = flip,
-                              plot = plot,
-                              rotate = rotate)
+                              plot = plot)
 
   list(
     omega_h = psych_omega$omega_h,

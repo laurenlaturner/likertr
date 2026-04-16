@@ -33,10 +33,9 @@ likertr <- function(
     na_decision = "drop",
     ipsatize_decision = FALSE,
     small_n_decision = "nothing",
-    groups = numeric(0), fm = "minres",
+    groups = numeric(0),
     flip = FALSE,
-    plot = FALSE,
-    rotate = "oblimin"
+    plot = FALSE
   ) {
 
   # Preparation and Cleaning
@@ -48,7 +47,7 @@ likertr <- function(
 
   # Reliability and Structure
   alpha <- cronbachs_alpha(clean_data, groups)
-  omega <- mcdonalds_omega(clean_data, fm, flip, plot, rotate)
+  omega <- mcdonalds_omega(clean_data, _______, flip, plot)
   rii <- rii(clean_data, max_val)
 
   # Inference and Reporting
