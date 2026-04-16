@@ -7,11 +7,11 @@
 #' 
 #' @param data a dataframe where each column is a likert survey question (item)
 #'     and each row is a response.
-#' @param na_decision Character. Strategy for handling `NA` values; if "neutral", 
+#' @param na_drop Logical. Strategy for handling `NA` values; if `FALSE`, 
 #'   missing values are replaced with the scale midpoint.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data 
 #'   centered by respondent (person-mean centering).
-#' @param small_n_decision Character. If not "nothing", questions/groups with 
+#' @param small_n_drop Logical. If `TRUE`, questions/groups with 
 #'   fewer than 20 responses are dropped.
 #' 
 #' @return A list containing:
@@ -25,7 +25,7 @@
 #' }
 #' 
 #' @export
-preparation <- function(data, na_decision, ipsatize_decision, small_n_decision) {
+preparation <- function(data, na_drop, ipsatize_decision, small_n_drop) {
     data <- general_cleaning(data)
     clean_data <- data[[1]]
     questions <- data[[2]]
@@ -36,13 +36,13 @@ preparation <- function(data, na_decision, ipsatize_decision, small_n_decision) 
 
     num_questions <- ncol(clean_data)
 
-    cleaner_data <- adjust_nas(clean_data, na_decision, neutrals) |>
+    cleaner_data <- adjust_nas(clean_data, na_drop, neutrals) |>
         bias_handling(neutrals, col_mins, col_maxs)
 
     ipsatize <- ipsatize(cleaner_data, ipsatize_decision)
 
     num_people <- colSums(!is.na(cleaner_data))
-    cleanest_data <- noting_small_n(cleaner_data, num_people, small_n_decision)
+    cleanest_data <- noting_small_n(cleaner_data, num_people, small_n_drop)
 
     perc_by_question <- split_question(cleanest_data)
     
@@ -130,12 +130,12 @@ ipsatize <- function(data, ipsatize_decision) {
 #'   allowing replacement with the calculated scale midpoint.
 #' 
 #' @param data the raw data
-#' @param na_decision a determination by the user if NAs should be 
+#' @param na_drop a determination by the user if NAs should be 
 #'   removed or replaced
 #' @param neutrals the average integer value between the maximum and the minimum
 #'   input values in each question
-adjust_nas <- function(data, na_decision, neutrals) {
-    if (na_decision == "neutral") {
+adjust_nas <- function(data, na_drop, neutrals) {
+    if (na_drop == "neutral") {
         nas <- is.na(data)
         neutral_matrix <- matrix(neutrals, nrow = nrow(data), ncol = ncol(data), byrow = TRUE)
         data[nas] <- neutral_matrix[nas]
@@ -150,14 +150,14 @@ adjust_nas <- function(data, na_decision, neutrals) {
 #' 
 #' @param data the raw data
 #' @param num_people the number of people's responses per question
-#' @param small_n_decision a determination by the user if questions with
+#' @param small_n_drop a determination by the user if questions with
 #'   low numbers of responses should be dropped.
-noting_small_n <-function(data, num_people, small_n_decision) {
+noting_small_n <-function(data, num_people, small_n_drop) {
     if (any(num_people < 20)) {
         message("Warning: Some groups have N < 20. Results may be unstable or non-representative.")
     }
 
-    if (small_n_decision != "nothing") {
+    if (small_n_drop != "nothing") {
         data <- data[num_people >= 20, ]
     }
     return(data)

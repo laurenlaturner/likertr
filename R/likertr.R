@@ -8,11 +8,11 @@
 #'   the dataframe. Specifies the point scale of each question by providing
 #'   the max value answerable (eg. if a question is on a five point scale
 #'   the value provided in max_val should be five).
-#' @param na_decision Character. Strategy for handling `NA` values; if "neutral",
+#' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
 #'   missing values are replaced with the scale midpoint.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data
 #'   centered by respondent (person-mean centering).
-#' @param small_n_decision Character. If not "nothing", questions/groups with
+#' @param small_n_drop Character. If not "nothing", questions/groups with
 #'   fewer than 20 responses are dropped.
 #' @param groups a numeric vector specifying groups of questions.
 #'   Cronbach's alpha information will be calculated separately for each
@@ -35,10 +35,10 @@
 likertr <- function(
     data,
     max_val,
-    na_decision = "drop",
+    na_drop = FALSE,
     n_fact,
     ipsatize_decision = FALSE,
-    small_n_decision = "nothing",
+    small_n_drop = FALSE,
     groups = numeric(0),
     factor_inference = NA,
     inference_vars = NA,
@@ -48,7 +48,7 @@ likertr <- function(
   ) {
 
   # Preparation and Cleaning
-  clean_data <- preparation(data, na_decision, ipsatize_decision, small_n_decision)
+  clean_data <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
 
   # EFA
   if (missing(n_fact)) {
