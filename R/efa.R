@@ -80,8 +80,6 @@ efa <- function(data, n=0, efa_args) {
   }
 
 
-
-
   pre_efa_diagnostics <- list(sphericity = sphericity_results,
                               kmo = kmo_results,
                               pa = pa_results,
@@ -102,7 +100,8 @@ efa <- function(data, n=0, efa_args) {
   # Values that will be needed for plotting later
   # plotting <- list(pa_results$fa_real,
   #                  pa_results$fa_sim,
-  #                  pa_results$fa_resamp)
+  #                  pa_results$fa_resamp
+  #                  pc_matrix)
 
   total_results
 }
@@ -196,7 +195,9 @@ run_efa <- function(data, n_fact, user_n_fact) {
   # Do we want to suppress warnings on this??
 
 
-  efa <- psych::fa(before, nfactors = n_fact, rotate = "oblimin", fm= "minres")
+  efa <- suppressWarnings(
+    psych::fa(before, nfactors = n_fact, rotate = "oblimin", fm= "minres")
+  )
 
   # Maybe give a cutoff option for the loadings?
   # What is a good default?
@@ -221,6 +222,28 @@ run_efa <- function(data, n_fact, user_n_fact) {
   communality <- efa$communality
 
   # Check for Ultra Heywood case (communality above 1)
+
+  ultra_heywood <- communality > 1
+  heywood <- communality >= 1
+
+  if (any(ultra_heywood)) {
+    warning(paste("Communality values above 1 indicate an Ultra-Heywood case,",
+              "which means that the EFA generated mathematically invalid",
+              "results\n\nSome causes may be:\n",
+              "- Too many factors\n",
+              "- Low sample size\n",
+              "- Very high multicollinearity"),
+            call. = FALSE)
+  } else if (any(heywood)) {
+    warning(paste("Communality values above 1 indicate a Heywood case,",
+                  "which means that the EFA generated mathematically invalid",
+                  "results\n\nSome causes may be:\n",
+                  "- Too many factors\n",
+                  "- Low sample size\n",
+                  "- Very high multicollinearity"),
+            call. = FALSE)
+  }
+
 
   list(loadings = loadings,
        var_exp = var_exp,

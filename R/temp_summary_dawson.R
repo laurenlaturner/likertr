@@ -55,27 +55,62 @@ test_efa_summary <- function(obj) {
             "indicate redundant variables\n\n"))
 
 
+  cat("================================================\n")
+  cat("EFA Results\n")
+  cat("================================================\n\n")
+
+  loadings <- obj$efa_results$loadings
+  var_exp <- obj$efa_results$var_exp
+  communality <- obj$efa_results$communality
+
+
   if (user_n_fact) {
     cat(paste0("User-supplied number of factors (",
                n_fact,
                ") was used for EFA\n\n"))
   } else {
     cat(paste0("No 'n' argument was given and number of factors (",
-           n_fact,
-           ") used in EFA was determined using parallel analysis\n\n",
-           "Check parallel analysis Skree plot using 'plot' function for more ",
-           "details\n\n")
-        )
+               n_fact,
+               ") used in EFA was determined using parallel analysis\n\n",
+               "Check parallel analysis Skree plot using 'plot' function for more ",
+               "details\n\n")
+    )
   }
 
 
-  cat("================================================\n")
-  cat("EFA Results\n")
-  cat("================================================\n\n")
+  # EFA Loadings
+
+  cat("EFA Loadings (Standardized):\n")
+  print(loadings)
+  cat("\n\n")
 
 
+  # Variance Explained
+
+  cat("Variance Explained:\n")
+  print(var_exp)
+  cat("\n\n")
 
 
+  # Communality
+
+  # Recommend to get rid of variables with a communality < 0.2
+
+  low_communality <- communality < 0.2
+
+  if (any(low_communality)) {
+    lc_variables <- communality[low_communality]
+    cat(paste("The following variables have communality values less than 0.2",
+              "and should be considered for removal:\n")
+    )
+    print(lc_variables)
+    cat("\n")
+  }
+
+  # We want variables with a high communality that contribute strongly to the
+  # common factors
+
+  # Do we want to add other stuff from the EFA output?
 
 
 
