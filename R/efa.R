@@ -90,7 +90,7 @@ sphericity <- function(data) {
 
 kmo <- function(data) {
   # Checks sampling adequacy
-  # Give a warning if it is below 0.6 (default acceptable minimum value)
+  # Summary gives a warning if it is below 0.6 (default acceptable minimum value)
 
   data <- cor(data,use="pairwise")
   Q <- try(solve(data))
@@ -221,23 +221,3 @@ run_efa <- function(data, n_fact, user_n_fact) {
        CFI = CFI)
 }
 
-
-
-# sphericity_results <- sphericity(before)
-# kmo_results <- kmo(before)
-#
-# pa <- psych::fa.parallel(before, fm = "minres", fa = "fa")
-#
-# n_fact <- pa$nfact
-# fa_real <- pa$fa.values
-# fa_sim <- pa$fa.sim
-# fa_resamp <- pa$fa.simr
-#
-# fa(before, nfactors = 2, rotate = "oblimin", fm= "minres")
-#
-# sphericity_results$p.value <- 0.9
-
-# efa(before)
-#
-# pa_results <- pa(before)
-# pa_results

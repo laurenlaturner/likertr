@@ -23,10 +23,12 @@ summary.likertr <- function(x, ...) {
   user_n_fact <- obj$efa_results$user_n_fact
   n_fact <- obj$efa_results$n_fact
 
-  kmo_validity <- MSAi |>
-    unname() |>
-    lapply(function(x) x > 0.6) |>
-    unlist()
+  # kmo_validity <- MSAi |>
+  #   unname() |>
+  #   lapply(function(x) x > 0.6) |>
+  #   unlist()
+
+  invalid_kmo <- MSAi < 0.6
 
   if (sph_p_val > 0.05) {
     cat(paste0("Bartlett's sphericity test resulted in a non-significant ",
@@ -41,7 +43,7 @@ summary.likertr <- function(x, ...) {
   }
 
 
-  if (all(kmo_validity) != TRUE) {
+  if (any(invalid_kmo)) {
     # invalid_kmo <- list(attributes(MSAi)$names['FALSE'])
     invalid_kmo <- MSAi[!kmo_validity]
     # row.names(invalid_kmo) <- c("Feature", "MSAi")
