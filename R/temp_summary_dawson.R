@@ -107,6 +107,9 @@ test_efa_summary <- function(obj) {
     cat("\n")
   }
 
+  # Maybe add something saying the communality values are fine, but you cna look
+  # at them more carefully?
+
   # We want variables with a high communality that contribute strongly to the
   # common factors
 
