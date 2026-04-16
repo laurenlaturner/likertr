@@ -203,6 +203,8 @@ run_efa <- function(data, n_fact) {
   # common factors
   communality <- efa$communality
 
+  # Check for Ultra Heywood case (communality above 1)
+
   list(loadings = loadings,
        var_exp = var_exp,
        communality  = communality)
