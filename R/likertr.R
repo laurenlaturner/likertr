@@ -20,6 +20,11 @@
 #'   (columns) in the dataframe. Ex. c(1, 1, 2, 2) i.e questions 1-2 are in
 #'   a group and questions 2-4 are in a group. Groups should be numbered
 #'   1, 2, 3, ... , n.
+#' @param factor_inference column index referencing a factor variable to split
+#'   data on for inference.
+#' @param inference_vars A vector of column indices to perform inference on
+#' @param inference_vars2 A vector of column indices to compare
+#'   to inference_vars.
 #' @param std
 #' @param empirical
 #'
@@ -34,9 +39,12 @@ likertr <- function(
     ipsatize_decision = FALSE,
     small_n_decision = "nothing",
     groups = numeric(0),
+    factor_inference = NA,
+    inference_vars = NA,
+    inference_vars2 = NA,
     flip = FALSE,
     plot = FALSE
-  ) {
+  )
 
   # Preparation and Cleaning
   clean_data <- preparation(data, na_decision, ipsatize_decision, small_n_decision)
@@ -51,7 +59,8 @@ likertr <- function(
   rii <- rii(clean_data, max_val)
 
   # Inference and Reporting
-  inference <- inference(clean_data)
+  inference <- inference(clean_data, factor_inference, inference_vars,
+                         inference_vars2)
 
   new_likertr(
     data = clean_data,
