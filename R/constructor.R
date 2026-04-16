@@ -5,8 +5,8 @@
 new_likertr <- function(data, alpha, omega, rii, polychoric,
                         pre_efa_diagnostics, efa_results, nonparam, effect_size) {
   structure(
+    data,
     class = "likertr",
-    data = data,
     alpha = alpha,
     omega = omega,
     rii = rii,
