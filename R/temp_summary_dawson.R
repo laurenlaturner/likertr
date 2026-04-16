@@ -59,9 +59,21 @@ test_efa_summary <- function(obj) {
   cat("EFA Results\n")
   cat("================================================\n\n")
 
-  loadings <- obj$efa_results$loadings
-  var_exp <- obj$efa_results$var_exp
-  communality <- obj$efa_results$communality
+  # loadings <- obj$efa_results$loadings
+  # var_exp <- obj$efa_results$var_exp
+  # communality <- obj$efa_results$communality
+  # fc_matrix <- obj$efa_results$fc_matrix
+  # RMSEA <- obj$efa_results$RMSEA
+  # TLI <- obj$efa_results$TLI
+  # CFI <- obj$efa_results$CFI
+
+  loadings <- round(obj$efa_results$loadings, 4)
+  var_exp <- round(obj$efa_results$var_exp, 4)
+  communality <- round(obj$efa_results$communality, 4)
+  fc_matrix <- round(obj$efa_results$fc_matrix, 4)
+  RMSEA <- round(obj$efa_results$RMSEA, 4)
+  TLI <- round(obj$efa_results$TLI, 4)
+  CFI <- round(obj$efa_results$CFI, 4)
 
 
   if (user_n_fact) {
@@ -96,15 +108,25 @@ test_efa_summary <- function(obj) {
 
   # Recommend to get rid of variables with a communality < 0.2
 
+  cat("Communality:\n")
+  print(communality)
+  cat("\n\n")
+
   low_communality <- communality < 0.2
 
   if (any(low_communality)) {
     lc_variables <- communality[low_communality]
-    cat(paste("The following variables have communality values less than 0.2",
-              "and should be considered for removal:\n")
+    cat(paste("The following variables have communality values less than 0.2,",
+              "which means that very little of their variance is explained by",
+              "the common factors and they should be considered for removal:\n")
     )
     print(lc_variables)
     cat("\n")
+  } else {
+    cat(paste("There are no variables with a communality less than 0.2,",
+              "but it is reccommended to review the communality values that",
+              "show how much of the variance of each variable is explained by",
+              "the common factors"))
   }
 
   # Maybe add something saying the communality values are fine, but you cna look
@@ -114,7 +136,48 @@ test_efa_summary <- function(obj) {
   # common factors
 
   # Do we want to add other stuff from the EFA output?
+  # Factor correlations
 
+  cat("Factor Correlation Matrix:\n")
+  print(fc_matrix)
+  cat("\n\n")
+
+  cat("Measures of Fit:\n")
+  cat(paste("RMSEA:", RMSEA, "\n"))
+  if (RMSEA < 0.05) {
+    cat("This RMSEA value indicates a good model fit")
+  } else if (RMSEA < 0.08) {
+    cat("This RMSEA value indicates an acceptable model fit")
+  } else if (RMSEA < 0.1) {
+    cat("This RMSEA value indicates a marginal model fit")
+  } else {
+    cat("This RMSEA value indicates a poor model fit")
+  }
+  cat("\n\n")
+
+  cat(paste("TLI:", TLI, "\n"))
+  if (TLI > 0.95) {
+    cat("This TLI value indicates a good model fit")
+  } else if (TLI > 0.9) {
+    cat("This TLI value indicates an acceptable model fit")
+  } else {
+    cat("This TLI value indicates a poor model fit")
+  }
+  cat("\n\n")
+
+  cat(paste("CFI:", CFI, "\n"))
+  if (CFI > 0.95) {
+    cat("This CFI value indicates a good model fit")
+  } else if (CFI > 0.9) {
+    cat("This CFI value indicates an acceptable model fit")
+  } else {
+    cat("This CFI value indicates a poor model fit")
+  }
+  cat("\n\n")
+
+
+  cat(paste("Keep in mind that the interpretation of many of these statistics",
+            "will depend on the context of your problem"))
 
 
 }

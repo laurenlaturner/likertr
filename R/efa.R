@@ -70,12 +70,6 @@ efa <- function(data, n=0, efa_args) {
 
   if (missing(n)) {
     n = pa_results$rec_n_fact
-    message(paste0("No 'n' argument was given and number of factors (",
-                  n,
-                  ") was determined using parallel analysis",
-                  "\n",
-                  "Check parallel analysis Skree plot using plot.likertr")
-            )
 
   }
 
@@ -213,9 +207,12 @@ run_efa <- function(data, n_fact, user_n_fact) {
     var_exp <- efa$Vaccounted[2:3,]
   }
 
+
+  fc_matrix <- efa$Phi
+
+
   # Recommend to get rid of variables with a communality < 0.2
   # in future runs of the likertr workflow
-
 
   # We want variables with a high communality that contribute strongly to the
   # common factors
@@ -244,12 +241,21 @@ run_efa <- function(data, n_fact, user_n_fact) {
             call. = FALSE)
   }
 
+  # Measures of fit
+  RMSEA <- efa$RMSEA[1]
+  TLI <- efa$TLI
+  CFI <- efa$CFI
+
 
   list(loadings = loadings,
        var_exp = var_exp,
        communality  = communality,
        n_fact = n_fact,
-       user_n_fact = user_n_fact)
+       user_n_fact = user_n_fact,
+       fc_matrix = fc_matrix,
+       RMSEA = RMSEA,
+       TLI = TLI,
+       CFI = CFI)
 }
 
 
