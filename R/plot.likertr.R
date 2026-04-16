@@ -2,7 +2,7 @@
 
 # Diverging stacked bar charts
 # Confidence Intervals on bar charts to show how "extreme responders" affect mean
-# EFA - Heat map for polychloric correlations
+# EFA - Heat map for polychoric correlations
 # Comparison plots (group to group)
 # Ridge Plots to show density of responses
 # EFA Skree plot
@@ -13,16 +13,19 @@
 #'   This function automatically generates a set of visualizations.
 #'
 #' @param x An object of class \code{likertr}, typically the output from
-#'   the \code{preparation} function
+#'   the \code{likertr} function
 #' @param ... Additional arguments passed to the underlying plotting functions.
 #'
 #' @export
 plot.likertr <- function(x, ...) {
-  data <- attr(x, "data")
+  clean_data_list <- x
+  pc <- attr(x, "pre_efa_diagnostics")[[4]]
 
-  stacked_bar(data[[6]], data[[2]])
-  diverging_bar(data[[6]], data[[2]])
-  ridge_plot(data[[1]], data[[2]])
+
+  stacked_bar(clean_data_list[[6]], clean_data_list[[2]])
+  diverging_bar(clean_data_list[[6]], clean_data_list[[2]])
+  ridge_plot(clean_data_list[[1]], clean_data_list[[2]])
+  efa_heat_map(pc)
 }
 
 #' Align the data for graphing
@@ -188,5 +191,42 @@ ridge_plot <- function(clean_data, questions) {
     lines(d$x, y_vals, col = "black", lwd = 1)
 
     abline(h = i, col = "gray90", lwd = 0.5)
+  }
+}
+
+#' Heat Map for the EFA Polychoric Correlation Matrix
+#' 
+#' @description Generates a color-coded visual representation of a polychoric correlation matrix 
+#'   using base R graphics. The function maps correlation values to a red-white-blue 
+#'   color palette, where red indicates negative correlations, white indicates zero, 
+#'   and blue indicates positive correlations. It also overlays the numerical 
+#'   correlation coefficients on the plot.
+#' 
+#' @param pc A square, symmetric numeric matrix of polychoric correlations. 
+#'   The matrix must have row and column names for axis labeling.
+#' 
+#' @param pc A square matrix of polychoric correlations.
+efa_heat_map <- function(pc) {
+  col_palette <- colorRampPalette(c("red", "white", "blue"))(100)
+
+  # Transpose and reverse the matrix 
+  # (image() plots columns as rows and starts from the bottom-left)
+  plot_data <- t(pc[nrow(pc):1, ])
+
+  image(1:ncol(pc), 1:nrow(pc), plot_data, 
+      col = col_palette, 
+      breaks = seq(-1, 1, length.out = 101),
+      axes = FALSE, 
+      xlab = "", ylab = "")
+
+  axis(3, at = 1:ncol(pc), labels = colnames(pc), las = 2, cex.axis = 0.8)
+  axis(2, at = 1:nrow(pc), labels = rev(rownames(pc)), las = 1, cex.axis = 0.8)
+  title("Polychoric Correlation Matrix")
+
+  for (x in 1:ncol(pc)) {
+    for (y in 1:nrow(pc)) {
+      val <- pc[nrow(pc) - y + 1, x]
+      text(x, y, round(val, 2), cex = 0.7)
+    }
   }
 }
