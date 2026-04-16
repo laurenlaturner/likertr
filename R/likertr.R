@@ -48,7 +48,8 @@ likertr <- function(
   ) {
 
   # Preparation and Cleaning
-  clean_data <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
+  clean_data_list <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
+  clean_data <- clean_data_list[[1]]
 
   # EFA
   if (missing(n_fact)) {
@@ -68,7 +69,7 @@ likertr <- function(
                          inference_vars2)
 
   new_likertr(
-    data = clean_data,
+    data = clean_data_list,
     alpha = alpha,
     omega = omega,
     rii = rii,

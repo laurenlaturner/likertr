@@ -135,7 +135,7 @@ ipsatize <- function(data, ipsatize_decision) {
 #' @param neutrals the average integer value between the maximum and the minimum
 #'   input values in each question
 adjust_nas <- function(data, na_drop, neutrals) {
-    if (na_drop == "neutral") {
+    if (na_drop == TRUE) {
         nas <- is.na(data)
         neutral_matrix <- matrix(neutrals, nrow = nrow(data), ncol = ncol(data), byrow = TRUE)
         data[nas] <- neutral_matrix[nas]
@@ -157,7 +157,7 @@ noting_small_n <-function(data, num_people, small_n_drop) {
         message("Warning: Some groups have N < 20. Results may be unstable or non-representative.")
     }
 
-    if (small_n_drop != "nothing") {
+    if (small_n_drop == TRUE) {
         data <- data[num_people >= 20, ]
     }
     return(data)
