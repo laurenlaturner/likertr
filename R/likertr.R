@@ -36,6 +36,7 @@ likertr <- function(
     data,
     max_val,
     na_decision = "drop",
+    n_fact,
     ipsatize_decision = FALSE,
     small_n_decision = "nothing",
     groups = numeric(0),
@@ -50,7 +51,11 @@ likertr <- function(
   clean_data <- preparation(data, na_decision, ipsatize_decision, small_n_decision)
 
   # EFA
-  efa <- efa(clean_data)
+  if (missing(n_fact)) {
+    efa <- efa(clean_data)
+  } else {
+    efa <- efa(clean_data, n_fact)
+  }
 
 
   # Reliability and Structure
@@ -67,9 +72,8 @@ likertr <- function(
     alpha = alpha,
     omega = omega,
     rii = rii,
-    polychoric = polychoric,
-    sphericity = sphericity,
-    kmo = kmo,
+    pre_efa_diagnostics = efa$pre_efa_diagnostics,
+    efa_results = efa$efa_results,
     nonparam = nonparam,
     effect_size = effect_size
   )
