@@ -26,41 +26,10 @@
 
 ########################### Main function ######################################
 
-efa <- function(data, n=0, efa_args) {
+efa <- function(data, n) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
-
-  # # Warning for sphericity pvalue > 0.05
-  # if (sphericity_results$p_value > 0.05) {
-  #     # The variables in the data are not sufficiently correlated
-  #     warning(paste("Bartlett's sphericity test resulted in a non-significant",
-  #                   "(p<0.05) value, variables may not be correlated enough",
-  #                   "for EFA"),
-  #             call. = FALSE)
-  # }
-
-  # kmo_validity <- kmo_results$MSAi |>
-  #   unname() |>
-  #   lapply(function(x) x > 0.6) |>
-  #   unlist()
-
-  # Warning for kmo value < 0.6
-  # if (all(kmo_validity) != TRUE) {
-  #   warning(paste("At least one KMO value is less than 0.6 and possibly",
-  #                 "problematic, the indicated feature or features share",
-  #                 "little variance with the rest of the data"),
-  #           call. = FALSE)
-  # }
-
-  # POLYCHLORIC CORRELATION MATRIX
-
-  # Tell them they can check the plot
-  # - Lots of low loadings indicate low factorability
-  # - Lots of high loadings indicate redundant variables
-
   pm_results <- polychoric_matrix(data)
-
-
   pa_results <- pa(data)
 
   # Variable that represents whether the user gave a number of factors or not
@@ -70,7 +39,6 @@ efa <- function(data, n=0, efa_args) {
 
   if (missing(n)) {
     n = pa_results$rec_n_fact
-
   }
 
 
@@ -81,11 +49,6 @@ efa <- function(data, n=0, efa_args) {
 
 
   efa_results <- run_efa(data, n, user_n_fact)
-
-  # ACTUAL EFA
-  # - Loadings
-  # - Variance Explained
-  # - Communality
 
 
   total_results <- list(pre_efa_diagnostics = pre_efa_diagnostics,
