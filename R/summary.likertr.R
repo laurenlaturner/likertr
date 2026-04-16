@@ -186,17 +186,14 @@ summary.likertr <- function(x, ...) {
 
 
   cat(paste("Keep in mind that the interpretation of many of these statistics",
-            "will depend on the context of your problem"))
-  
-# We should probably rename the likertr obj to not be the same name as the class
+            "will depend on the context of your problem \n\n"))
 
-test_summary <- function(obj) {
   cat("================================================\n")
   cat("Cronbach's Alpha\n")
   cat("================================================\n\n")
 
   # Extract alpha information from likertr object
-  alpha <- obj$alpha
+  alpha <- x$alpha
   groups <- length(alpha)
 
   for (i in seq_len(groups)) {
@@ -239,7 +236,7 @@ test_summary <- function(obj) {
   cat("================================================\n\n")
 
   # Extract RII information from likertr object
-  rii <- obj$rii
+  rii <- x$rii
 
   # Print
   rows <- nrow(rii)
@@ -255,11 +252,9 @@ test_summary <- function(obj) {
   cat("================================================\n\n")
 
   # Extract Omega information from likertr object
-  omega <- obj$omega
+  omega <- x$omega
 
   # Print
   cat("Omega Hierarchical:     ", omega$omega_h, "\n")
   cat("Omega Total:            ", omega$omega_t, "\n\n")
-}
-
 }
