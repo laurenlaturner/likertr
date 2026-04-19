@@ -10,6 +10,9 @@
 #'   the value provided in max_val should be five).
 #' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
 #'   missing values are replaced with the scale midpoint.
+#' @param n_fact Integer. Optional argument for the number of factors to be used
+#'   in the Exploratory Factor Analysis (EFA). If not given, this argument will
+#'   be decided using parallel analysis.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data
 #'   centered by respondent (person-mean centering).
 #' @param small_n_drop Character. If not "nothing", questions/groups with
