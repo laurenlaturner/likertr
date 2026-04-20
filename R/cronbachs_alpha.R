@@ -22,11 +22,10 @@ cronbachs_alpha <- function(data, groups) {
   if (length(groups) == 0) {
     groups <- rep(1, ncol(data))
     message(
-      "No item grouping specified. Cronbach's Alpha calculated assuming all items in same group."
+      "No item grouping specified.
+      Cronbach's Alpha calculated assuming all items in same group."
     )
   }
-
-  # ADD MORE ERROR HANDLING :)
 
   num_groups <- max(groups)
   alpha_info <- vector("list", num_groups)
@@ -85,4 +84,3 @@ c_alpha_calc <- function(data) {
   # Calculate and return Cronbach's Alpha
   (num_items / (num_items - 1)) * ((tot_var - sum_item_var) / tot_var)
 }
-

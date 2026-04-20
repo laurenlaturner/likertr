@@ -17,9 +17,6 @@
 #' @returns a numeric vector with the relative importance index for each
 #'     question.
 rii <- function(data, max_val) {
-
-  # ADD MORE ERROR HANDLING :)
-
   data.frame(
     item = names(data),
     rii = colSums(data) / (max_val * nrow(data))
