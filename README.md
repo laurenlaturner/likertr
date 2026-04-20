@@ -7,8 +7,6 @@
 
 <!-- badges: end -->
 
-# Likertr Workflow Analysis
-
 `likertr` provides a comprehensive workflow for a full-scale analysis of
 Likert-scale data. The package facilitates the following processes:
 
@@ -43,9 +41,7 @@ Likert-scale data. The package facilitates the following processes:
 - **Nonparametric testing:** Utilizing Mann-Whitney U or Kruskal-Wallis
   tests.
 - **Effect size calculation:** Providing Cliff’s Delta or $r$ for robust
-  interpretation.
-
-## Installation
+  interpretation. \## Installation
 
 You can install the development version of likertr from
 [GitHub](https://github.com/) with:

@@ -18,8 +18,6 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-# Likertr Workflow Analysis
-
 `likertr` provides a comprehensive workflow for a full-scale analysis of Likert-scale data. The package facilitates the following processes:
 
 ## 1. Data Preparation and Cleaning
@@ -42,7 +40,6 @@ knitr::opts_chunk$set(
 ## 4. Inference and Reporting
 * **Nonparametric testing:** Utilizing Mann-Whitney U or Kruskal-Wallis tests.
 * **Effect size calculation:** Providing Cliff’s Delta or $r$ for robust interpretation.
-
 ## Installation
 
 You can install the development version of likertr from [GitHub](https://github.com/) with:
@@ -51,7 +48,6 @@ You can install the development version of likertr from [GitHub](https://github.
 # install.packages("pak")
 pak::pak("laurenlaturner/likertr")
 ```
-
 ## Example Workflow
 
 Three main functions in Likertr provide all required functionality. The function "likertr()" is used to create a likertr object that can then be passed to summary() and plot() generics.
