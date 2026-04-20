@@ -1,28 +1,3 @@
-# EFA
-  # Polychoric Correlation Matrix
-  # Bartlett’s Test of Sphericity
-  # Kaiser-Meyer-Olkin (KMO)
-
-  # Functions from other packages:
-  # psych::KMO()
-  # psych::cortest.bartlett
-
-# Diagnostics
-# - Sphericity
-# - KMO
-
-# Diagnostic Plots
-# - Polychoric Correlation Matrix
-# - Skree plot
-
-# Number of factors
-# - We'll have an option to have this decided automatically,
-# but also have an option to manually decide the number of factors
-
-# Output
-# - Spit out diagnostics values
-# - Do the EFA
-# - Spit out loadings and also spit out variance explained (like fa function)
 
 ########################### Main function ######################################
 
@@ -31,8 +6,13 @@
 #' @description `efa()` carries out exploratory factor analysis on a dataset,
 #'     returning pre-EFA diagnostics as well as various EFA results
 #'
+#' @param data A dataset in the form of a data.frame that will be used for the
+#'     analysis
+#' @param n An optional integer argument indicating how many factors should be
+#'     used in the analysis
 #'
-#'
+#' @returns A list containing smaller lists of pre-EFA diagnostics and EFA
+#'     results, which both contain several measures
 efa <- function(data, n) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
@@ -76,7 +56,8 @@ efa <- function(data, n) {
 
 sphericity <- function(data) {
   # If this test results in a non-significant value, it indicates that the
-  # variables are not correlated enough for an EFA
+  # variables are not correlated enough for an EFA (indicated by summary
+  # function)
 
   n <- nrow(data)
   data <- cor(data, use = "pairwise")
@@ -126,6 +107,7 @@ polychoric_matrix <- function(data) {
   # Instead of correlations of exact responses, this function returns
   # correlations of the underlying continuous variables (true anxiety, true
   # stress. etc.)
+
   matrix <- psych::polychoric(data)
 
   matrix$rho
@@ -134,7 +116,11 @@ polychoric_matrix <- function(data) {
 
 #' @importFrom psych fa.parallel
 pa <- function(data) {
-  # Supress plot, output, and warnings
+  # Parallel analysis will give us a reccommended number of factors to use for
+  # EFA, as well as the necessary values for a Skree plot that users can look
+  # at further
+
+  # Suppress plot, output, and warnings from fa.parallel function
   pdf(file = tempfile())
   invisible(
     capture.output(
