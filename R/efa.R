@@ -89,7 +89,7 @@ kmo <- function(data) {
   q <- try(solve(data))
   if (inherits(q, as.character("try-error"))) {
     message(paste(
-      "matrix is not",
+      "Matrix is not",
       "invertible, image not found"
     ))
     q <- data
