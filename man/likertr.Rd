@@ -6,8 +6,8 @@
 \usage{
 likertr(
   data,
-  na_drop = FALSE,
   n_fact,
+  na_drop = FALSE,
   ipsatize_decision = FALSE,
   small_n_drop = FALSE,
   groups = numeric(0),
@@ -22,12 +22,12 @@ likertr(
 \item{data}{a dataframe where each column is a likert survey question (item)
 and each row is a response.}
 
-\item{na_drop}{Character. Strategy for handling \code{NA} values; if "neutral",
-missing values are replaced with the scale midpoint.}
-
 \item{n_fact}{Integer. Optional argument for the number of factors to be used
 in the Exploratory Factor Analysis (EFA). If not given, this argument will
 be decided using parallel analysis.}
+
+\item{na_drop}{Character. Strategy for handling \code{NA} values; if "neutral",
+missing values are replaced with the scale midpoint.}
 
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
@@ -45,17 +45,11 @@ a group and questions 2-4 are in a group. Groups should be numbered
 \item{factor_inference}{column index referencing a factor variable to split
 data on for inference.}
 
-\item{inference_vars}{A vector of column indices to perform inference on}
+\item{flip}{If flip is TRUE, then items are automatically flipped to have
+positive correlations on the general factor (recommended to do this
+manually before)}
 
-\item{inference_vars2}{A vector of column indices to compare
-to inference_vars.}
-
-\item{max_val}{a numeric vector with length equal to the number of items in
-the dataframe. Specifies the point scale of each question by providing
-the max value answerable (eg. if a question is on a five point scale
-the value provided in max_val should be five).}
-
-\item{empirical}{}
+\item{plot}{Whether or not to call omega.diagram}
 }
 \description{
 Likertr Wrapper Function
