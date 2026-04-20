@@ -13,6 +13,8 @@
 #'     manually before)
 #' @param plot Whether or not to call omega.diagram
 #'
+#' @importFrom psych omega
+#'
 #' @returns list containing omega hierarchical and omega total values
 mcdonalds_omega <- function(data, n_fact, flip, plot) {
 
