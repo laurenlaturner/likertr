@@ -54,7 +54,7 @@ summary.likertr <- function(x, ...) {
     cat(paste(
       "At least one MSAi value from the KMO test is less than 0.6 and",
       "possibly problematic, the following feature or features share",
-      "little variance with the rest of the data:\n"
+      "little variance with the rest of the data:\n", sep = "\n"
     ))
     print(invalid_kmo)
     cat("\n")
@@ -132,7 +132,7 @@ summary.likertr <- function(x, ...) {
     lc_variables <- communality[low_communality]
     cat(paste(
       "The following variables have communality values less than 0.2,",
-      "which means that very little of their variance is explained by",
+      "which means that very little of their variance is explained by\n",
       "the common factors and they should be considered for removal:\n"
     ))
     print(lc_variables)
@@ -140,7 +140,7 @@ summary.likertr <- function(x, ...) {
   } else {
     cat(paste(
       "There are no variables with a communality less than 0.2,",
-      "but it is reccommended to review the communality values that",
+      "but it is reccommended to review the communality values that\n",
       "show how much of the variance of each variable is explained by",
       "the common factors"
     ))
