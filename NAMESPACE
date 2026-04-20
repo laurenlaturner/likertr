@@ -3,3 +3,7 @@
 S3method(plot,likertr)
 export(likertr)
 export(preparation)
+importFrom(psych,fa)
+importFrom(psych,fa.parallel)
+importFrom(psych,omega)
+importFrom(psych,polychoric)

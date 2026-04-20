@@ -25,6 +25,10 @@ and each row is a response.}
 \item{na_drop}{Character. Strategy for handling \code{NA} values; if "neutral",
 missing values are replaced with the scale midpoint.}
 
+\item{n_fact}{Integer. Optional argument for the number of factors to be used
+in the Exploratory Factor Analysis (EFA). If not given, this argument will
+be decided using parallel analysis.}
+
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
 
