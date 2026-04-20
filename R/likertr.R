@@ -4,11 +4,11 @@
 #'
 #' @param data a dataframe where each column is a likert survey question (item)
 #'     and each row is a response.
-#' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
-#'   missing values are replaced with the scale midpoint.
 #' @param n_fact Integer. Optional argument for the number of factors to be used
 #'   in the Exploratory Factor Analysis (EFA). If not given, this argument will
 #'   be decided using parallel analysis.
+#' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
+#'   missing values are replaced with the scale midpoint.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data
 #'   centered by respondent (person-mean centering).
 #' @param small_n_drop Character. If not "nothing", questions/groups with
@@ -21,6 +21,10 @@
 #'   1, 2, 3, ... , n.
 #' @param factor_inference column index referencing a factor variable to split
 #'   data on for inference.
+#' @param flip If flip is TRUE, then items are automatically flipped to have
+#'     positive correlations on the general factor (recommended to do this
+#'     manually before)
+#' @param plot Whether or not to call omega.diagram
 #'
 #' @example
 #'
@@ -28,8 +32,8 @@
 
 likertr <- function(
     data,
-    na_drop = FALSE,
     n_fact,
+    na_drop = FALSE,
     ipsatize_decision = FALSE,
     small_n_drop = FALSE,
     groups = numeric(0),
