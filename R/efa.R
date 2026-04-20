@@ -1,4 +1,3 @@
-
 ########################### Main function ######################################
 
 #' Carry out exploratory factor analysis
@@ -25,21 +24,25 @@ efa <- function(data, n) {
   # If n is missing, we use an estimate of which one's the best
 
   if (missing(n)) {
-    n = pa_results$rec_n_fact
+    n <- pa_results$rec_n_fact
   }
 
 
-  pre_efa_diagnostics <- list(sphericity = sphericity_results,
-                              kmo = kmo_results,
-                              pa = pa_results,
-                              pc_matrix = pcm_results)
+  pre_efa_diagnostics <- list(
+    sphericity = sphericity_results,
+    kmo = kmo_results,
+    pa = pa_results,
+    pc_matrix = pcm_results
+  )
 
 
   efa_results <- run_efa(data, n, user_n_fact)
 
 
-  total_results <- list(pre_efa_diagnostics = pre_efa_diagnostics,
-                        efa_results = efa_results)
+  total_results <- list(
+    pre_efa_diagnostics = pre_efa_diagnostics,
+    efa_results = efa_results
+  )
 
   # Values that will be needed for plotting later
   # plotting <- list(pa_results$fa_real,
@@ -51,7 +54,7 @@ efa <- function(data, n) {
 }
 
 
-################# Smaller helper functions ############################################
+################# Smaller helper functions #####################################
 
 
 sphericity <- function(data) {
@@ -64,15 +67,14 @@ sphericity <- function(data) {
   p <- dim(data)[2]
 
 
-  diag(data) <- 1   #this will make tests of factor residuals correct
+  diag(data) <- 1 # this will make tests of factor residuals correct
   det <- det(data)
-  statistic  <- -log(det) *(n -1 - (2*p + 5)/6)
-  df <- p * (p-1)/2
-  pval <- pchisq(statistic,df,lower.tail=FALSE)
+  statistic <- -log(det) * (n - 1 - (2 * p + 5) / 6)
+  df <- p * (p - 1) / 2
+  pval <- pchisq(statistic, df, lower.tail = FALSE)
 
   bartlett <- list(chi_squared = statistic, p_value = pval, df = df)
   bartlett
-
 }
 
 kmo <- function(data) {
@@ -80,24 +82,24 @@ kmo <- function(data) {
   # Summary gives a warning if any variable's value is below 0.6
   # (default acceptable minimum value)
 
-  data <- cor(data,use="pairwise")
-  Q <- try(solve(data))
-  if(inherits(Q,  as.character("try-error")))  {message(paste("matrix is not",
-    "invertible, image not found"))
-    Q <- data}
+  data <- cor(data, use = "pairwise")
+  q <- try(solve(data))
+  if (inherits(q, as.character("try-error"))) {
+    message(paste(
+      "matrix is not",
+      "invertible, image not found"
+    ))
+    q <- data
+  }
 
-  S2  <- diag(1/diag(Q))
-  S <- sqrt(S2)
-  IC <- S %*% Q %*% S
-
-  Q <- Image <-  cov2cor(Q)
-  diag(Q) <- 0
+  q <- cov2cor(q)
+  diag(q) <- 0
   diag(data) <- 0
-  sumQ2 <- sum(Q^2)
+  sum_q2 <- sum(q^2)
   sumr2 <- sum(data^2)
-  MSA <- sumr2/(sumr2 + sumQ2)
-  MSAi <- colSums(data^2)/(colSums(data^2) + colSums(Q^2))
-  results <- list(MSA = MSA, MSAi = MSAi)
+  msa <- sumr2 / (sumr2 + sum_q2)
+  msai <- colSums(data^2) / (colSums(data^2) + colSums(q^2))
+  results <- list(MSA = msa, MSAi = msai)
   results
 }
 
@@ -116,7 +118,7 @@ polychoric_matrix <- function(data) {
 
 #' @importFrom psych fa.parallel
 pa <- function(data) {
-  # Parallel analysis will give us a reccommended number of factors to use for
+  # Parallel analysis will give us a recommended number of factors to use for
   # EFA, as well as the necessary values for a scree plot that users can look
   # at further
 
@@ -126,34 +128,34 @@ pa <- function(data) {
     capture.output(
       pa <- suppressWarnings(
         psych::fa.parallel(data, fm = "minres", fa = "fa")
-        )
+      )
     )
   )
   dev.off()
 
-  list(rec_n_fact = pa$nfact,
-       fa_real = pa$fa.values,
-       fa_sim = pa$fa.sim,
-       fa_resamp = pa$fa.simr)
-
+  list(
+    rec_n_fact = pa$nfact,
+    fa_real = pa$fa.values,
+    fa_sim = pa$fa.sim,
+    fa_resamp = pa$fa.simr
+  )
 }
 
 
 #' @importFrom psych fa
 run_efa <- function(data, n_fact, user_n_fact) {
-
   efa <- suppressWarnings(
-    psych::fa(data, nfactors = n_fact, rotate = "oblimin", fm= "minres")
+    psych::fa(data, nfactors = n_fact, rotate = "oblimin", fm = "minres")
   )
 
   # Factor loadings
-  loadings <- efa$loadings[,]
+  loadings <- efa$loadings[, ]
 
   # Variance explained
   if (n_fact == 1) {
-    var_exp <- efa$Vaccounted[2,]
+    var_exp <- efa$Vaccounted[2, ]
   } else {
-    var_exp <- efa$Vaccounted[2:3,]
+    var_exp <- efa$Vaccounted[2:3, ]
   }
 
 
@@ -161,11 +163,10 @@ run_efa <- function(data, n_fact, user_n_fact) {
   fc_matrix <- efa$Phi
 
 
-  # Summary function reccommends to get rid of variables with a
-  # communality < 0.2
+  # Summary function recommends to get rid of variables with communality < 0.2
 
   # We want variables with a high communality that contribute strongly to the
-  # common factors
+  # common factors.
   communality <- efa$communality
 
   # Check for Ultra Heywood case (communality above 1)
@@ -174,37 +175,47 @@ run_efa <- function(data, n_fact, user_n_fact) {
   heywood <- communality >= 1
 
   if (any(ultra_heywood)) {
-    warning(paste("Communality values above 1 indicate an Ultra-Heywood case,",
-              "which means that the EFA generated mathematically invalid",
-              "results\n\nSome causes may be:\n",
-              "- Too many factors\n",
-              "- Low sample size\n",
-              "- Very high multicollinearity"),
-            call. = FALSE)
+    warning(
+      paste(
+        "Communality values above 1 indicate an Ultra-Heywood case,",
+        "which means that the EFA generated mathematically invalid",
+        "results\n\nSome causes may be:\n",
+        "- Too many factors\n",
+        "- Low sample size\n",
+        "- Very high multicollinearity"
+      ),
+      call. = FALSE
+    )
   } else if (any(heywood)) {
-    warning(paste("Communality values above 1 indicate a Heywood case,",
-                  "which means that the EFA generated mathematically invalid",
-                  "results\n\nSome causes may be:\n",
-                  "- Too many factors\n",
-                  "- Low sample size\n",
-                  "- Very high multicollinearity"),
-            call. = FALSE)
+    warning(
+      paste(
+        "Communality values above 1 indicate a Heywood case,",
+        "which means that the EFA generated mathematically invalid",
+        "results\n\nSome causes may be:\n",
+        "- Too many factors\n",
+        "- Low sample size\n",
+        "- Very high multicollinearity"
+      ),
+      call. = FALSE
+    )
   }
 
   # Measures of fit
-  RMSEA <- efa$RMSEA[1]
-  TLI <- efa$TLI
-  CFI <- efa$CFI
+  rmsea <- efa$RMSEA[1]
+  attributes(rmsea) <- NULL
+  tli <- efa$TLI
+  cfi <- efa$CFI
 
 
-  list(loadings = loadings,
-       var_exp = var_exp,
-       communality  = communality,
-       n_fact = n_fact,
-       user_n_fact = user_n_fact,
-       fc_matrix = fc_matrix,
-       RMSEA = RMSEA,
-       TLI = TLI,
-       CFI = CFI)
+  list(
+    loadings = loadings,
+    var_exp = var_exp,
+    communality = communality,
+    n_fact = n_fact,
+    user_n_fact = user_n_fact,
+    fc_matrix = fc_matrix,
+    RMSEA = rmsea,
+    TLI = tli,
+    CFI = cfi
+  )
 }
-
