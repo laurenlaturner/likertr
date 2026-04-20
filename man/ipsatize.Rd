@@ -12,7 +12,7 @@ ipsatize(data, ipsatize_decision)
 \item{ipsatize_decision}{a determination by the user if this data is wanted}
 }
 \description{
-Subtracts the respondent's average score from each of their individual
-responses to control for individual response styles (e.g., general tendency to
-agree or disagree).
+Subtracts the respondent's average score from
+each of their individual responses to control for individual
+response styles (e.g., general tendency to agree or disagree).
 }

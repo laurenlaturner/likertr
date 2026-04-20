@@ -12,5 +12,6 @@ split_question(data)
 \description{
 Takes the cleaned data frame and splits it into a list of
 percentage distributions, one for each question, suitable
-for Likert visualization. Calls the helper function \code{\link[=converting_to_percentage]{converting_to_percentage()}}.
+for Likert visualization. Calls the helper function
+\code{\link[=converting_to_percentage]{converting_to_percentage()}}.
 }

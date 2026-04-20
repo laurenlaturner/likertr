@@ -19,8 +19,11 @@ input values in each question}
 \description{
 Filters out "low-effort" respondents, including:
 \itemize{
-\item \strong{Fence-sitters}: Respondents who only chose the neutral midpoint.
-\item \strong{Straight-liners}: Respondents who only chose the scale minimum or maximum.
-\item \strong{Identical responses}: Respondents who gave the same value for every question.
+\item \strong{Fence-sitters}: Respondents who only chose the
+neutral midpoint.
+\item \strong{Straight-liners}: Respondents who only chose
+the scale minimum or maximum.
+\item \strong{Identical responses}: Respondents who gave the
+same value for every question.
 }
 }

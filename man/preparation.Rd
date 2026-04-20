@@ -22,18 +22,23 @@ fewer than 20 responses are dropped.}
 \value{
 A list containing:
 \itemize{
-\item \strong{cleanest_data}: The final numeric data frame after all filters.
+\item \strong{cleanest_data}: The final numeric data frame after all
+filters.
 \item \strong{questions}: Original column names (question text).
-\item \strong{num_questions}: Total count of Likert questions identified.
+\item \strong{num_questions}: Total count of Likert questions
+identified.
 \item \strong{num_people}: Vector of response counts per question.
-\item \strong{ipsatize}: The ipsatized data frame (or NULL if not requested).
-\item \strong{perc_by_question}: List of percentage distributions for plotting.
-\item \strong{col_maxs}: List of largest answered value from each question.
+\item \strong{ipsatize}: The ipsatized data frame (or NULL if not
+requested).
+\item \strong{perc_by_question}: List of percentage distributions
+for plotting.
+\item \strong{col_maxs}: List of largest answered value from each
+question.
 }
 }
 \description{
-This is the primary entry point for processing raw survey data. It performs
-a sequence of cleaning steps including type conversion, handle-missing-data
-strategies, bias removal (fence-sitting/straight-lining), ipsatization,
-and sample size validation.
+This is the primary entry point for processing raw survey
+data. It performs a sequence of cleaning steps including type conversion,
+handle-missing-data strategies, bias removal (fence-sitting/
+straight-lining), ipsatization, and sample size validation.
 }
