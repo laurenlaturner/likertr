@@ -2,3 +2,7 @@
 data-raw
 .Rhistory
 inst/doc
+.RData
+.httr-oauth
+.DS_Store
+.quarto

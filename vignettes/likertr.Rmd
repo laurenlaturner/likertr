@@ -18,3 +18,48 @@ knitr::opts_chunk$set(
 library(likertr)
 
 ```
+likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
+
+1. Summary Command
+likertr comes with example data on student stress levels. Lets look at the data:
+```{r, include = TRUE}
+library(likertr)
+head(data)
+
+```
+
+Lots to summarize! The only required argument of the summary function is just the dataset. 
+
+```{r, include = TRUE}
+#summary(data)
+```
+
+Likertr also has custom plots that come with summary. 
+
+```{r, include = TRUE}
+#layout(matrix(1:6,nrow = 3, ncol =2, byrow = TRUE))
+#plot(likertr)
+```
+
+
+If you want more control over the analysis that is happening in likertr, other arguments can be specified.
+
+Likertr is designed to handle 'NA' values effectively. Default handling will drop observations when NA values interfere with analysis. The argument na_drop option "neutral" can also be specified, replacing NA values with the midpoint.
+
+ipsatize_decision allows you to center all responses around the respondent's mean response.
+
+small_n_drop lets you drop questions with less than 20 respondent's.
+
+groups allows you to specify question groups that you want to compare to each other, both for calculating Cronbach's alpha and calculating Cliff's Delta Value for correlation between responses.
+```{r, include = TRUE}
+# Compare whether students depression responses are correlated to anxiety responses.
+
+```
+
+If you have a categorical variable you want to split your data on (or perhaps a likert scale question that has large number of responses), inference can be done on whether those groups are significantly different from each other.
+
+
+
+
+
+
