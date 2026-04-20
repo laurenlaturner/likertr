@@ -7,49 +7,43 @@
 
 <!-- badges: end -->
 
-Likertr provides a comprehensive workflow for a full-scale analysis of
-Likert-scale data. It provides:
+# Likertr Workflow Analysis
 
-1.  Data Preparation and Cleaning
+`likertr` provides a comprehensive workflow for a full-scale analysis of
+Likert-scale data. The package facilitates the following processes:
 
-<!-- -->
+## 1. Data Preparation and Cleaning
 
-1)  Dealing with “neutral” or “do not know” or “do not wish to answer”.
-2)  Center weighting or setting to NA.
+- **Handling specific responses:** Dealing with “neutral,” “do not
+  know,” or “do not wish to answer.”
+- **Recoding:** Center weighting or setting values to `NA`.
 
-<!-- -->
+## 2. Reliability Measures and Structure Information
 
-2.  Reliability Measures and Structure Information
+- **Consistency Metrics:** Cronbach’s alpha and McDonald’s omega.
+- **Exploratory Factor Analysis (EFA):**
+  - **Kaiser-Meyer-Olkin (KMO):** A test to see if the items share
+    enough variance.
+  - **Bartlett’s Test of Sphericity:** A test to confirm the correlation
+    matrix isn’t just random noise.
+  - **Polychoric Correlation Matrix:** Treats Likert categories as
+    ordinal rather than continuous.
+- **Relative Importance Index (RII):** A method to rank the importance
+  of survey questions against each other.
 
-<!-- -->
+## 3. Visualization
 
-1)  Cronbach’s alpha and McDonald’s omega.
-2)  Exploratory Factor Analysis. i. Kaiser-Meyer-Olkin (KMO): A test to
-    see if the items share enough variance ii. Bartlett’s Test of
-    Sphericity: A test to confirm the correlation matrix isn’t just
-    random noise iii. Polychoric Correlation Matrix: This treats the
-    Likert categories as ordinal rather than continuous.
-3)  Relative Importance Index (RII) - a way to rank the importance of
-    survey questions against each other.
+- **Diverging stacked bar charts:** The standard for Likert scale
+  visualization.
+- **Heat maps:** Specifically for correlation matrices.
+- **Comparison plots:** Useful for group-to-group analysis.
 
-<!-- -->
+## 4. Inference and Reporting
 
-3.  Visualization
-
-<!-- -->
-
-1)  Diverging stacked bar charts.
-2)  Heat maps for correlations.
-3)  Comparison plots (group to group).
-
-<!-- -->
-
-4.  Inference and Reporting
-
-<!-- -->
-
-1)  Nonparametric testing with Mann-Whitney U or Kruskal-Wallis.
-2)  Effect size calculation (Cliff’s Delta or r).
+- **Nonparametric testing:** Utilizing Mann-Whitney U or Kruskal-Wallis
+  tests.
+- **Effect size calculation:** Providing Cliff’s Delta or $r$ for robust
+  interpretation.
 
 ## Installation
 
@@ -79,13 +73,11 @@ summary(analysis)
 #> ================================================
 #> LIKERTR OBJECT SUMMARY REPORT
 #> ================================================
+#> 
 #> This dataset contains 23 questions with 842 total observations.
-#> ================================================
-#> Exploratory Factor Analysis (EFA)
-#> ================================================
 #> 
 #> ================================================
-#> Pre-EFA Diagnostics
+#> Pre-EFA (Exploratory Factor Analysis) Diagnostics
 #> ================================================
 #> 
 #> Bartlett's sphericity test does not show problematic results 

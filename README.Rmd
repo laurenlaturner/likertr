@@ -18,28 +18,30 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Likertr provides a comprehensive workflow for a full-scale analysis of Likert-scale data. It provides:
+# Likertr Workflow Analysis
 
-1. Data Preparation and Cleaning
-  (a) Dealing with "neutral" or "do not know" or "do not wish to answer".
-  (b) Center weighting or setting to NA.
+`likertr` provides a comprehensive workflow for a full-scale analysis of Likert-scale data. The package facilitates the following processes:
 
-2. Reliability Measures and Structure Information
-  (a) Cronbach’s alpha and McDonald’s omega.
-  (b) Exploratory Factor Analysis.
-    i. Kaiser-Meyer-Olkin (KMO): A test to see if the items share enough variance
-    ii. Bartlett’s Test of Sphericity: A test to confirm the correlation matrix isn’t just random noise
-    iii. Polychoric Correlation Matrix: This treats the Likert categories as ordinal rather than continuous.
-  (c) Relative Importance Index (RII) - a way to rank the importance of survey questions against each other.
+## 1. Data Preparation and Cleaning
+* **Handling specific responses:** Dealing with "neutral," "do not know," or "do not wish to answer."
+* **Recoding:** Center weighting or setting values to `NA`.
 
-3. Visualization
-  (a) Diverging stacked bar charts.
-  (b) Heat maps for correlations.
-  (c) Comparison plots (group to group).
-  
-4. Inference and Reporting
-  (a) Nonparametric testing with Mann-Whitney U or Kruskal-Wallis.
-  (b) Effect size calculation (Cliff’s Delta or r).
+## 2. Reliability Measures and Structure Information
+* **Consistency Metrics:** Cronbach’s alpha and McDonald’s omega.
+* **Exploratory Factor Analysis (EFA):**
+    * **Kaiser-Meyer-Olkin (KMO):** A test to see if the items share enough variance.
+    * **Bartlett’s Test of Sphericity:** A test to confirm the correlation matrix isn’t just random noise.
+    * **Polychoric Correlation Matrix:** Treats Likert categories as ordinal rather than continuous.
+* **Relative Importance Index (RII):** A method to rank the importance of survey questions against each other.
+
+## 3. Visualization
+* **Diverging stacked bar charts:** The standard for Likert scale visualization.
+* **Heat maps:** Specifically for correlation matrices.
+* **Comparison plots:** Useful for group-to-group analysis.
+
+## 4. Inference and Reporting
+* **Nonparametric testing:** Utilizing Mann-Whitney U or Kruskal-Wallis tests.
+* **Effect size calculation:** Providing Cliff’s Delta or $r$ for robust interpretation.
 
 ## Installation
 
