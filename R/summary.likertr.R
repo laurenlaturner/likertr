@@ -1,5 +1,15 @@
 # For generic usage of summary() with "likertr" class
 
+#' Summarize the results of a likertr object
+#'
+#' `summary.likertr()` is a generic summary function for objects of the
+#'     likertr class. The function generates a summary report with EFA
+#'     diagnostics and results, reliability measures, and inferential
+#'     statistics.
+#'
+#' @param x A likertr object for which to generate a summary report
+#'
+#' @export
 summary.likertr <- function(x, ...) {
   data <- attr(x, "data")
   n_q <- data[[3]]
