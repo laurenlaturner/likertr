@@ -10,11 +10,12 @@ diverging_bar(perc_by_question, questions)
 \item{perc_by_question}{A list of numeric vectors containing percentage
 distributions for each question.}
 
-\item{questions}{A character vector of labels/questions to display on the y-axis.}
+\item{questions}{A character vector of labels/questions to display on the
+y-axis.}
 }
 \description{
-Generates a centered Likert scale visualization. Unlike a standard stacked
-bar, this function uses calculated offsets to align the neutral midpoint of
-each question at zero. This makes it easier to compare the "lean" of
-responses toward the positive or negative ends of the scale.
+Generates a centered Likert scale visualization. Unlike a
+standard stacked bar, this function uses calculated offsets to align the
+neutral midpoint of each question at zero. This makes it easier to compare
+the "lean" of responses toward the positive or negative ends of the scale.
 }

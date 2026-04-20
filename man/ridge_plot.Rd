@@ -7,13 +7,15 @@
 ridge_plot(clean_data, questions)
 }
 \arguments{
-\item{clean_data}{A data frame or list containing the raw numeric response values.}
+\item{clean_data}{A data frame or list containing the raw numeric response
+values.}
 
-\item{questions}{A character vector of labels/questions to display on the y-axis.}
+\item{questions}{A character vector of labels/questions to display on the
+y-axis.}
 }
 \description{
-Visualizes the distribution of Likert responses using overlapping density
-plots. This is particularly useful for seeing the "shape" of
-the data and identifying whether responses are unimodal, bimodal, or
-skewed across different questions.
+Visualizes the distribution of Likert responses using
+overlapping density plots. This is particularly useful for seeing the
+"shape" of the data and identifying whether responses are unimodal,
+bimodal, or skewed across different questions.
 }

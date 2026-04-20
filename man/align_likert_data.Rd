@@ -7,22 +7,27 @@
 align_likert_data(perc_by_question)
 }
 \arguments{
-\item{perc_by_question}{A list of numeric vectors, where each vector represents
-the percentage distribution of responses for a single question.}
+\item{perc_by_question}{A list of numeric vectors, where each vector
+represents the percentage distribution of responses for a single question.}
 }
 \value{
 A list containing:
 \itemize{
-\item \strong{matrix}: A numeric matrix where each column is a padded question vector.
-\item \strong{offsets}: A numeric vector of calculated offsets used to shift the bars.
-\item \strong{max_w}: The maximum number of response categories found across all questions.
-\item \strong{mid_idx}: The index identified as the midpoint/neutral category.
+\item \strong{matrix}: A numeric matrix where each column is a padded
+question vector.
+\item \strong{offsets}: A numeric vector of calculated offsets used to
+shift the bars.
+\item \strong{max_w}: The maximum number of response categories found
+across all questions.
+\item \strong{mid_idx}: The index identified as the midpoint/neutral
+category.
 }
 }
 \description{
-Processes a list of Likert scale percentages to ensure they are centered and
-aligned for visualization. The function pads varying response lengths to a
-uniform width and calculates the necessary horizontal offset for diverging
-stacked bar charts. This ensures that the "neutral" category (or the center
-of the scale) is positioned at a consistent zero-point across different questions.
+Processes a list of Likert scale percentages to ensure they are
+centered and aligned for visualization. The function pads varying response
+lengths to a uniform width and calculates the necessary horizontal offset
+for diverging stacked bar charts. This ensures that the "neutral" category
+(or the center of the scale) is positioned at a consistent zero-point
+across different questions.
 }

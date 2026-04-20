@@ -10,9 +10,10 @@ efa_heat_map(pc)
 \item{pc}{A square matrix of polychoric correlations.}
 }
 \description{
-Generates a color-coded visual representation of a polychoric correlation matrix
-using base R graphics. The function maps correlation values to a red-white-blue
-color palette, where red indicates negative correlations, white indicates zero,
-and blue indicates positive correlations. It also overlays the numerical
-correlation coefficients on the plot.
+Generates a color-coded visual representation of a polychoric
+correlation matrix using base R graphics. The function maps correlation
+values to a red-white-blue color palette, where red indicates negative
+correlations, white indicates zero, and blue indicates positive
+correlations. It also overlays the numerical correlation coefficients on
+the plot.
 }

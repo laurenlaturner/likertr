@@ -10,7 +10,8 @@ stacked_bar(perc_by_question, questions)
 \item{perc_by_question}{A list of numeric vectors containing percentage
 distributions for each question.}
 
-\item{questions}{A character vector of labels/questions to display on the y-axis.}
+\item{questions}{A character vector of labels/questions to display on the
+y-axis.}
 }
 \description{
 Generates a horizontal stacked bar chart where each bar represents a question
