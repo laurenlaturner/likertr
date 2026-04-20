@@ -23,11 +23,6 @@ summary.likertr <- function(x, ...) {
   user_n_fact <- x$efa_results$user_n_fact
   n_fact <- x$efa_results$n_fact
 
-  # kmo_validity <- MSAi |>
-  #   unname() |>
-  #   lapply(function(x) x > 0.6) |>
-  #   unlist()
-
   invalid_kmo <- MSAi < 0.6
 
   if (sph_p_val > 0.05) {
@@ -44,9 +39,7 @@ summary.likertr <- function(x, ...) {
 
 
   if (any(invalid_kmo)) {
-    # invalid_kmo <- list(attributes(MSAi)$names['FALSE'])
     invalid_kmo <- MSAi[!kmo_validity]
-    # row.names(invalid_kmo) <- c("Feature", "MSAi")
     cat(paste("At least one MSAi value from the KMO test is less than 0.6 and",
               "possibly problematic, the following feature or features share",
               "little variance with the rest of the data:\n")
@@ -132,14 +125,9 @@ summary.likertr <- function(x, ...) {
               "the common factors"))
   }
 
-  # Maybe add something saying the communality values are fine, but you cna look
-  # at them more carefully?
-
   # We want variables with a high communality that contribute strongly to the
   # common factors
 
-  # Do we want to add other stuff from the EFA output?
-  # Factor correlations
 
   cat("Factor Correlation Matrix:\n")
   print(fc_matrix)
@@ -180,7 +168,7 @@ summary.likertr <- function(x, ...) {
 
 
   cat(paste("Keep in mind that the interpretation of many of these statistics",
-            "will depend on the context of your problem\n\n"))
+            "will depend on the context of your analysis\n\n"))
 
   cat("================================================\n")
   cat("Cronbach's Alpha\n")

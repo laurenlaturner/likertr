@@ -26,6 +26,13 @@
 
 ########################### Main function ######################################
 
+#' Carry out exploratory factor analysis
+#'
+#' @description `efa()` carries out exploratory factor analysis on a dataset,
+#'     returning pre-EFA diagnostics as well as various EFA results
+#'
+#'
+#'
 efa <- function(data, n) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
@@ -68,15 +75,14 @@ efa <- function(data, n) {
 
 
 sphericity <- function(data) {
-  # What form will the data be in?
-  # Probably a dataframe
+  # If this test results in a non-significant value, it indicates that the
+  # variables are not correlated enough for an EFA
 
   n <- nrow(data)
   data <- cor(data, use = "pairwise")
   p <- dim(data)[2]
 
 
-  # if(diag) ?
   diag(data) <- 1   #this will make tests of factor residuals correct
   det <- det(data)
   statistic  <- -log(det) *(n -1 - (2*p + 5)/6)
@@ -90,41 +96,43 @@ sphericity <- function(data) {
 
 kmo <- function(data) {
   # Checks sampling adequacy
-  # Summary gives a warning if it is below 0.6 (default acceptable minimum value)
+  # Summary gives a warning if any variable's value is below 0.6
+  # (default acceptable minimum value)
 
   data <- cor(data,use="pairwise")
   Q <- try(solve(data))
-  if(inherits(Q,  as.character("try-error")))  {message("matrix is not invertible, image not found")
+  if(inherits(Q,  as.character("try-error")))  {message(paste("matrix is not",
+    "invertible, image not found"))
     Q <- data}
-  #from the original paper
+
   S2  <- diag(1/diag(Q))
   S <- sqrt(S2)
-  IC <- S %*% Q %*% S   #from the kaiser paper
+  IC <- S %*% Q %*% S
 
-  Q <- Image <-  cov2cor(Q) #ANOTHER WAY OF FINDING Q
+  Q <- Image <-  cov2cor(Q)
   diag(Q) <- 0
   diag(data) <- 0
   sumQ2 <- sum(Q^2)
   sumr2 <- sum(data^2)
   MSA <- sumr2/(sumr2 + sumQ2)
   MSAi <- colSums(data^2)/(colSums(data^2) + colSums(Q^2))
-  results <- list(MSA = MSA, MSAi = MSAi) # , Image=Image,ImCov = IC,Call=cl)
+  results <- list(MSA = MSA, MSAi = MSAi)
   results
 }
 
 
-# instead of correlations of responses, correlations of the underlying continuous
-# variables (true anxiety, true stress. etc.)
-
+#' @importFrom psych polychoric
 polychoric_matrix <- function(data) {
+  # Instead of correlations of exact responses, this function returns
+  # correlations of the underlying continuous variables (true anxiety, true
+  # stress. etc.)
   matrix <- psych::polychoric(data)
 
-  # list(polychoric_matrix = matrix$rho)
   matrix$rho
 }
 
 
-
+#' @importFrom psych fa.parallel
 pa <- function(data) {
   # Supress plot, output, and warnings
   pdf(file = tempfile())
@@ -142,28 +150,20 @@ pa <- function(data) {
        fa_sim = pa$fa.sim,
        fa_resamp = pa$fa.simr)
 
-  # Don't show warnings, but give them a way to look at them??
-  # Actually, pa warnings don't really matter a ton
-  # A suppress warning option on the overall likertr function is also a good idea
 }
 
 
+#' @importFrom psych fa
 run_efa <- function(data, n_fact, user_n_fact) {
-  # Do we want to suppress warnings on this??
-
 
   efa <- suppressWarnings(
     psych::fa(data, nfactors = n_fact, rotate = "oblimin", fm= "minres")
   )
 
-  # Maybe give a cutoff option for the loadings?
-  # What is a good default?
-
+  # Factor loadings
   loadings <- efa$loadings[,]
-  # When we print these, we'll only show above a certain level
-  # Should we only use above a certain level?
-  # For McDonald's Omega as well?
 
+  # Variance explained
   if (n_fact == 1) {
     var_exp <- efa$Vaccounted[2,]
   } else {
@@ -171,11 +171,12 @@ run_efa <- function(data, n_fact, user_n_fact) {
   }
 
 
+  # Factor correlation matrix
   fc_matrix <- efa$Phi
 
 
-  # Recommend to get rid of variables with a communality < 0.2
-  # in future runs of the likertr workflow
+  # Summary function reccommends to get rid of variables with a
+  # communality < 0.2
 
   # We want variables with a high communality that contribute strongly to the
   # common factors
