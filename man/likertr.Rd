@@ -42,8 +42,11 @@ group. The vector must be the same length as the number of items
 a group and questions 2-4 are in a group. Groups should be numbered
 1, 2, 3, ... , n.}
 
-\item{factor_inference}{column index referencing a factor variable to split
-data on for inference.}
+\item{factor_inference}{integer corresponding to a column index
+referencing a factor variable to split data on for inference.}
+
+\item{inference_vars}{vector of integers corresponding to column
+indicies to use for inferential analysis}
 }
 \description{
 Likertr Wrapper Function
