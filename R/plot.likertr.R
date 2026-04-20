@@ -117,7 +117,7 @@ stacked_bar <- function(perc_by_question, questions) {
     legend = 1:prep$max_w,
     fill = cols,
     horiz = FALSE,
-    inset = c(-0.25, 0), 
+    inset = c(-0.25, 0),
     bty = "n",
     title = "Response Scale",
     cex = 0.8,
