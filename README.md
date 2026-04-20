@@ -76,9 +76,12 @@ library(likertr)
 
 load("data/data.rda")
 
+# Create 'likertr' object
 analysis <- likertr(data)
 #> Loading required namespace: GPArotation
 #> No item grouping specified. Cronbach's Alpha calculated assuming all items in same group.
+
+# View summary
 summary(analysis)
 #> ================================================
 #> LIKERTR OBJECT SUMMARY REPORT
@@ -239,6 +242,8 @@ summary(analysis)
 #> 
 #> Omega Hierarchical:      0.2908097 
 #> Omega Total:             0.7606632
+
+# View Plots
 plot(analysis)
 ```
 
