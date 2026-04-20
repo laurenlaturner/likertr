@@ -1,0 +1,68 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# likertr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Likertr provides a comprehensive workflow for a full-scale analysis of Likert-scale data. It provides:
+
+1. Data Preparation and Cleaning
+  (a) Dealing with "neutral" or "do not know" or "do not wish to answer".
+  (b) Center weighting or setting to NA.
+
+2. Reliability Measures and Structure Information
+  (a) Cronbach’s alpha and McDonald’s omega.
+  (b) Exploratory Factor Analysis.
+    i. Kaiser-Meyer-Olkin (KMO): A test to see if the items share enough variance
+    ii. Bartlett’s Test of Sphericity: A test to confirm the correlation matrix isn’t just random noise
+    iii. Polychoric Correlation Matrix: This treats the Likert categories as ordinal rather than continuous.
+  (c) Relative Importance Index (RII) - a way to rank the importance of survey questions against each other.
+
+3. Visualization
+  (a) Diverging stacked bar charts.
+  (b) Heat maps for correlations.
+  (c) Comparison plots (group to group).
+  
+4. Inference and Reporting
+  (a) Nonparametric testing with Mann-Whitney U or Kruskal-Wallis.
+  (b) Effect size calculation (Cliff’s Delta or r).
+
+## Installation
+
+You can install the development version of likertr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("laurenlaturner/likertr")
+```
+
+## Example Workflow
+
+Three main functions in Likertr provide all required functionality. The function "likertr()" is used to create a likertr object that can then be passed to summary() and plot() generics.
+
+```{r example}
+library(likertr)
+
+load("data/data.rda")
+
+analysis <- likertr(data)
+summary(analysis)
+plot(analysis)
+
+```
+
+
