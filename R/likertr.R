@@ -65,6 +65,9 @@ likertr <- function(
   inference <- inference(clean_data, factor_inference, inference_vars,
                          inference_vars2)
 
+  test <- inference$test
+  effect_size <- inference$effect_size
+
   new_likertr(
     data = clean_data_list,
     alpha = alpha,
@@ -72,7 +75,7 @@ likertr <- function(
     rii = rii,
     pre_efa_diagnostics = pre_efa_diagnostics,
     efa_results = efa_results,
-    nonparam = nonparam,
+    test = test, 
     effect_size = effect_size
   )
 }

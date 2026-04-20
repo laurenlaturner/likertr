@@ -55,5 +55,3 @@ test_kruskal <- function(data, factor_var, inference_variables) {
 
   kruskal.test(likert ~ fact, data = kruskal_data)
 }
-
-inference(data, factor_var = 1, inference_variables = 3:25)
