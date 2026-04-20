@@ -60,10 +60,10 @@ workflow. Three main functions provide all required functionality to
 move from raw data to insights:
 
 - **`likertr()`**: The primary constructor function. It is used to
-  create a **likertr object** from your raw survey data. This object
-  contains information about the data, item reliability, underlying
-  structures, and inference. It can then be passed to **`summary()`**
-  and **`plot()`**.
+  create a **likertr object** from raw survey data. This object contains
+  information about the data, item reliability, underlying structures,
+  and inference. It can then be passed to **`summary()`** and
+  **`plot()`**.
 - **`summary()`**: A generic function that prints formatted information
   for all metrics.
 - **`plot()`**: A generic function that generates visualizations
