@@ -19,28 +19,27 @@
 #'   (columns) in the dataframe. Ex. c(1, 1, 2, 2) i.e questions 1-2 are in
 #'   a group and questions 2-4 are in a group. Groups should be numbered
 #'   1, 2, 3, ... , n.
-#' @param factor_inference integer corresponding to a column index 
+#' @param factor_inference integer corresponding to a column index
 #'   referencing a factor variable to split data on for inference.
-#' @param inference_vars vector of integers corresponding to column 
+#' @param inference_vars vector of integers corresponding to column
 #'   indicies to use for inferential analysis
 #' @example
 #'
 #' @export
 
 likertr <- function(
-    data,
-    na_drop = FALSE,
-    n_fact,
-    ipsatize_decision = FALSE,
-    small_n_drop = FALSE,
-    groups = numeric(0),
-    factor_inference = NA,
-    inference_vars = NA,
-    inference_vars2 = NA,
-    flip = FALSE,
-    plot = FALSE
+  data,
+  na_drop = FALSE,
+  n_fact,
+  ipsatize_decision = FALSE,
+  small_n_drop = FALSE,
+  groups = numeric(0),
+  factor_inference = NA,
+  inference_vars = NA,
+  inference_vars2 = NA,
+  flip = FALSE,
+  plot = FALSE
 ) {
-
   # Preparation and Cleaning
   clean_data_list <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
   clean_data <- clean_data_list[[1]]
@@ -53,8 +52,8 @@ likertr <- function(
     efa <- efa(clean_data, n_fact)
   }
 
-  pre_efa_diagnostics = efa$pre_efa_diagnostics
-  efa_results = efa$efa_results
+  pre_efa_diagnostics <- efa$pre_efa_diagnostics
+  efa_results <- efa$efa_results
 
 
   # Reliability and Structure
@@ -63,8 +62,10 @@ likertr <- function(
   rii <- rii(clean_data, max_val)
 
   # Inference and Reporting
-  inference <- inference(clean_data, factor_inference, inference_vars,
-                         inference_vars2)
+  inference <- inference(
+    clean_data, factor_inference, inference_vars,
+    inference_vars2
+  )
 
   test <- inference$test
   effect_size <- inference$effect_size
@@ -76,7 +77,7 @@ likertr <- function(
     rii = rii,
     pre_efa_diagnostics = pre_efa_diagnostics,
     efa_results = efa_results,
-    test = test, 
+    test = test,
     effect_size = effect_size
   )
 }
