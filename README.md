@@ -7,16 +7,18 @@
 
 <!-- badges: end -->
 
+## Overview
+
 `likertr` provides a comprehensive workflow for a full-scale analysis of
 Likert-scale data. The package facilitates the following processes:
 
-## 1. Data Preparation and Cleaning
+### 1. Data Preparation and Cleaning
 
 - **Handling specific responses:** Dealing with “neutral,” “do not
   know,” or “do not wish to answer.”
 - **Recoding:** Center weighting or setting values to `NA`.
 
-## 2. Reliability Measures and Structure Information
+### 2. Reliability Measures and Structure Information
 
 - **Consistency Metrics:** Cronbach’s alpha and McDonald’s omega.
 - **Exploratory Factor Analysis (EFA):**
@@ -29,14 +31,14 @@ Likert-scale data. The package facilitates the following processes:
 - **Relative Importance Index (RII):** A method to rank the importance
   of survey questions against each other.
 
-## 3. Visualization
+### 3. Visualization
 
 - **Diverging stacked bar charts:** The standard for Likert scale
   visualization.
 - **Heat maps:** Specifically for correlation matrices.
 - **Comparison plots:** Useful for group-to-group analysis.
 
-## 4. Inference and Reporting
+### 4. Inference and Reporting
 
 - **Nonparametric testing:** Utilizing Mann-Whitney U or Kruskal-Wallis
   tests.
@@ -51,11 +53,21 @@ You can install the development version of likertr from
 pak::pak("laurenlaturner/likertr")
 ```
 
-## Example Workflow
+## Core Functionality
 
-Three main functions in Likertr provide all required functionality. The
-function “likertr()” is used to create a likertr object that can then be
-passed to summary() and plot() generics.
+The `likertr` package is designed around a streamlined object-oriented
+workflow. Three main functions provide all required functionality to
+move from raw data to insights:
+
+- **`likertr()`**: The primary constructor function. It is used to
+  create a **likertr object** from your raw survey data.
+- **`summary()`**: A generic function that, when passed a likertr
+  object, generates descriptive statistics and reliability metrics.
+- **`plot()`**: A generic function that identifies the likertr object to
+  produce high-quality diverging stacked bar charts and comparison
+  visualizations.
+
+## Example Workflow
 
 ``` r
 library(likertr)
