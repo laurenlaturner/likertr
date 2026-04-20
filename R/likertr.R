@@ -4,10 +4,6 @@
 #'
 #' @param data a dataframe where each column is a likert survey question (item)
 #'     and each row is a response.
-#' @param max_val a numeric vector with length equal to the number of items in
-#'   the dataframe. Specifies the point scale of each question by providing
-#'   the max value answerable (eg. if a question is on a five point scale
-#'   the value provided in max_val should be five).
 #' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
 #'   missing values are replaced with the scale midpoint.
 #' @param n_fact Integer. Optional argument for the number of factors to be used
@@ -25,11 +21,6 @@
 #'   1, 2, 3, ... , n.
 #' @param factor_inference column index referencing a factor variable to split
 #'   data on for inference.
-#' @param inference_vars A vector of column indices to perform inference on
-#' @param inference_vars2 A vector of column indices to compare
-#'   to inference_vars.
-#' @param std
-#' @param empirical
 #'
 #' @example
 #'
@@ -47,7 +38,7 @@ likertr <- function(
     inference_vars2 = NA,
     flip = FALSE,
     plot = FALSE
-  ) {
+) {
 
   # Preparation and Cleaning
   clean_data_list <- preparation(data, na_drop, ipsatize_decision, small_n_drop)
