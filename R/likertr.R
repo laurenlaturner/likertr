@@ -19,9 +19,9 @@
 #'   (columns) in the dataframe. Ex. c(1, 1, 2, 2) i.e questions 1-2 are in
 #'   a group and questions 2-4 are in a group. Groups should be numbered
 #'   1, 2, 3, ... , n.
-#' @param factor_inference column index referencing a factor variable to split
+#' @param factor_inference integer corresponding to a column index referencing a factor variable to split
 #'   data on for inference.
-#'
+#' @ param inference_vars vector of integers corresponding to column indicies to use for inferential analysis
 #' @example
 #'
 #' @export
