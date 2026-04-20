@@ -25,7 +25,6 @@
 #'   \item \strong{col_maxs}: List of largest answered value from each question.
 #' }
 #' 
-#' @export
 preparation <- function(data, na_drop, ipsatize_decision, small_n_drop) {
     data <- general_cleaning(data)
     clean_data <- data[[1]]
