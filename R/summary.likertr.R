@@ -11,7 +11,7 @@
 #'
 #' @export
 summary.likertr <- function(x, ...) {
-  data <- attr(x, "data")
+  data <- x
   n_q <- data[[3]]
   n_obs <- max(data[[4]])
 
@@ -28,10 +28,10 @@ summary.likertr <- function(x, ...) {
   cat("Pre-EFA Diagnostics\n")
   cat("================================================\n\n")
 
-  sph_p_val <- x$pre_efa_diagnostics$sphericity$p_value
-  MSAi <- x$pre_efa_diagnostics$kmo$MSAi
-  user_n_fact <- x$efa_results$user_n_fact
-  n_fact <- x$efa_results$n_fact
+  sph_p_val <- attributes(x)$pre_efa_diagnostics$sphericity$p_value
+  MSAi <- attributes(x)$pre_efa_diagnostics$kmo$MSAi
+  user_n_fact <- attributes(x)$efa_results$user_n_fact
+  n_fact <- attributes(x)$efa_results$n_fact
 
   invalid_kmo <- MSAi < 0.6
 
@@ -73,13 +73,13 @@ summary.likertr <- function(x, ...) {
   cat("EFA Results\n")
   cat("================================================\n\n")
 
-  loadings <- round(x$efa_results$loadings, 4)
-  var_exp <- round(x$efa_results$var_exp, 4)
-  communality <- round(x$efa_results$communality, 4)
-  fc_matrix <- round(x$efa_results$fc_matrix, 4)
-  RMSEA <- round(x$efa_results$RMSEA, 4)
-  TLI <- round(x$efa_results$TLI, 4)
-  CFI <- round(x$efa_results$CFI, 4)
+  loadings <- round(attributes(x)$efa_results$loadings, 4)
+  var_exp <- round(attributes(x)$efa_results$var_exp, 4)
+  communality <- round(attributes(x)$efa_results$communality, 4)
+  fc_matrix <- round(attributes(x)$efa_results$fc_matrix, 4)
+  RMSEA <- round(attributes(x)$efa_results$RMSEA, 4)
+  TLI <- round(attributes(x)$efa_results$TLI, 4)
+  CFI <- round(attributes(x)$efa_results$CFI, 4)
 
 
   if (user_n_fact) {
@@ -185,7 +185,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract alpha information from likertr object
-  alpha <- x$alpha
+  alpha <- attributes(x)$alpha
   groups <- length(alpha)
 
   for (i in seq_len(groups)) {
@@ -228,7 +228,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract RII information from likertr object
-  rii <- x$rii
+  rii <- attributes(x)$rii
 
   # Print
   rows <- nrow(rii)
@@ -244,7 +244,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract Omega information from likertr object
-  omega <- x$omega
+  omega <- attributes(x)$omega
 
   # Print
   cat("Omega Hierarchical:     ", omega$omega_h, "\n")
