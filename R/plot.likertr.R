@@ -20,12 +20,17 @@
 plot.likertr <- function(x, ...) {
   clean_data_list <- x
   pc <- attr(x, "pre_efa_diagnostics")[[4]]
+  pa <- attr(x, "pre_efa_diagnostics")[["pa"]]
+  fa_real <- pa[["fa_real"]]
+  fa_sim <- pa[["fa_sim"]]
+  fa_resamp <- pa[["fa_resamp"]]
 
 
   stacked_bar(clean_data_list[[6]], clean_data_list[[2]])
   diverging_bar(clean_data_list[[6]], clean_data_list[[2]])
   ridge_plot(clean_data_list[[1]], clean_data_list[[2]])
   efa_heat_map(pc)
+  pa_skree_plot(fa_real, fa_sim, fa_resamp)
 }
 
 #' Align the data for graphing
@@ -195,28 +200,28 @@ ridge_plot <- function(clean_data, questions) {
 }
 
 #' Heat Map for the EFA Polychoric Correlation Matrix
-#' 
-#' @description Generates a color-coded visual representation of a polychoric correlation matrix 
-#'   using base R graphics. The function maps correlation values to a red-white-blue 
-#'   color palette, where red indicates negative correlations, white indicates zero, 
-#'   and blue indicates positive correlations. It also overlays the numerical 
+#'
+#' @description Generates a color-coded visual representation of a polychoric correlation matrix
+#'   using base R graphics. The function maps correlation values to a red-white-blue
+#'   color palette, where red indicates negative correlations, white indicates zero,
+#'   and blue indicates positive correlations. It also overlays the numerical
 #'   correlation coefficients on the plot.
-#' 
-#' @param pc A square, symmetric numeric matrix of polychoric correlations. 
+#'
+#' @param pc A square, symmetric numeric matrix of polychoric correlations.
 #'   The matrix must have row and column names for axis labeling.
-#' 
+#'
 #' @param pc A square matrix of polychoric correlations.
 efa_heat_map <- function(pc) {
   col_palette <- colorRampPalette(c("red", "white", "blue"))(100)
 
-  # Transpose and reverse the matrix 
+  # Transpose and reverse the matrix
   # (image() plots columns as rows and starts from the bottom-left)
   plot_data <- t(pc[nrow(pc):1, ])
 
-  image(1:ncol(pc), 1:nrow(pc), plot_data, 
-      col = col_palette, 
+  image(1:ncol(pc), 1:nrow(pc), plot_data,
+      col = col_palette,
       breaks = seq(-1, 1, length.out = 101),
-      axes = FALSE, 
+      axes = FALSE,
       xlab = "", ylab = "")
 
   axis(3, at = 1:ncol(pc), labels = colnames(pc), las = 2, cex.axis = 0.8)
@@ -229,4 +234,34 @@ efa_heat_map <- function(pc) {
       text(x, y, round(val, 2), cex = 0.7)
     }
   }
+}
+
+
+pa_skree_plot <- function(fa_real, fa_sim, fa_resamp) {
+  idx <- seq_len(length(fa_real))
+
+  plot(idx, fa_real,
+       type = "o",
+       col = "blue",
+       lwd = 2,
+       pch = 16,
+       main = "Parallel Analysis Scree Plot",
+       xlab = "Number of Factors",
+       ylab = "Eigenvalues")
+
+  lines(idx, fa_sim,
+        lwd = 2,
+        col = "red")
+
+  lines(idx, fa_resamp,
+        lwd = 2,
+        col = "#00DE64")
+
+  legend("topright",
+         legend = c("Actual Data", "Simulated Data", "Resampled Data"),
+         col = c("blue", "red", "#00DE64"),
+         pch = c(16, NA, NA),
+         lwd = 2,
+         inset = 0.05,
+         bty = "n")
 }

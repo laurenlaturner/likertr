@@ -16,7 +16,7 @@
 efa <- function(data, n) {
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
-  pm_results <- polychoric_matrix(data)
+  pcm_results <- polychoric_matrix(data)
   pa_results <- pa(data)
 
   # Variable that represents whether the user gave a number of factors or not
@@ -32,7 +32,7 @@ efa <- function(data, n) {
   pre_efa_diagnostics <- list(sphericity = sphericity_results,
                               kmo = kmo_results,
                               pa = pa_results,
-                              pc_matrix = pm_results)
+                              pc_matrix = pcm_results)
 
 
   efa_results <- run_efa(data, n, user_n_fact)
