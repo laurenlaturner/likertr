@@ -7,6 +7,9 @@ inference <- function(data,
                       inference_variables,
                       factor_var = NA,
                       variable_group2 = NA) {
+  test <- "None"
+  effect_size <- "None"
+
   if (is.na(factor_var) == FALSE) {
     if (nlevels(factor_var) == 2) {
       test <- "wilcox"
@@ -28,9 +31,6 @@ inference <- function(data,
         paste("p-value:", kruskal$p.value),
         sep = "\n"
       )
-    } else {
-      test <- "None"
-      effect_size <- "None"
     }
   }
   list("test" = test, "effect_size" = effect_size)
