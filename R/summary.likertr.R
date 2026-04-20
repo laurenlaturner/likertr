@@ -80,7 +80,7 @@ summary.likertr <- function(x, ...) {
     cat(paste0("No 'n' argument was given and number of factors (",
                n_fact,
                ") used in EFA was determined using parallel analysis\n\n",
-               "Check parallel analysis Skree plot using 'plot' function for ",
+               "Check parallel analysis Scree plot using 'plot' function for ",
                "more details\n\n")
     )
   }

@@ -117,7 +117,7 @@ polychoric_matrix <- function(data) {
 #' @importFrom psych fa.parallel
 pa <- function(data) {
   # Parallel analysis will give us a reccommended number of factors to use for
-  # EFA, as well as the necessary values for a Skree plot that users can look
+  # EFA, as well as the necessary values for a scree plot that users can look
   # at further
 
   # Suppress plot, output, and warnings from fa.parallel function
