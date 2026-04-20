@@ -22,8 +22,10 @@ cronbachs_alpha <- function(data, groups) {
   if (length(groups) == 0) {
     groups <- rep(1, ncol(data))
     message(
-      "No item grouping specified.
-      Cronbach's Alpha calculated assuming all items in same group."
+      paste(
+        "No item grouping specified.",
+        "Cronbach's Alpha calculated assuming all items in same group."
+      )
     )
   }
 
