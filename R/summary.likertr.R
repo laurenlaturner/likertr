@@ -17,18 +17,14 @@ summary.likertr <- function(x, ...) {
 
   cat("================================================\n")
   cat("LIKERTR OBJECT SUMMARY REPORT\n")
-  cat("================================================\n")
+  cat("================================================\n\n")
   cat(paste0(
     "This dataset contains ", n_q, " questions with ", n_obs,
-    " total observations.\n"
+    " total observations.\n\n"
   ))
 
   cat("================================================\n")
-  cat("Exploratory Factor Analysis (EFA)\n")
-  cat("================================================\n\n")
-
-  cat("================================================\n")
-  cat("Pre-EFA Diagnostics\n")
+  cat("Pre-EFA (Exploratory Factor Analysis) Diagnostics\n")
   cat("================================================\n\n")
 
   sph_p_val <- attributes(x)$pre_efa_diagnostics$sphericity$p_value
