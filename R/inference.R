@@ -3,8 +3,8 @@
   # Effect size calculation (Cliff’s Delta or r)
 
 
-inference <- function(data, variable_group, factor_var = NA, variable_group2 = NA) {
-  if (is.na(factor_var) == FALSE) {
+inference <- function(data, inference_variables, factor_var = NA, variable_group2 = NA) {
+  if (anyNA(factor_var) == FALSE) {
     if (nlevels(factor_var) == 2) {
       test <- "wilcox"
       wilcox <- test_wilcox(data, factor_var, variable_group)
@@ -23,8 +23,12 @@ inference <- function(data, variable_group, factor_var = NA, variable_group2 = N
           paste("p-value:", kruskal$p.value),
           sep = "\n")
     }
+    else {
+      test = "None"
+      effect_size = "None"
+    }
   }
-
+  return(list("test" = test, "effect_size" = wilcox$p.value))
 }
 
 
@@ -36,7 +40,7 @@ test_wilcox <- function(data, factor_var, likert_var) {
 
   wilcox <- wilcox.test(likert ~ fact,
               data = wilcox_data,
-              exact = TRUE)
+              exact = FALSE)
 }
 
 test_kruskal <- function(data, factor_var, likert_var) {
