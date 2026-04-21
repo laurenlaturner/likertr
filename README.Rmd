@@ -51,7 +51,7 @@ You can install the development version of likertr from [GitHub](https://github.
 pak::pak("laurenlaturner/likertr")
 ```
 
-## Core Functionality
+## Core Functionality 
 
 The `likertr` package is designed around a streamlined object-oriented workflow. Three main functions provide all required functionality to move from raw data to insights:
 

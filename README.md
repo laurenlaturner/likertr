@@ -80,6 +80,7 @@ load("data/data.rda")
 analysis <- likertr(data)
 #> Loading required namespace: GPArotation
 #> No item grouping specified. Cronbach's Alpha calculated assuming all items in same group.
+#> Warning in max(groups): no non-missing arguments to max; returning -Inf
 
 # View summary
 summary(analysis)
@@ -105,7 +106,8 @@ summary(analysis)
 #> EFA Results
 #> ================================================
 #> 
-#> No 'n' argument was given and number of factors (6) used in EFA was determined using parallel analysis
+#> No 'n' argument was given and number of factors (6) used in EFA was determined
+#>  using parallel analysis
 #> 
 #> Check parallel analysis Scree plot using 'plot' function for more details
 #> 
@@ -151,7 +153,9 @@ summary(analysis)
 #> 0.1367 
 #> 
 #> 
-#> The following variables have communality values less than 0.2, which means that very little of their variance is explained by the common factors and they should be considered for removal:
+#> The following variables have communality values less than 0.2,
+#>  which means that very little of their variance is explained by
+#>  the common factors and they should be considered for removal:
 #>    Q14    Q22    Q23 
 #> 0.1590 0.0973 0.1367 
 #> 
@@ -175,7 +179,8 @@ summary(analysis)
 #> CFI: 0.9172 
 #> This CFI value indicates an acceptable model fit
 #> 
-#> Keep in mind that the interpretation of many of these statistics will depend on the context of your analysis
+#> Keep in mind that the interpretation of many of these statistics
+#>  will depend on the context of your analysis
 #> 
 #> ================================================
 #> Cronbach's Alpha
@@ -241,7 +246,13 @@ summary(analysis)
 #> ================================================
 #> 
 #> Omega Hierarchical:      0.2908097 
-#> Omega Total:             0.7606632
+#> Omega Total:             0.7606632 
+#> 
+#> ================================================
+#> Inference
+#> ================================================
+#> 
+#> No Variables were provided for inference
 
 # View Plots
 plot(analysis)
