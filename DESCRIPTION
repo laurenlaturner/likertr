@@ -26,4 +26,5 @@ LazyData: true
 Imports:
   psych
 Suggests:
+  rmarkdown,
   knitr
