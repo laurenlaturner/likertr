@@ -17,11 +17,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat (>= 3.0.0)
+    rmarkdown
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 
-    R (>= 3.5)
     psych
 LazyData: true
