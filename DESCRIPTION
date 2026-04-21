@@ -2,8 +2,7 @@ Package: likertr
 Title: Analyze Likert Data in One Easy Function
 Version: 0.0.0.9000
 Authors@R: 
-    person("Lauren", "LaTurner", "lauren.laturner@usu.edu", 
-      role = c("aut", "cre"))
+    person("Lauren", "LaTurner", "lauren.laturner@usu.edu", role = c("aut", "cre"))
     person("Dawson", "Tree", "dawson.tree@usu.edu", role = "aut")
     person("Samuel", "Hansen", "a02352588@aggies.usu.edu", role = "aut")
     person("Reagan", "Watrin", "reagan.watrin@usu.edu", role = "aut")
@@ -21,5 +20,9 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 
+<<<<<<< HEAD
     psych
+=======
+    R (>= 3.5)
+>>>>>>> 03c9eac5b014218d7e143ae633eb08ffa77e5f09
 LazyData: true
