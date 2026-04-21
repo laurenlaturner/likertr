@@ -27,7 +27,8 @@ Imports:
   psych,
   stats,
   grDevices,
-  utils
+  utils,
+  graphics
 Suggests:
   rmarkdown,
   knitr
