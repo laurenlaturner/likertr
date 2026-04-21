@@ -17,8 +17,10 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 ```
-
+Welcome friend. If you want to see our github, check out the link below!
+github link: https://github.com/laurenlaturner/likertr.git
 ```{r setup}
+
 library(likertr)
 ```
 likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
@@ -29,6 +31,7 @@ likertr comes with example data on student stress and depression levels. We'll u
 library(likertr)
 small_data <- data[c(1, 3:7, 11:15)]
 str(small_data)
+
 ```
 
 Lots of analysis to do! The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work.
@@ -55,14 +58,13 @@ plot(likert_analysis)
 If you want more control over the analysis that is happening in likertr, other arguments can be specified, including handling of NA values, scaling, and checking for sufficient number of observations.
 
 ```{r, echo = TRUE, results = 'hide'}
-# Perform likert analysis replacing NA values with the midpoint,
-# center respondents answers around their mean answer, and drop columns with
+# Perform likert analysis replacing NA values with the midpoint, 
+# center respondents answers around their mean answer, and drop columns with 
 # less than 20 sample sizes.
-clean_analysis <- likertr(small_data,
-  na_drop = "neutral",
-  ipsatize_decision = TRUE,
-  small_n_drop = TRUE
-)
+clean_analysis <- likertr(small_data, 
+                          na_drop = "neutral", 
+                          ipsatize_decision = TRUE,
+                          small_n_drop = TRUE)
 ```
 
 
@@ -79,10 +81,9 @@ A categorical variable can also be specified in order to perform inference on wh
 # the anxiety and depression questions split into groups for similarity,
 # and the gender categorical variable used for inference.
 likert_analysis <- likertr(small_data,
-  n_fact = 2,
-  groups = c(rep(1, 5), rep(2, 5)),
-  category = 1
-)
+                           n_fact = 2,
+                           groups = c(rep(1, 5), rep(2, 5)),
+                           category = 1)
 summary(likert_analysis)
 ```
 
