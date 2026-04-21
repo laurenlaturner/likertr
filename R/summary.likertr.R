@@ -7,11 +7,11 @@
 #'     diagnostics and results, reliability measures, and inferential
 #'     statistics.
 #'
-#' @param x A likertr object for which to generate a summary report
+#' @param object A likertr object for which to generate a summary report
 #'
 #' @export
-summary.likertr <- function(x, ...) {
-  data <- x
+summary.likertr <- function(object, ...) {
+  data <- object
   n_q <- data[[3]]
   n_obs <- max(data[[4]])
 
@@ -27,10 +27,10 @@ summary.likertr <- function(x, ...) {
   cat("Pre-EFA (Exploratory Factor Analysis) Diagnostics\n")
   cat("================================================\n\n")
 
-  sph_p_val <- attributes(x)$pre_efa_diagnostics$sphericity$p_value
-  msai <- attributes(x)$pre_efa_diagnostics$kmo$MSAi
-  user_n_fact <- attributes(x)$efa_results$user_n_fact
-  n_fact <- attributes(x)$efa_results$n_fact
+  sph_p_val <- attributes(object)$pre_efa_diagnostics$sphericity$p_value
+  msai <- attributes(object)$pre_efa_diagnostics$kmo$MSAi
+  user_n_fact <- attributes(object)$efa_results$user_n_fact
+  n_fact <- attributes(object)$efa_results$n_fact
 
   invalid_kmo <- msai < 0.6
 
@@ -78,13 +78,13 @@ summary.likertr <- function(x, ...) {
   cat("EFA Results\n")
   cat("================================================\n\n")
 
-  loadings <- round(attributes(x)$efa_results$loadings, 4)
-  var_exp <- round(attributes(x)$efa_results$var_exp, 4)
-  communality <- round(attributes(x)$efa_results$communality, 4)
-  fc_matrix <- round(attributes(x)$efa_results$fc_matrix, 4)
-  rmsea <- round(attributes(x)$efa_results$RMSEA, 4)
-  tli <- round(attributes(x)$efa_results$TLI, 4)
-  cfi <- round(attributes(x)$efa_results$CFI, 4)
+  loadings <- round(attributes(object)$efa_results$loadings, 4)
+  var_exp <- round(attributes(object)$efa_results$var_exp, 4)
+  communality <- round(attributes(object)$efa_results$communality, 4)
+  fc_matrix <- round(attributes(object)$efa_results$fc_matrix, 4)
+  rmsea <- round(attributes(object)$efa_results$RMSEA, 4)
+  tli <- round(attributes(object)$efa_results$TLI, 4)
+  cfi <- round(attributes(object)$efa_results$CFI, 4)
 
 
   if (user_n_fact) {
@@ -198,7 +198,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract alpha information from likertr object
-  alpha <- attributes(x)$alpha
+  alpha <- attributes(object)$alpha
   groups <- length(alpha)
 
   for (i in seq_len(groups)) {
@@ -240,7 +240,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract RII information from likertr object
-  rii <- attributes(x)$rii
+  rii <- attributes(object)$rii
 
   # Print
   rows <- nrow(rii)
@@ -256,7 +256,7 @@ summary.likertr <- function(x, ...) {
   cat("================================================\n\n")
 
   # Extract Omega information from likertr object
-  omega <- attributes(x)$omega
+  omega <- attributes(object)$omega
 
   # Print
   cat("Omega Hierarchical:     ", omega$omega_h, "\n")
@@ -267,8 +267,8 @@ summary.likertr <- function(x, ...) {
   cat("Inference\n")
   cat("================================================\n\n")
 
-  test <- attributes(x)$test
-  effect_size <- attributes(x)$effect_size
+  test <- attributes(object)$test
+  effect_size <- attributes(object)$effect_size
 
   if (test == "wilcox") {
     cat("Mann Whitney U-Test for Two Independent Samples\n",
