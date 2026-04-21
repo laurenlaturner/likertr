@@ -6,7 +6,6 @@
 inference <- function(data, category, groups) {
   test <- "None"
   effect_size <- "None"
-  n_groups <- max(groups)
 
   if (is.na(category) == FALSE) {
     if (nlevels(as.factor(data[[category]])) == 2) {
@@ -25,8 +24,10 @@ inference <- function(data, category, groups) {
 
 test_wilcox <- function(data, factor_var, inference_variables) {
   # Create dataframe with factor variable and sum
-  wilcox_data <- data.frame(fact = data[[factor_var]],
-                            likert = rowSums(data[, inference_variables]))
+  wilcox_data <- data.frame(
+    fact = data[[factor_var]],
+    likert = rowSums(data[, inference_variables])
+  )
   wilcox_data$fact <- as.factor(wilcox_data$fact)
 
   wilcox.test(likert ~ fact, data = wilcox_data, exact = FALSE)
