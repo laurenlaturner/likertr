@@ -4,7 +4,7 @@
 \alias{summary.likertr}
 \title{Summarize the results of a likertr object}
 \usage{
-\method{summary}{likertr}(x, ...)
+\method{summary}{likertr}(object, ...)
 }
 \arguments{
 \item{x}{A likertr object for which to generate a summary report}

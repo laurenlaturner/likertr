@@ -10,8 +10,8 @@
 #' @param x A likertr object for which to generate a summary report
 #'
 #' @export
-summary.likertr <- function(x, ...) {
-  data <- x
+summary.likertr <- function(object, ...) {
+  data <- object
   n_q <- data[[3]]
   n_obs <- max(data[[4]])
 
