@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # likertr
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/laurenlaturner/likertr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laurenlaturner/likertr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview

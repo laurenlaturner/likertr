@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/laurenlaturner/likertr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laurenlaturner/likertr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -80,7 +81,6 @@ load("data/data.rda")
 analysis <- likertr(data)
 #> Loading required namespace: GPArotation
 #> No item grouping specified. Cronbach's Alpha calculated assuming all items in same group.
-#> Warning in max(groups): no non-missing arguments to max; returning -Inf
 
 # View summary
 summary(analysis)
