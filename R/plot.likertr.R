@@ -107,17 +107,18 @@ stacked_bar <- function(perc_by_question, questions) {
   # Generate colors
   cols <- colorRampPalette(c("#D7191C", "#FFFFBF", "#2C7BB6"))(prep$max_w)
 
-  par(mar = c(5, 15, 5, 2), xpd = TRUE)
+  par(mar = c(5, 16, 5, 2), xpd = TRUE)
   barplot(prep$matrix,
     horiz = TRUE, col = cols, names.arg = questions,
-    las = 1, xlab = "Percentage (%)"
+    las = 1, xlab = "Percentage (%)",
+    cex.names = 0.58
   )
 
   legend("topright",
     legend = 1:prep$max_w,
     fill = cols,
     horiz = FALSE,
-    inset = c(-0.25, 0),
+    inset = c(-0.08, -0.31),
     bty = "n",
     title = "Response Scale",
     cex = 0.8,
@@ -148,7 +149,8 @@ diverging_bar <- function(perc_by_question, questions) {
     las = 1,
     offset = -prep$offsets,
     xlim = c(-100, 100),
-    xlab = "Negative <--- Neutral ---> Positive"
+    xlab = "Negative <--- Neutral ---> Positive",
+    cex.names = 0.58
   )
 
   abline(v = 0, lty = 2, col = "gray40")
@@ -157,7 +159,7 @@ diverging_bar <- function(perc_by_question, questions) {
     legend = 1:prep$max_w,
     fill = cols,
     horiz = FALSE,
-    inset = c(-0.15, 0),
+    inset = c(0, 0),
     bty = "n",
     title = "Response Scale"
   )
@@ -195,7 +197,7 @@ ridge_plot <- function(clean_data, questions) {
 
   max_h <- max(sapply(densities, function(d) max(d$y)))
 
-  par(mar = c(5, 12, 4, 2) + 0.1)
+  par(mar = c(5, 14, 4, 2) + 0.1)
 
   plot(NULL,
     xlim = c(global_min, global_max),
@@ -203,15 +205,13 @@ ridge_plot <- function(clean_data, questions) {
     type = "n", yaxt = "n", bty = "n",
     xlab = "Response Value", ylab = "",
     main = "Response Density by Question"
-  )
+    )
 
-  axis(2, at = 1:n, labels = questions, las = 1, cex.axis = 0.8, tick = FALSE)
 
   for (i in n:1) {
     d <- densities[[i]]
 
-    y_vals <- (d$y / max_h) * overlap + i
-
+    y_vals <- (d$y / max_h) * overlap*0.9 + i
     polygon(d$x, y_vals,
       col = adjustcolor(cols[i], alpha.f = 0.7),
       border = "white", lwd = 0.5
@@ -219,8 +219,10 @@ ridge_plot <- function(clean_data, questions) {
 
     lines(d$x, y_vals, col = "black", lwd = 1)
 
-    abline(h = i, col = "gray90", lwd = 0.5)
+    #abline(h = i, col = "gray90", lwd = 0.5)
   }
+  axis(2, at = 1:n +1, labels = questions, cex.axis = 0.5, las = 1, tick = FALSE)
+
 }
 
 #' Heat Map for the EFA Polychoric Correlation Matrix
@@ -238,7 +240,7 @@ ridge_plot <- function(clean_data, questions) {
 #' @param pc A square matrix of polychoric correlations.
 efa_heat_map <- function(pc) {
   col_palette <- colorRampPalette(c("red", "white", "blue"))(100)
-
+  par(mar = c(2, 4, 4, 2) + 0.1)
   # Transpose and reverse the matrix
   # (image() plots columns as rows and starts from the bottom-left)
   plot_data <- t(pc[rev(seq_len(nrow(pc))), ])
@@ -264,7 +266,7 @@ efa_heat_map <- function(pc) {
     las = 1,
     cex.axis = 0.8
   )
-  title("Polychoric Correlation Matrix")
+  title("Polychoric Correlation Matrix", line = 3)
 
   for (x in seq_len(ncol(pc))) {
     for (y in seq_len(nrow(pc))) {
@@ -277,7 +279,7 @@ efa_heat_map <- function(pc) {
 
 pa_skree_plot <- function(fa_real, fa_sim, fa_resamp) {
   idx <- seq_len(length(fa_real))
-
+  par(mar = c(5, 4, 4, 2) + 0.1)
   plot(idx, fa_real,
     type = "o",
     col = "blue",
@@ -286,7 +288,7 @@ pa_skree_plot <- function(fa_real, fa_sim, fa_resamp) {
     main = "Parallel Analysis Scree Plot",
     xlab = "Number of Factors",
     ylab = "Eigenvalues"
-  )
+    )
 
   lines(idx, fa_sim,
     lwd = 2,

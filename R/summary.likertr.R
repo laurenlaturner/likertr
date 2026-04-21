@@ -97,7 +97,7 @@ summary.likertr <- function(x, ...) {
     cat(paste0(
       "No 'n' argument was given and number of factors (",
       n_fact,
-      ") used in EFA was determined using parallel analysis\n\n",
+      ") used in EFA was determined\n using parallel analysis\n\n",
       "Check parallel analysis Scree plot using 'plot' function for ",
       "more details\n\n"
     ))
@@ -131,7 +131,7 @@ summary.likertr <- function(x, ...) {
   if (any(low_communality)) {
     lc_variables <- communality[low_communality]
     cat(paste(
-      "The following variables have communality values less than 0.2,",
+      "The following variables have communality values less than 0.2,\n",
       "which means that very little of their variance is explained by\n",
       "the common factors and they should be considered for removal:\n"
     ))
@@ -189,7 +189,7 @@ summary.likertr <- function(x, ...) {
 
 
   cat(paste(
-    "Keep in mind that the interpretation of many of these statistics",
+    "Keep in mind that the interpretation of many of these statistics\n",
     "will depend on the context of your analysis\n\n"
   ))
 
