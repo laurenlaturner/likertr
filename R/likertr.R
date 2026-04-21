@@ -16,7 +16,7 @@
 #'   be decided using parallel analysis.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data
 #'   centered by respondent (person-mean centering).
-#' @param small_n_drop Character. If not "nothing", questions/groups with
+#' @param small_n_drop Logical. If TRUE, questions/groups with
 #'   fewer than 20 responses are dropped.
 #' @param groups a numeric vector specifying groups of questions.
 #'   Cronbach's alpha information will be calculated separately for each
@@ -51,9 +51,7 @@ likertr <- function(
   ipsatize_decision = FALSE,
   small_n_drop = FALSE,
   groups = numeric(0),
-  factor_inference = NA,
-  inference_vars = NA,
-  inference_vars2 = NA,
+  category = NA,
   flip = FALSE,
   plot = FALSE
 ) {

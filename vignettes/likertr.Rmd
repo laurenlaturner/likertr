@@ -11,10 +11,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 6,
-  fig.height = 4,
-  out.width = "70%",
-  fig.align = "right"
+  fig.width = 7,
+  fig.height = 5,
+  # = "80%",
+  fig.align = "center"
 )
 ```
 
@@ -24,11 +24,11 @@ library(likertr)
 ```
 likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
 
-1. Summary Command
-likertr comes with example data on student stress levels. We'll use the first 10 variables for the demonstration. Lets preview the data:
+
+likertr comes with example data on student stress and depression levels. We'll use 5 questions about depressiona and anxiety as variables for the demonstration. Lets preview the data:
 ```{r, include = TRUE}
 library(likertr)
-small_data <- data[1:10]
+small_data <- data[c(1, 3:7, 11:15)]
 str(small_data)
 
 ```
@@ -40,7 +40,7 @@ likert_analysis <- likertr(small_data)
 str(likert_analysis)
 ```
 
-The likertr function returns an s3 object with custom summary and plotting functions
+The likertr function returns a custom s3 object with summary and plotting functions
 
 ```{r, inclue = TRUE}
 summary(likert_analysis)
@@ -50,27 +50,40 @@ summary(likert_analysis)
 
 
 ```{r, include = TRUE}
-#layout(matrix(1:6,nrow = 3, ncol =2, byrow = TRUE))
 plot(likert_analysis)
 ```
 
 
-If you want more control over the analysis that is happening in likertr, other arguments can be specified.
+If you want more control over the analysis that is happening in likertr, other arguments can be specified, including handling of NA values, scaling, and checking for sufficient number of observations.
 
-Likertr is designed to handle 'NA' values effectively. Default handling will drop observations when NA values interfere with analysis. The argument na_drop option "neutral" can also be specified, replacing NA values with the midpoint.
-
-ipsatize_decision allows you to center all responses around the respondent's mean response.
-
-small_n_drop lets you drop questions with less than 20 respondent's.
-
-groups allows you to specify question groups that you want to compare to each other, both for calculating Cronbach's alpha and calculating Cliff's Delta Value for correlation between responses.
-```{r, include = TRUE}
-# Compare whether students depression responses are correlated to anxiety responses.
-
+```{r, echo = TRUE, results = 'hide'}
+# Perform likert analysis replacing NA values with the midpoint, 
+# center respondents answers around their mean answer, and drop columns with 
+# less than 20 sample sizes.
+clean_analysis <- likertr(small_data, 
+                          na_drop = "neutral", 
+                          ipsatize_decision = TRUE,
+                          small_n_drop = TRUE)
 ```
 
-If you have a categorical variable you want to split your data on (or perhaps a likert scale question that has large number of responses), inference can be done on whether those groups are significantly different from each other.
 
+
+likertr does exploratory factor analysis. The number of underlying factors can be specified, otherwise parallel analysis will decide the ideal number of factors.
+
+The groups argument can be used to group similar likert questions together to find Cronbach's Alpha, a measure of consistency of the data. The groups vector should be the same length as the number of questions, with each integer specifying which group the question falls in. If specified the groups will also be compared against each other in the inference step to see if the responses between groups are significantly different from each other.
+
+A categorical variable can also be specified in order to perform inference on whether answers are significantly different across groups.
+
+
+```{r, include = TRUE, results = 'hide'}
+# Perform the likert analysis with two underlying factors,
+# the anxiety and depression questions split into groups for similarity,
+# and the gender categorical variable used for inference.
+inference_likert_analysis <- likertr(small_data,
+                                     n_fact = 2,
+                                     groups = c(rep(1, 5), rep(2, 5)),
+                                     category = 1)
+```
 
 
 
