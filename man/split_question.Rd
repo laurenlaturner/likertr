@@ -7,7 +7,7 @@
 split_question(data)
 }
 \arguments{
-\item{the}{raw data}
+\item{data}{the raw data}
 }
 \description{
 Takes the cleaned data frame and splits it into a list of

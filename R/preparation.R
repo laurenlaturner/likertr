@@ -193,7 +193,7 @@ noting_small_n <- function(data, num_people, small_n_drop) {
 #'   for Likert visualization. Calls the helper function
 #'   [converting_to_percentage()].
 #'
-#' @param the raw data
+#' @param data the raw data
 split_question <- function(data) {
   results <- lapply(data, converting_to_percentage)
   results
