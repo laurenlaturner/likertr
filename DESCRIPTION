@@ -24,7 +24,10 @@ Depends:
     R (>= 3.5)
 LazyData: true
 Imports:
-  psych
+  psych,
+  stats,
+  grDevices,
+  utils
 Suggests:
   rmarkdown,
   knitr
