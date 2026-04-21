@@ -3,34 +3,20 @@
 # Effect size calculation (Cliff’s Delta or r)
 
 
-inference <- function(data,
-                      inference_variables,
-                      factor_var = NA,
-                      variable_group2 = NA) {
+inference <- function(data, category, groups) {
   test <- "None"
   effect_size <- "None"
+  n_groups <- max(groups)
 
-  if (is.na(factor_var) == FALSE) {
-    if (nlevels(factor_var) == 2) {
+  if (is.na(category) == FALSE) {
+    if (nlevels(as.factor(data[category])) == 2) {
       test <- "wilcox"
-      wilcox <- test_wilcox(data, factor_var, inference_variables)
+      wilcox <- test_wilcox(data, category, which(groups == 1))
       effect_size <- wilcox$p.value
-      cat("Mann Whitney U-Test for Two Independent Samples",
-        paste("Factor Variable:", colnames(data[factor_var])),
-        paste("Likert Variable:", colnames(data[inference_variables])),
-        paste("p-value:", wilcox$p.value),
-        sep = "\n"
-      )
-      print(cat("p-value:", as.character(wilcox$p.value)))
-    } else if (nlevels(factor_var) > 2) {
+    } else if (nlevels(as.factor(data[category])) > 2) {
       test <- "Kruskal Wallis"
-      kruskal <- test_kruskal(data, factor_var, inference_variables)
-      cat("Kruskal-Wallis Rank Sum Test",
-        paste("Factor Variable:", colnames(data[factor_var])),
-        paste("Likert Variable:", colnames(data[inference_variables])),
-        paste("p-value:", kruskal$p.value),
-        sep = "\n"
-      )
+      kruskal <- test_kruskal(data, category, which(groups == 1))
+      effect_size <- kruskal$p.value
     }
   }
   list("test" = test, "effect_size" = effect_size)

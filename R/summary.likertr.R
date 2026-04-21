@@ -261,4 +261,25 @@ summary.likertr <- function(x, ...) {
   # Print
   cat("Omega Hierarchical:     ", omega$omega_h, "\n")
   cat("Omega Total:            ", omega$omega_t, "\n\n")
+
+  # Inference and Reporting
+  cat("================================================\n")
+  cat("Inference\n")
+  cat("================================================\n\n")
+
+  test <- attributes(x)$test
+  effect_size <- attributes(x)$effect_size
+
+  if (test == "wilcox") {
+    cat("Mann Whitney U-Test for Two Independent Samples\n",
+        paste("Effect Size:", effect_size),
+    )
+  }
+  if (test == "Kruskal Wallis") {
+    cat("Kruskal-Wallis Rank Sum Test\n",
+        paste("Efffect Size:", effect_size)
+    )
+  }
+
+
 }
