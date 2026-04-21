@@ -17,8 +17,10 @@
 #' @returns a numeric vector with the relative importance index for each
 #'     question.
 rii <- function(data, max_val) {
-  data.frame(
+  ans <- data.frame(
     item = names(data),
     rii = colSums(data) / (max_val * nrow(data))
   )
+  ans <- ans[order(ans$rii, decreasing = TRUE), ]
+  ans
 }
