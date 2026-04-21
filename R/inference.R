@@ -30,7 +30,7 @@ test_wilcox <- function(data, factor_var, inference_variables) {
   )
   wilcox_data$fact <- as.factor(wilcox_data$fact)
 
-  wilcox.test(likert ~ fact, data = wilcox_data, exact = FALSE)
+  stats::wilcox.test(likert ~ fact, data = wilcox_data, exact = FALSE)
 }
 
 test_kruskal <- function(data, factor_var, inference_variables) {
@@ -40,5 +40,5 @@ test_kruskal <- function(data, factor_var, inference_variables) {
   )
   kruskal_data$fact <- as.factor(kruskal_data$fact)
 
-  kruskal.test(likert ~ fact, data = kruskal_data)
+  stats::kruskal.test(likert ~ fact, data = kruskal_data)
 }
