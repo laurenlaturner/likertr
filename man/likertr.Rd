@@ -57,7 +57,7 @@ to Exploratory Factor Analysis (EFA), reliability testing
 (RII) calculation, and inferential testing.
 }
 \examples{
-\dontrun {
+\dontrun{
 load("data/data.rda")
 # Run the wrapper with 2-group reliability check
 # Group 1: Items 1-2, Group 2: Items 3-5
