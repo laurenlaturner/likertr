@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{object}{A likertr object for which to generate a summary report}
+
+\item{...}{All other arguments to be passed to this function.}
 }
 \description{
 \code{summary.likertr()} is a generic summary function for objects of the
