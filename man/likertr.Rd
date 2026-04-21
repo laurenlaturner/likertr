@@ -11,9 +11,7 @@ likertr(
   ipsatize_decision = FALSE,
   small_n_drop = FALSE,
   groups = numeric(0),
-  factor_inference = NA,
-  inference_vars = NA,
-  inference_vars2 = NA,
+  category = NA,
   flip = FALSE,
   plot = FALSE
 )
@@ -32,7 +30,7 @@ be decided using parallel analysis.}
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
 
-\item{small_n_drop}{Character. If not "nothing", questions/groups with
+\item{small_n_drop}{Logical. If TRUE, questions/groups with
 fewer than 20 responses are dropped.}
 
 \item{groups}{a numeric vector specifying groups of questions.
@@ -42,11 +40,8 @@ group. The vector must be the same length as the number of items
 a group and questions 2-4 are in a group. Groups should be numbered
 1, 2, 3, ... , n.}
 
-\item{factor_inference}{integer corresponding to a column index
+\item{category}{integer corresponding to a column index
 referencing a factor variable to split data on for inference.}
-
-\item{inference_vars}{vector of integers corresponding to column
-indicies to use for inferential analysis}
 }
 \description{
 A comprehensive wrapper for psychometric analysis of

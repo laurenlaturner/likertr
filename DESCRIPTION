@@ -1,9 +1,15 @@
 Package: likertr
-Title: What the Package Does (One Line, Title Case)
+Title: Analyze Likert Data in One Easy Function
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Lauren", "LaTurner", "lauren.laturner@usu.edu", role = "cre")
+    person("Dawson", "Tree", dawson.tree@usu.edu, role = "aut")
+    person("Samuel", "Hansen", "a02352588@aggies.usu.edu", role = "aut")
+    person("Reagan", "Watrin", "reagan.watrin@usu.edu", role = "aut")
+Description: This package takes likert scale data, traditionally used in surveys
+    to show direction and magnitude of feeling, and analyses it. The package 
+    first cleans the data, then does exploratory factor analysis, finds the 
+    consistency of the data, and finally does inference.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,4 +22,5 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
+    psych
 LazyData: true
