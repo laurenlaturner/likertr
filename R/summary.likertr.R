@@ -55,7 +55,8 @@ summary.likertr <- function(object, ...) {
     cat(paste(
       "At least one MSAi value from the KMO test is less than 0.6 and",
       "possibly problematic, the following feature or features share",
-      "little variance with the rest of the data:\n", sep = "\n"
+      "little variance with the rest of the data:\n",
+      sep = "\n"
     ))
     print(invalid_kmo)
     cat("\n")
@@ -272,11 +273,13 @@ summary.likertr <- function(object, ...) {
   effect_size <- attributes(object)$effect_size
 
   if (test == "wilcox") {
-    cat("Mann Whitney U-Test for Two Independent Samples\n",
+    cat(
+      "Mann Whitney U-Test for Two Independent Samples\n",
       paste("p-value:", effect_size),
     )
   } else if (test == "Kruskal Wallis") {
-    cat("Kruskal-Wallis Rank Sum Test\n",
+    cat(
+      "Kruskal-Wallis Rank Sum Test\n",
       paste("p-value:", effect_size)
     )
   } else {

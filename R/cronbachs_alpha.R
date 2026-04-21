@@ -60,7 +60,6 @@ cronbachs_alpha <- function(data, groups) {
 }
 
 
-
 #' @title c_alpha_calc
 #'
 #' @description function for calculating cronbach's alpha for a dataset

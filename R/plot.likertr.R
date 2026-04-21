@@ -18,7 +18,8 @@
 #' @param ... Additional arguments passed to the underlying plotting functions.
 #'
 #' @importFrom grDevices adjustcolor colorRampPalette dev.off pdf
-#' @importFrom graphics abline axis barplot image legend lines par polygon text title
+#' @importFrom graphics abline axis barplot image legend lines par
+#'   polygon text title
 #' @importFrom stats cor cov2cor density kruskal.test pchisq wilcox.test
 #' @importFrom utils capture.output
 #' @export
@@ -192,11 +193,12 @@ ridge_plot <- function(clean_data, questions) {
 
   densities <- lapply(1:n, function(i) {
     density(
-            clean_data[[i]],
-            from = global_min,
-            to = global_max,
-            na.rm = TRUE,
-            bw = 0.4)
+      clean_data[[i]],
+      from = global_min,
+      to = global_max,
+      na.rm = TRUE,
+      bw = 0.4
+    )
   })
 
   max_h <- max(sapply(densities, function(d) max(d$y)))
@@ -209,24 +211,24 @@ ridge_plot <- function(clean_data, questions) {
     type = "n", yaxt = "n", bty = "n",
     xlab = "Response Value", ylab = "",
     main = "Response Density by Question"
-    )
+  )
 
 
   for (i in n:1) {
     d <- densities[[i]]
 
-    y_vals <- (d$y / max_h) * overlap*0.9 + i
+    y_vals <- (d$y / max_h) * overlap * 0.9 + i
     polygon(d$x, y_vals,
       col = adjustcolor(cols[i], alpha.f = 0.7),
       border = "white", lwd = 0.5
     )
 
     lines(d$x, y_vals, col = "black", lwd = 1)
-
-    #abline(h = i, col = "gray90", lwd = 0.5)
   }
-  axis(2, at = 1:n +1, labels = questions, cex.axis = 0.5, las = 1, tick = FALSE)
-
+  axis(2,
+    at = 1:n + 1, labels = questions, cex.axis = 0.5, las = 1,
+    tick = FALSE
+  )
 }
 
 #' Heat Map for the EFA Polychoric Correlation Matrix
@@ -282,7 +284,7 @@ efa_heat_map <- function(pc) {
 
 
 pa_skree_plot <- function(fa_real, fa_sim, fa_resamp) {
-  idx <- seq_len(length(fa_real))
+  idx <- seq_along(fa_real)
   par(mar = c(5, 4, 4, 2) + 0.1)
   plot(idx, fa_real,
     type = "o",
@@ -292,7 +294,7 @@ pa_skree_plot <- function(fa_real, fa_sim, fa_resamp) {
     main = "Parallel Analysis Scree Plot",
     xlab = "Number of Factors",
     ylab = "Eigenvalues"
-    )
+  )
 
   lines(idx, fa_sim,
     lwd = 2,

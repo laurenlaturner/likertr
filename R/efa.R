@@ -13,7 +13,6 @@
 #' @returns A list containing smaller lists of pre-EFA diagnostics and EFA
 #'     results, which both contain several measures
 efa <- function(data, n) {
-
   sphericity_results <- sphericity(data)
   kmo_results <- kmo(data)
   pcm_results <- polychoric_matrix(data)
@@ -62,7 +61,6 @@ sphericity <- function(data) {
   # If this test results in a non-significant value, it indicates that the
   # variables are not correlated enough for an EFA (indicated by summary
   # function)
-
 
 
   n <- nrow(data)

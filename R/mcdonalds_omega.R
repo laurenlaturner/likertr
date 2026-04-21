@@ -17,11 +17,12 @@
 #'
 #' @returns list containing omega hierarchical and omega total values
 mcdonalds_omega <- function(data, n_fact, flip, plot) {
-
-  psych_omega <- psych::omega(m = data,
-                              nfactors = n_fact,
-                              flip = flip,
-                              plot = plot)
+  psych_omega <- psych::omega(
+    m = data,
+    nfactors = n_fact,
+    flip = flip,
+    plot = plot
+  )
 
   list(
     omega_h = psych_omega$omega_h,
