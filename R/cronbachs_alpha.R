@@ -71,6 +71,8 @@ cronbachs_alpha <- function(data, groups) {
 #' @details this function handles the math for a prepared and filtered dataset.
 #'     See [cronbachs_alpha()] for the process of the analysis.
 #'
+#' @importFrom stats var
+#'
 #' @returns a numeric value. cronbach's alpha for the provided data.
 c_alpha_calc <- function(data) {
   # Number of items (questions) in the dataset
@@ -78,10 +80,10 @@ c_alpha_calc <- function(data) {
 
   # Create total column and calculate variance
   tot_col <- rowSums(data)
-  tot_var <- var(tot_col)
+  tot_var <- stats::var(tot_col)
 
   # Calculate the sum of variances of each item (question)
-  sum_item_var <- sum(sapply(data, var))
+  sum_item_var <- sum(sapply(data, stats::var))
 
   # Calculate and return Cronbach's Alpha
   (num_items / (num_items - 1)) * ((tot_var - sum_item_var) / tot_var)
