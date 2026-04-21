@@ -9,11 +9,11 @@ inference <- function(data, category, groups) {
   n_groups <- max(groups)
 
   if (is.na(category) == FALSE) {
-    if (nlevels(as.factor(data[category])) == 2) {
+    if (nlevels(as.factor(data[[category]])) == 2) {
       test <- "wilcox"
       wilcox <- test_wilcox(data, category, which(groups == 1))
       effect_size <- wilcox$p.value
-    } else if (nlevels(as.factor(data[category])) > 2) {
+    } else if (nlevels(as.factor(data[[category]])) > 2) {
       test <- "Kruskal Wallis"
       kruskal <- test_kruskal(data, category, which(groups == 1))
       effect_size <- kruskal$p.value

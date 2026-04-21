@@ -272,14 +272,12 @@ summary.likertr <- function(x, ...) {
 
   if (test == "wilcox") {
     cat("Mann Whitney U-Test for Two Independent Samples\n",
-        paste("Effect Size:", effect_size),
+        paste("p-value:", effect_size),
     )
-  }
-  if (test == "Kruskal Wallis") {
+  }else if (test == "Kruskal Wallis") {
     cat("Kruskal-Wallis Rank Sum Test\n",
-        paste("Efffect Size:", effect_size)
+        paste("p-value:", effect_size)
     )
-  }
-
+  } else cat("No Variables were provided for inference")
 
 }

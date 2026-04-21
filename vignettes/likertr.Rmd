@@ -75,14 +75,15 @@ The groups argument can be used to group similar likert questions together to fi
 A categorical variable can also be specified in order to perform inference on whether answers are significantly different across groups.
 
 
-```{r, include = TRUE, results = 'hide'}
+```{r, include = TRUE}
 # Perform the likert analysis with two underlying factors,
 # the anxiety and depression questions split into groups for similarity,
 # and the gender categorical variable used for inference.
-inference_likert_analysis <- likertr(small_data,
-                                     n_fact = 2,
-                                     groups = c(rep(1, 5), rep(2, 5)),
-                                     category = 1)
+likert_analysis <- likertr(small_data,
+                           n_fact = 2,
+                           groups = c(rep(1, 5), rep(2, 5)),
+                           category = 1)
+summary(likert_analysis)
 ```
 
 
