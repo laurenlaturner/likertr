@@ -17,6 +17,10 @@
 #'   the \code{likertr} function
 #' @param ... Additional arguments passed to the underlying plotting functions.
 #'
+#' @importFrom grDevices adjustcolor colorRampPalette dev.off pdf
+#' @importFrom graphics abline axis barplot image legend lines par polygon text title
+#' @importFrom stats cor cov2cor density kruskal.test pchisq wilcox.test
+#' @importFrom utils capture.output
 #' @export
 plot.likertr <- function(x, ...) {
   clean_data_list <- x
