@@ -57,7 +57,7 @@ efa <- function(data, n) {
 
 ################# Smaller helper functions #####################################
 
-
+#' @importFrom stats cor pchisq
 sphericity <- function(data) {
   # If this test results in a non-significant value, it indicates that the
   # variables are not correlated enough for an EFA (indicated by summary
@@ -66,7 +66,7 @@ sphericity <- function(data) {
 
 
   n <- nrow(data)
-  data <- cor(data, use = "pairwise")
+  data <- stats::cor(data, use = "pairwise")
   p <- dim(data)[2]
 
 
@@ -74,18 +74,19 @@ sphericity <- function(data) {
   det <- det(data)
   statistic <- -log(det) * (n - 1 - (2 * p + 5) / 6)
   df <- p * (p - 1) / 2
-  pval <- pchisq(statistic, df, lower.tail = FALSE)
+  pval <- stats::pchisq(statistic, df, lower.tail = FALSE)
 
   bartlett <- list(chi_squared = statistic, p_value = pval, df = df)
   bartlett
 }
 
+#' @importFrom stats cor cov2cor
 kmo <- function(data) {
   # Checks sampling adequacy
   # Summary gives a warning if any variable's value is below 0.6
   # (default acceptable minimum value)
 
-  data <- cor(data, use = "pairwise")
+  data <- stats::cor(data, use = "pairwise")
   q <- try(solve(data))
   if (inherits(q, as.character("try-error"))) {
     message(paste(
@@ -95,7 +96,7 @@ kmo <- function(data) {
     q <- data
   }
 
-  q <- cov2cor(q)
+  q <- stats::cov2cor(q)
   diag(q) <- 0
   diag(data) <- 0
   sum_q2 <- sum(q^2)
@@ -120,21 +121,23 @@ polychoric_matrix <- function(data) {
 
 
 #' @importFrom psych fa.parallel
+#' @importFrom grDevices pdf dev.off
+#' @importFrom utils capture.output
 pa <- function(data) {
   # Parallel analysis will give us a recommended number of factors to use for
   # EFA, as well as the necessary values for a scree plot that users can look
   # at further
 
   # Suppress plot, output, and warnings from fa.parallel function
-  pdf(file = tempfile())
+  grDevices::pdf(file = tempfile())
   invisible(
-    capture.output(
+    utils::capture.output(
       pa <- suppressWarnings(
         psych::fa.parallel(data, fm = "minres", fa = "fa")
       )
     )
   )
-  dev.off()
+  grDevices::dev.off()
 
   list(
     rec_n_fact = pa$nfact,
