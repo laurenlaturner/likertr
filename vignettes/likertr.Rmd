@@ -25,8 +25,21 @@ library(likertr)
 ```
 likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
 
+A likert Scale is a range of numbers indicating the agreement with a questions. A common example is a five or seven point scale that you may see in a survey. For example a survey may ask. 
 
-likertr comes with example data on student stress and depression levels. We'll use 5 questions about depressiona and anxiety as variables for the demonstration. Lets preview the data:
+Do you like Coding in R? Select a response from 1-5 corresponding to:
+
+Strongly Disagree, Moderately Disagree, Neutral, Moderately Agree, Strongly Agree
+
+Through this Vignette we will explain likertr's functionality for cleaning data, doing exploratory factor analysis, reliability testing,
+and performing inference.
+
+
+likertr comes with example dataset on student anxiety and depression levels we will use to demonstrate the package functionality. The data was accessed on Kaggle, and was collected by surveying 843 college students from multiple campuses. The survey included 2 demographic questions, 24 5-point likert scale questions, and one additional question about stress. For this demo I'll use a subset of the data frame containing one demographic question, 5 questions about anxiety, and 5 questions about depression.
+
+Link to data source: https://www.kaggle.com/datasets/mdsultanulislamovi/student-stress-monitoring-datasets
+
+Lets preview the data:
 ```{r, include = TRUE}
 library(likertr)
 small_data <- data[c(1, 3:7, 11:15)]
@@ -34,20 +47,24 @@ str(small_data)
 
 ```
 
-Lots of analysis to do! The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work.
+Lots of analysis to do! The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work. The default behavior of the likertr function is to run every process and spit out all of the analysis you could want.
 
 ```{r, include = TRUE}
 likert_analysis <- likertr(small_data)
-str(likert_analysis)
-```
-
-The likertr function returns a custom s3 object with summary and plotting functions
-
-```{r, inclue = TRUE}
 summary(likert_analysis)
 ```
 
+The plot() generic function with a likert object outputs five graphs:
 
+Stacked bar chart: A standard bar chart where each row represents a question, and each colored segment (representing response categories) is stacked to reach 100% of the responses. This is best for comparing the total distribution of responses across different items or groups.
+
+Diverging bar chart: Similar to a stacked bar, but the bars are aligned around a central neutral point. Negative responses extend to the left, and positive responses extend to the right. This shows which questions have the strongest lean (positive or negative) or have clear polar responses.
+
+Ridge plot: A series of overlapping density curves that show the distribution of responses along a continuous-looking scale. This is best for visualizing how the "shape" of opinions changes across many different questions.
+
+Heat map: A color-coded grid representing the correlation values between questions from an Exploratory Factor Analysis (EFA). This helps highlight high correlations between questions, possibly indicating redundancy in the data.
+
+Skree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
 
 
 ```{r, include = TRUE}
