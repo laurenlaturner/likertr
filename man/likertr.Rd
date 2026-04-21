@@ -42,6 +42,12 @@ a group and questions 2-4 are in a group. Groups should be numbered
 
 \item{category}{integer corresponding to a column index
 referencing a factor variable to split data on for inference.}
+
+\item{flip}{If flip is TRUE, then items are automatically flipped to have
+positive correlations on the general factor (recommended to do this
+manually before). Defaults to FALSE.}
+
+\item{plot}{Whether or not to call omega.diagram. Defaults to FALSE.}
 }
 \description{
 A comprehensive wrapper for psychometric analysis of
