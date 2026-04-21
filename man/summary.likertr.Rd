@@ -4,10 +4,29 @@
 \alias{summary.likertr}
 \title{Summarize the results of a likertr object}
 \usage{
-\method{summary}{likertr}(object, ...)
+\method{summary}{likertr}(
+  object,
+  data_summary = TRUE,
+  efa_summary = TRUE,
+  reliability_summary = TRUE,
+  inference_summary = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{A likertr object for which to generate a summary report}
+
+\item{data_summary}{Logical. Determines whether or not a data summary
+is included in the \code{\link[=summary]{summary()}} output.}
+
+\item{efa_summary}{Logical. Determines whether or not an exploratory
+factor analysis summary is included in the \code{\link[=summary]{summary()}} output.}
+
+\item{reliability_summary}{Logical. Determines whether or not a
+reliability summary is included in the \code{\link[=summary]{summary()}} output.}
+
+\item{inference_summary}{Logical. Determines whether or not an inference
+summary is included in the \code{\link[=summary]{summary()}} output.}
 
 \item{...}{All other arguments to be passed to this function.}
 }
