@@ -1,6 +1,11 @@
 #' Likertr Wrapper Function
 #'
-#' @description
+#' @description A comprehensive wrapper for psychometric analysis of
+#'   Likert-scale survey data. This function automates the pipeline
+#'   from data cleaning (including optional ipsatization and NA handling)
+#'   to Exploratory Factor Analysis (EFA), reliability testing
+#'   (Cronbach's alpha and McDonald's omega), Relative Importance Index
+#'   (RII) calculation, and inferential testing.
 #'
 #' @param data a dataframe where each column is a likert survey question (item)
 #'     and each row is a response.
@@ -23,7 +28,19 @@
 #'   referencing a factor variable to split data on for inference.
 #' @param inference_vars vector of integers corresponding to column
 #'   indicies to use for inferential analysis
-#' @example
+#' @examples
+#' \dontrun{
+#' load("data/data.rda")
+#' # Run the wrapper with 2-group reliability check
+#' # Group 1: Items 1-2, Group 2: Items 3-5
+#' results <- likertr(
+#'   data = data,
+#'   na_drop = "neutral",
+#'   n_fact = 1,
+#'   groups = c(1, 1, 2, 2, 2),
+#'   ipsatize_decision = TRUE
+#' )
+#' }
 #'
 #' @export
 
