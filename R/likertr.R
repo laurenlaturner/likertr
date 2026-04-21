@@ -26,6 +26,11 @@
 #'   1, 2, 3, ... , n.
 #' @param category integer corresponding to a column index
 #'   referencing a factor variable to split data on for inference.
+#' @param flip If flip is TRUE, then items are automatically flipped to have
+#'   positive correlations on the general factor (recommended to do this
+#'   manually before). Defaults to FALSE.
+#' @param plot Whether or not to call omega.diagram. Defaults to FALSE.
+#'
 #' @examples
 #' \dontrun{
 #' load("data/data.rda")
