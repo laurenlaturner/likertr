@@ -2,10 +2,10 @@ Package: likertr
 Title: Analyze Likert Data in One Easy Function
 Version: 0.0.0.9000
 Authors@R: 
-    person("Lauren", "LaTurner", ,"lauren.laturner@usu.edu", role = "cre"),
-    person("Dawson", "Tree", , "dawson.tree@usu.edu", role = "aut"),
-    person("Samuel", "Hansen", , "a02352588@aggies.usu.edu", role = "aut"),
-    person("Reagan", "Watrin", , "reagan.watrin@usu.edu", role = "aut")
+    person("Lauren", "LaTurner", "lauren.laturner@usu.edu", role = c("aut", "cre"))
+    person("Dawson", "Tree", "dawson.tree@usu.edu", role = "aut")
+    person("Samuel", "Hansen", "a02352588@aggies.usu.edu", role = "aut")
+    person("Reagan", "Watrin", "reagan.watrin@usu.edu", role = "aut")
 Description: This package takes likert scale data, traditionally used in surveys
     to show direction and magnitude of feeling, and analyses it. The package 
     first cleans the data, then does exploratory factor analysis, finds the 
