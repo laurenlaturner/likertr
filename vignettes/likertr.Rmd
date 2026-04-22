@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 Welcome friend. If you want to see our github, check out the link below!
 github link: https://github.com/laurenlaturner/likertr.git
 ```{r setup}
-
 library(likertr)
 ```
 likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
@@ -41,7 +40,6 @@ Link to data source: https://www.kaggle.com/datasets/mdsultanulislamovi/student-
 
 Lets preview the data:
 ```{r, include = TRUE}
-library(likertr)
 small_data <- data[c(1, 3:7, 11:15)]
 str(small_data)
 
