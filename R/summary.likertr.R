@@ -26,4 +26,17 @@ summary.likertr <- function(
   cat("================================================\n")
   cat("LIKERTR OBJECT SUMMARY REPORT\n")
   cat("================================================\n\n")
+
+  if (data_summary) {
+    data_summary(object)
+  }
+  if (efa_summary) {
+    efa_summary(object)
+  }
+  if (reliability_summary) {
+    reliability_summary(object)
+  }
+  if (inference_summary) {
+    inference_summary(object)
+  }
 }

@@ -104,7 +104,7 @@ likert_analysis <- likertr(small_data,
 summary(likert_analysis)
 ```
 
-
+By integrating these specialized tools into a single, cohesive workflow, likertr ensures that your Likert-scale analysis is both statistically rigorous and visually compelling. Instead of requiring multiple disjointed packages or a deep expertise in various complicated principles, the package provides a streamlined object-oriented framework that respects the ordinal nature of your data at every step. From initial cleaning and bias handling to advanced structural validation and inference, likertr allows researchers to move effortlessly from raw survey responses to high-impact, reproducible insights. Whether you are validating a new scale or communicating final results to stakeholders, this package provides the tools to treat human sentiment data with the statistical respect it deserves.
 
 
 
