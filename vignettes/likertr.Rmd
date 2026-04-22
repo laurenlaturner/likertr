@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 ```
+## Introduction
 Welcome friend. If you want to see our github, check out the link below!
 github link: https://github.com/laurenlaturner/likertr.git
 ```{r setup}
@@ -44,11 +45,34 @@ small_data <- data[c(1, 3:7, 11:15)]
 str(small_data)
 
 ```
-
-Lots of analysis to do! The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work. The default behavior of the likertr function is to run every process and spit out all of the analysis you could want.
+## Creating a Likertr object
+The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work.
 
 ```{r, include = TRUE}
 likert_analysis <- likertr(small_data)
+```
+The output object holds a lot of information. These are contained in attributes:
+
+    * The cleaned and prepared version of the data.
+
+    * The Cronbach's alpha calculation.
+
+    * The McDonald's omega value.
+
+    * The Relative Importance Index
+
+    * The pre-Exploratory Factor Analysis (EFA)
+
+    * The EFA results
+
+    * The inference test used.
+
+    * The effect size calculation.
+
+## The Summary Function
+With all this information stored in our new object, there is lots of analysis to do! The default behavior of the summary function is to run every process and spit out all of the analysis you could want.
+
+```{r, eval = FALSE}
 summary(likert_analysis)
 ```
 If digging through all the summary content seems overwhelming, you can look at each summary section separately.
@@ -73,24 +97,25 @@ The Inference:
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
 ```
 
+## The Plot Function
 The plot() generic function with a likert object outputs five graphs:
 
-Stacked bar chart: A standard bar chart where each row represents a question, and each colored segment (representing response categories) is stacked to reach 100% of the responses. This is best for comparing the total distribution of responses across different items or groups.
+   * Stacked bar chart: A standard bar chart where each row represents a question, and each colored segment (representing response categories) is stacked to reach 100% of the responses. This is best for comparing the total distribution of responses across different items or groups.
 
-Diverging bar chart: Similar to a stacked bar, but the bars are aligned around a central neutral point. Negative responses extend to the left, and positive responses extend to the right. This shows which questions have the strongest lean (positive or negative) or have clear polar responses.
+   * Diverging bar chart: Similar to a stacked bar, but the bars are aligned around a central neutral point. Negative responses extend to the left, and positive responses extend to the right. This shows which questions have the strongest lean (positive or negative) or have clear polar responses.
 
-Ridge plot: A series of overlapping density curves that show the distribution of responses along a continuous-looking scale. This is best for visualizing how the "shape" of opinions changes across many different questions.
+   * Ridge plot: A series of overlapping density curves that show the distribution of responses along a continuous-looking scale. This is best for visualizing how the "shape" of opinions changes across many different questions.
 
-Heat map: A color-coded grid representing the correlation values between questions from an Exploratory Factor Analysis (EFA). This helps highlight high correlations between questions, possibly indicating redundancy in the data.
+   * Heat map: A color-coded grid representing the correlation values between questions from an Exploratory Factor Analysis (EFA). This helps highlight high correlations between questions, possibly indicating redundancy in the data.
 
-Skree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
+   * Skree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
 
 
 ```{r, include = TRUE}
 plot(likert_analysis)
 ```
 
-
+## Changing the Default Settings
 If you want more control over the analysis that is happening in likertr, other arguments can be specified, including handling of NA values, scaling, and checking for sufficient number of observations.
 
 ```{r, echo = TRUE, results = 'hide'}
@@ -98,7 +123,7 @@ If you want more control over the analysis that is happening in likertr, other a
 # center respondents answers around their mean answer, and drop columns with 
 # less than 20 sample sizes.
 clean_analysis <- likertr(small_data, 
-                          na_drop = "neutral", 
+                          na_drop = TRUE, 
                           ipsatize_decision = TRUE,
                           small_n_drop = TRUE)
 ```
@@ -123,6 +148,7 @@ likert_analysis <- likertr(small_data,
 summary(likert_analysis)
 ```
 
+## Conclusion
 By integrating these specialized tools into a single, cohesive workflow, likertr ensures that your Likert-scale analysis is both statistically rigorous and visually compelling. Instead of requiring multiple disjointed packages or a deep expertise in various complicated principles, the package provides a streamlined object-oriented framework that respects the ordinal nature of your data at every step. From initial cleaning and bias handling to advanced structural validation and inference, likertr allows researchers to move effortlessly from raw survey responses to high-impact, reproducible insights. Whether you are validating a new scale or communicating final results to stakeholders, this package provides the tools to treat human sentiment data with the statistical respect it deserves.
 
 
