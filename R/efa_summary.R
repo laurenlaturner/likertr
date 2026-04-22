@@ -10,17 +10,19 @@ efa_summary <- function(object) {
 
   invalid_kmo <- msai < 0.6
 
+  cat(paste(
+    "Bartlett's Test of Sphericity P-value:",
+    sph_p_val,
+    "\n")
+  )
   if (sph_p_val > 0.05) {
-    cat(paste0(
-      "Bartlett's sphericity test resulted in a non-significant ",
-      "(p<0.05) p-value of ",
-      sph_p_val,
-      ", variables may not be correlated enough for EFA\n\n"
+    cat(paste(
+      "Non-significant (p<0.05) p-value indicates that variables may not be",
+      "correlated enough to justify EFA\n\n"
     ))
   } else {
     cat(paste(
-      "Bartlett's sphericity test does not show problematic results",
-      "\n\n"
+      "Significant (p<0.05) p-value does not show problematic results\n\n"
     ))
   }
 
@@ -29,15 +31,15 @@ efa_summary <- function(object) {
     invalid_kmo <- msai[invalid_kmo]
     cat(paste(
       "At least one MSAi value from the KMO test is less than 0.6 and",
-      "possibly problematic, the following feature or features share",
-      "little variance with the rest of the data:\n",
-      sep = "\n"
+      "possibly problematic for EFA, the following feature or features share",
+      "little variance with the rest of the data:\n"
     ))
     print(invalid_kmo)
     cat("\n")
   } else {
     cat(paste(
-      "The KMO test does not show problematic results",
+      "All MSAi values from the KMO test are greater than 0.6, so each",
+      "variable shares sufficient variance with the rest of the data for EFA",
       "\n\n"
     ))
   }
@@ -76,7 +78,7 @@ efa_summary <- function(object) {
       n_fact,
       ") used in EFA was determined\n using parallel analysis\n\n",
       "Check parallel analysis Scree plot using 'plot' function for ",
-      "more details\n\n"
+      "more details\n\n\n"
     ))
   }
 
@@ -101,25 +103,25 @@ efa_summary <- function(object) {
 
   cat("Communality:\n")
   print(communality)
-  cat("\n\n")
+  cat("\n")
 
   low_communality <- communality < 0.2
 
   if (any(low_communality)) {
     lc_variables <- communality[low_communality]
     cat(paste(
-      "The following variables have communality values less than 0.2,\n",
-      "which means that very little of their variance is explained by\n",
+      "The following variables have communality values less than 0.2,",
+      "which means that very little of their variance is explained by",
       "the common factors and they should be considered for removal:\n"
     ))
     print(lc_variables)
-    cat("\n")
+    cat("\n\n")
   } else {
     cat(paste(
       "There are no variables with a communality less than 0.2,",
-      "but it is reccommended to review the communality values that\n",
+      "but it is reccommended to review the communality values that",
       "show how much of the variance of each variable is explained by",
-      "the common factors"
+      "the common factors\n\n\n"
     ))
   }
 
@@ -166,7 +168,7 @@ efa_summary <- function(object) {
 
 
   cat(paste(
-    "Keep in mind that the interpretation of many of these statistics\n",
+    "Keep in mind that the interpretation of many of these statistics",
     "will depend on the context of your analysis\n\n"
   ))
 }
