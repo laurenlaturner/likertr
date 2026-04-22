@@ -51,6 +51,27 @@ Lots of analysis to do! The most basic way to use this package is to put a data 
 likert_analysis <- likertr(small_data)
 summary(likert_analysis)
 ```
+If digging through all the summary content seems overwhelming, you can look at each summary section separately.
+
+The General Data:
+```{r, include = TRUE}
+summary(likert_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+```
+
+The Exploratory Factor Analysis:
+```{r, include = TRUE}
+summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+```
+
+The Reliability:
+```{r, include = TRUE}
+summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
+```
+
+The Inference:
+```{r, include = TRUE}
+summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
+```
 
 The plot() generic function with a likert object outputs five graphs:
 
