@@ -6,8 +6,8 @@
 \usage{
 likertr(
   data,
-  na_drop = FALSE,
   n_fact,
+  na_drop = FALSE,
   ipsatize_decision = FALSE,
   small_n_drop = FALSE,
   groups = numeric(0),
@@ -20,12 +20,12 @@ likertr(
 \item{data}{a dataframe where each column is a likert survey question (item)
 and each row is a response.}
 
-\item{na_drop}{Character. Strategy for handling \code{NA} values; if "neutral",
-missing values are replaced with the scale midpoint.}
-
 \item{n_fact}{Integer. Optional argument for the number of factors to be used
 in the Exploratory Factor Analysis (EFA). If not given, this argument will
 be decided using parallel analysis.}
+
+\item{na_drop}{Logical. Strategy for handling \code{NA} values; if \code{FALSE},
+missing values are replaced with the scale midpoint.}
 
 \item{ipsatize_decision}{Logical. If \code{TRUE}, returns a version of the data
 centered by respondent (person-mean centering).}
@@ -64,8 +64,8 @@ load("data/data.rda")
 # Group 1: Items 1-2, Group 2: Items 3-5
 results <- likertr(
   data = data,
-  na_drop = "neutral",
   n_fact = 1,
+  na_drop = TRUE,
   groups = c(1, 1, 2, 2, 2),
   ipsatize_decision = TRUE
 )

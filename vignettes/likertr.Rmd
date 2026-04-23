@@ -27,14 +27,22 @@ likertr is a lightweight package that can analyze your likert scale data in one 
 
 A likert Scale is a range of numbers indicating the agreement with a questions. A common example is a five or seven point scale that you may see in a survey. For example a survey may ask. 
 
-Do you like Coding in R? Select a response from 1-5 corresponding to:
+     Do you like Coding in R? Select a response from 1-5 corresponding to:
 
-Strongly Disagree, Moderately Disagree, Neutral, Moderately Agree, Strongly Agree
+     1. Strongly Disagree
+
+     2. Moderately Disagree
+
+     3. Neutral
+
+     4. Moderately Agree
+
+     5. Strongly Agree
 
 Through this Vignette we will explain likertr's functionality for cleaning data, doing exploratory factor analysis, reliability testing,
 and performing inference.
 
-
+### The Data
 likertr comes with example dataset on student anxiety and depression levels we will use to demonstrate the package functionality. The data was accessed on Kaggle, and was collected by surveying 843 college students from multiple campuses. The survey included 2 demographic questions, 24 5-point likert scale questions, and one additional question about stress. For this demo I'll use a subset of the data frame containing one demographic question, 5 questions about anxiety, and 5 questions about depression.
 
 Link to data source: https://www.kaggle.com/datasets/mdsultanulislamovi/student-stress-monitoring-datasets
@@ -77,12 +85,12 @@ summary(likert_analysis)
 ```
 If digging through all the summary content seems overwhelming, you can look at each summary section separately.
 
-The General Data:
+### The General Data:
 ```{r, include = TRUE}
 summary(likert_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
 
-Exploratory Factor Analysis
+### Exploratory Factor Analysis:
 ```{r, include = TRUE}
 summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
@@ -110,12 +118,12 @@ EFA Results
   * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
 
 
-The Reliability:
+### Reliability Testing:
 ```{r, include = TRUE}
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
 ```
 
-The Inference:
+### Inference Results:
 ```{r, include = TRUE}
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
 ```
@@ -146,7 +154,24 @@ plot(likert_analysis)
 ```
 
 ## Changing the Default Settings
-If you want more control over the analysis that is happening in likertr, other arguments can be specified, including handling of NA values, scaling, and checking for sufficient number of observations.
+If you want more control over the analysis that is happening in likertr, other arguments can be specified. These arguments include:
+
+    * n_fact: Optional argument for the number of factors to be used in the Exploratory Factor Analysis (EFA). If not given, this argument will be decided using parallel analysis.
+
+    * na_drop: Strategy for handling `NA` values. If `FALSE` (default), missing values are replaced with the scale midpoint; if TRUE, `NA` responses are dropped.
+
+    * ipsatize_decision: If `TRUE`, returns a version of the data centered by respondent (person-mean centering); if FALSE (default), no ipsatized data is returned.
+
+    * small_n_drop: If TRUE, questions/groups with fewer than 20 responses are dropped; if FALSE (default), a warning is given and the analysis continues.
+
+    * groups: A numeric vector specifying groups of questions, (default of `numeric(0)`). The vector must be the same length as the number of items (columns) in the dataframe.
+
+    * category: A value corresponding to a column index referencing a factor variable to split data on for inference, (default of `NA`).
+
+    * flip: If flip is TRUE, then items are automatically flipped to have positive correlations on the general factor; if FALSE (default), no changes occur to correlation signs.
+
+    * plot: A decision (default FALSE) of whether or not to call omega.diagram, a technically plotting function to visualize the groupings of McDonald's Omega. 
+
 
 ```{r, echo = TRUE, results = 'hide'}
 # Perform likert analysis replacing NA values with the midpoint, 
