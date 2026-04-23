@@ -139,7 +139,17 @@ McDonald’s Omega is a more robust alternative to Cronbach’s alpha. It uses f
 
 #### Relative Importance Index (RII)
 
-RII is used to rank the importance of items in Likert survey data. It results in a value between 0 and 1. It is frequently used to identify which items are of greatest importance. Higher values indicate greater importance. In the output provided by **`summary()`**, questions are listed by RII in descending order.
+RII is used to rank the importance of items in Likert survey data. It results in a value between 0 and 1. While specific importance cutoffs are project specific, in general, values of RII can be interpreted as
+
+| RII | Importance of Question | 
+|----------|----------|
+| 0.8 - 1.0 |	Very High |
+| 0.6 - 0.8	| High |
+| 0.4 - 0.6	| Moderate |
+| 0.2 - 0.4	| Low	|
+| 0.0 - 0.2	| Very Low |
+
+In the output provided by **`summary()`**, questions are listed by RII in descending order.
 
 The equation for the RII of a likert survey question is:
 
