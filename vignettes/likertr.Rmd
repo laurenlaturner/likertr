@@ -78,7 +78,7 @@ The output object holds a lot of information. These are contained in attributes:
     * The effect size calculation.
 
 ## The Summary Function
-With all this information stored in our new object, there is lots of analysis to do! The default behavior of the summary function is to run every process and spit out all of the analysis you could want.
+With all this information stored in our new object, there is lots of analysis to do! The default behavior of the summary function is to output general commentary that helps analyze the information stored in the likertr object. Each time a section is output from the summary function with pre-written commentary, it begins with "LIKERTR OBJECT SUMMARY REPORT."
 
 ```{r, eval = FALSE}
 summary(likert_analysis)
