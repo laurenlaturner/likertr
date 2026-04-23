@@ -85,7 +85,7 @@ efa_summary <- function(object) {
 
   # EFA Loadings
 
-  cat("EFA Loadings (Standardized):\n")
+  cat("Factor Loadings (Standardized):\n")
   print(loadings)
   cat("\n\n")
 

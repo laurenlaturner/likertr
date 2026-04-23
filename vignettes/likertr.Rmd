@@ -61,7 +61,7 @@ The output object holds a lot of information. These are contained in attributes:
 
     * The Relative Importance Index
 
-    * The pre-Exploratory Factor Analysis (EFA)
+    * The pre-Exploratory Factor Analysis (EFA) Diagnostics
 
     * The EFA results
 
@@ -82,10 +82,33 @@ The General Data:
 summary(likert_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
 
-The Exploratory Factor Analysis:
+Exploratory Factor Analysis
 ```{r, include = TRUE}
 summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
+Exploratory Factor Analysis (EFA) is the process of analyzing data to discover underlying factors shown by correlations within the data. With survey data, an example would be asking a customer if they would buy a product again and if they would recommend it to a friend to find out their true opinion of the product. 
+
+Pre-EFA Diagnostics
+
+  * Bartlett's test of sphericity determines whether the variables in general are correlated enough to justify EFA.
+
+  * MSAi values from the KMO test determine whether the individual variables share sufficient variance with the rest of the data.
+
+
+EFA Results
+
+  * Parallel Analysis: Parallel analysis determines the recommended number of factors to use in EFA by comparing the variance explained by factors in the observed data to the variance explained by factors in randomly generated data. Our package allows users to either specify the number of factors or use the recommended amount.
+
+  * Factor Loadings: The factor loadings are weights showing how each factor is formed using the survey questions. This shows which questions have a large effect on each factor. All of the loadings are standardized to be between -1 and 1.
+
+  * Variance Explained: This section shows how much variance each factor explains and then shows the cumulative variance explained by each factor and the factors before.
+
+  * Communality: As for communality, we want variables with a high communality because that means they contribute strongly to the common factors. The summary output makes recommendations to drop variables with especially low communalitites.
+
+  * Factor Correlation Matrix: The factor correlation matrix shows how correlated the common factors are. The goal is to have unique common factors that represent different underlying characteristics of the data, so high correlations can indicate redundant factors.
+
+  * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
+
 
 The Reliability:
 ```{r, include = TRUE}
@@ -108,7 +131,7 @@ The plot() generic function with a likert object outputs five graphs:
 
    * Heat map: A color-coded grid representing the correlation values between questions from an Exploratory Factor Analysis (EFA). This helps highlight high correlations between questions, possibly indicating redundancy in the data.
 
-   * Skree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
+   * Scree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
 
 
 ```{r, include = TRUE}
