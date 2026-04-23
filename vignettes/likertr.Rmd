@@ -65,7 +65,7 @@ The output object holds a lot of information. These are contained in attributes:
 
     * The Cronbach's alpha calculation.
 
-    * The McDonald's omega value.
+    * The McDonald's omega values.
 
     * The Relative Importance Index
 
@@ -118,7 +118,35 @@ EFA Results
   * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
 
 
-### Reliability Testing:
+### Reliability, Internal Consistency, and Item Importance:
+
+#### Cronbach’s Alpha ($\alpha$)
+
+Cronbach’s alpha is the most common measure of internal consistency. It calculates the average correlation among all items. It is a measure of how well survey questions/items represent the same underlying factor.
+
+Alpha values range from 0 to 1. Higher values indicate greater agreement or correlation between items. In other words, knowing the response on one question is a good indicator of the response to the others. This shows that all survey items are related by an underlying factor. Conversely, lower values indicate less agreement or correlation between items. Knowing the response on one question gives little information of the response to the others. Low values indicate that the survey items are unlikely to be related. Too high values of Cronbach's Alpha can indicate redundant questions.
+
+Cronbach’s Alpha can also be used to eliminate questions that do not represent the same factor by calculating Cronbach’s Alpha after removing each question. If the alpha value increases when a question is removed, this question may not be measuring the same thing as the other question and could be considered for removal. In the output provided by **`summary()`**, the overall Cronbach's is given along with the value calculated excluding each question. If the value of alpha increases when a question is omitted, that line is marked with an asterisk (\*). 
+
+If you believe that your data tests multiple distinct factors (e.g. a hotel satifaction survey asks questions about both cleanliness of pool facilities and breakfast food quality, which can be reasonably assumed not be correlated), it is desireable to calculate Cronbach's alpha separately for these groups of quesitons. To do this, an optional argument "groups" can be provided to the **`likertr()`** function (see function documentation for specific details on this argument's requirements).
+
+#### McDonald’s Omega ($\omega$)
+
+McDonald’s Omega is a more robust alternative to Cronbach’s alpha. It uses factor loadings from a factor analysis to estimate reliability, acknowledging that some items are better indicators of a trait than others. There are two common values of Omega, both of which are provided in the output of **`summary()`**:
+
+- Omega Total ($\omega_t$): This represents the total reliability of the scale. It measures the proportion of variance in the total score that is accounted for by all underlying factors (both the general trait and any specific sub-groups). Omega total measures the reliability of the test as a whole.
+- Omega Hierarchical ($\omega_h$): This is a much stricter measure of unidimensionality.It measures the proportion of variance accounted for by a single general factor while controlling for specific group factors (sub-scales). If $\omega_t$ is high but $\omega_h$ is low, it suggests your scale is reliable but is actually measuring multiple distinct things rather than one single "big" concept.
+
+#### Relative Importance Index (RII)
+
+RII is used to rank the importance of items in Likert survey data. It results in a value between 0 and 1. It is frequently used to identify which items are of greatest importance. Higher values indicate greater importance. In the output provided by **`summary()`**, questions are listed by RII in descending order.
+
+The equation for the RII of a likert survey question is:
+
+$$RII = \frac{\sum W}{A \times N}$$
+
+Where $W$ is the weight given to the item by respondents, $A$ is the highest weight, and $N$ is the total number of respondents.
+
 ```{r, include = TRUE}
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
 ```
