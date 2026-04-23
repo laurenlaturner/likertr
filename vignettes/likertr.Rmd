@@ -129,9 +129,16 @@ The plot() generic function with a likert object outputs five graphs:
 
    * Ridge plot: A series of overlapping density curves that show the distribution of responses along a continuous-looking scale. This is best for visualizing how the "shape" of opinions changes across many different questions.
 
-   * Heat map: A color-coded grid representing the correlation values between questions from an Exploratory Factor Analysis (EFA). This helps highlight high correlations between questions, possibly indicating redundancy in the data.
+   * Heat map: A color-coded grid showing the correlations between variables. Instead of correlations of exact responses, this matrix contains correlations of the underlying continuous variables (true anxiety, true stress. etc.). As for interpretation,
+      * Lots of very low coefficients in the matrix indicate low factorability
+      * Lots of very high loadings indicate redundant variables
 
-   * Scree plot: A line graph showing the amount of variance that is explainable from the data versus simulated data. This helps users decide the number of factors to include in a final EFA. 
+   * Parallel analysis scree plot: A line graph showing the amount of variance that is explained (measured in eigenvalues) by factors for different types of data.
+      * The actual data is the observed data that you are analyzing
+      * The simulated data is randomly simulated data with the same number of variables and sample size as your data
+      * The resampled data is randomly simulated data that uses the same distributions for each of your variables, this will be more accurate for datasets with very messy, non-normal variables
+      
+     This plot helps users decide the number of factors to include in a final EFA. The conventional use is to keep factors until the observed data eigenvalues drop below the random data eigenvalues. This means that you only want factors that explain more than factors in totally random data would. 
 
 
 ```{r, include = TRUE}
