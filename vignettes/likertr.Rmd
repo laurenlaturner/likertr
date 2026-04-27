@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 Welcome friend. If you want to see our github, check out the link below!
 github link: https://github.com/laurenlaturner/likertr.git
 ```{r setup}
-
 library(likertr)
 ```
 likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
@@ -72,7 +71,13 @@ plot(likert_analysis)
 ```
 
 
-If you want more control over the analysis that is happening in likertr, other arguments can be specified, including handling of NA values, scaling, and checking for sufficient number of observations.
+If you want more control over the analysis that is happening in likertr, other arguments can be specified.
+
+Data Cleaning:
+
+
+
+including handling of NA values, scaling, and checking for sufficient number of observations.
 
 ```{r, echo = TRUE, results = 'hide'}
 # Perform likert analysis replacing NA values with the midpoint, 
@@ -88,7 +93,47 @@ clean_analysis <- likertr(small_data,
 
 likertr does exploratory factor analysis. The number of underlying factors can be specified, otherwise parallel analysis will decide the ideal number of factors.
 
-The groups argument can be used to group similar likert questions together to find Cronbach's Alpha, a measure of consistency of the data. The groups vector should be the same length as the number of questions, with each integer specifying which group the question falls in. If specified the groups will also be compared against each other in the inference step to see if the responses between groups are significantly different from each other.
+
+Reliability Test:
+
+Cronbach’s Alpha ($\alpha$)
+
+Cronbach’s alpha is the most common measure of internal consistency. It calculates the average correlation among all items. It is a measure of how well survey items represent the same underlying factor.
+
+Alpha values range from 0 to 1. Higher values indicate greater agreement or correlation between items. In other words, knowing the response on one question is a good indicator of the response to the others. This shows that all survey items are related by an underlying factor. Conversely, lower values indicate less agreement or correlation between items. Knowing the response on one question gives little information of the response to the others. Low values indicate that the survey items are unlikely to be related. Too high values of Cronbach's Alpha can indicate redundant questions.
+
+Cronbach’s Alpha can also be used to eliminate questions that do not represent the same factor by calculating Cronbach’s Alpha after removing each question. If the alpha value increases when a question is removed, this question may not be measuring the same thing as the other question and could be considered for removal.
+
+McDonald’s Omega ($\omega$)
+
+McDonald’s Omega is a more robust alternative to Cronbach’s alpha. It uses factor loadings from a factor analysis to estimate reliability, acknowledging that some items are better indicators of a trait than others. There are two common values of Omega:
+Omega Total ($\omega_t$)
+
+This represents the total reliability of the scale.
+It measures the proportion of variance in the total score that is accounted for by all underlying factors (both the general trait and any specific sub-groups). Omega total measures the reliability of the test as a whole.
+
+Omega Hierarchical ($\omega_h$)
+
+This is a much stricter measure of unidimensionality.
+It measures the proportion of variance accounted for by a single general factor while controlling for specific group factors (sub-scales).
+
+If $\omega_t$ is high but $\omega_h$ is low, it suggests your scale is reliable but is actually measuring multiple distinct things rather than one single "big" concept.
+
+Relative Importance Index (RII)
+
+RII is used to rank the importance of items in Likert survey data. It results in a value between 0 and 1. It is frequently used to identify which items are of greatest importance. Higher values indicate greater importance.
+
+Equation:
+
+$$RII = \frac{\sum W}{A \times N}$$
+Where $W$ is the weight given to each factor by respondents, $A$ is the highest weight, and $N$ is the total number of respondents.
+
+
+Inference:
+
+The Likert R package has multiple inference tests that can be performed depending on what arguments are given to the function.
+
+
 
 A categorical variable can also be specified in order to perform inference on whether answers are significantly different across groups.
 
@@ -97,14 +142,14 @@ A categorical variable can also be specified in order to perform inference on wh
 # Perform the likert analysis with two underlying factors,
 # the anxiety and depression questions split into groups for similarity,
 # and the gender categorical variable used for inference.
-likert_analysis <- likertr(small_data,
+likert_efa   <- likertr(small_data,
                            n_fact = 2,
                            groups = c(rep(1, 5), rep(2, 5)),
                            category = 1)
 summary(likert_analysis)
 ```
 
-
+By integrating these specialized tools into a single, cohesive workflow, likertr ensures that your Likert-scale analysis is both statistically rigorous and visually compelling. Instead of requiring multiple disjointed packages or a deep expertise in various complicated principles, the package provides a streamlined object-oriented framework that respects the ordinal nature of your data at every step. From initial cleaning and bias handling to advanced structural validation and inference, likertr allows researchers to move effortlessly from raw survey responses to high-impact, reproducible insights. Whether you are validating a new scale or communicating final results to stakeholders, this package provides the tools to treat human sentiment data with the statistical respect it deserves.
 
 
 
