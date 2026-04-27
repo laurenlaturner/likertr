@@ -1,0 +1,270 @@
+---
+title: "Getting Started with likertr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with likertr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  # = "80%",
+  fig.align = "center"
+)
+```
+## Introduction
+Welcome friend. If you want to see our github, check out the link below!
+github link: https://github.com/laurenlaturner/likertr.git
+```{r setup}
+library(likertr)
+```
+likertr is a lightweight package that can analyze your likert scale data in one simple step! Here is a quick tutorial on what inputs you should provide and what output will come back out.
+
+A likert Scale is a range of numbers indicating the agreement with a questions. A common example is a five or seven point scale that you may see in a survey. For example a survey may ask. 
+
+     Do you like Coding in R? Select a response from 1-5 corresponding to:
+
+     1. Strongly Disagree
+
+     2. Moderately Disagree
+
+     3. Neutral
+
+     4. Moderately Agree
+
+     5. Strongly Agree
+
+Through this Vignette we will explain likertr's functionality for cleaning data, doing exploratory factor analysis, reliability testing,
+and performing inference.
+
+### The Data
+likertr comes with example dataset on student anxiety and depression levels we will use to demonstrate the package functionality. The data was accessed on Kaggle, and was collected by surveying 843 college students from multiple campuses. The survey included 2 demographic questions, 24 5-point likert scale questions, and one additional question about stress. For this demo I'll use a subset of the data frame containing one demographic question, 5 questions about anxiety, and 5 questions about depression.
+
+Link to data source: https://www.kaggle.com/datasets/mdsultanulislamovi/student-stress-monitoring-datasets
+
+Lets preview the data:
+```{r, include = TRUE}
+small_data <- data[c(1, 3:7, 11:15)]
+str(small_data)
+```
+## Creating a Likertr object
+The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work.
+
+```{r, include = TRUE}
+likert_analysis <- likertr(small_data)
+```
+The output object holds a lot of information. These are contained in attributes:
+
+    * The cleaned and prepared version of the data.
+
+    * The Cronbach's alpha calculation.
+
+    * The McDonald's omega values.
+
+    * The Relative Importance Index
+
+    * The pre-Exploratory Factor Analysis (EFA) Diagnostics
+
+    * The EFA results
+
+    * The inference test used.
+
+    * The effect size calculation.
+
+## The Summary Function
+With all this information stored in our new object, there is lots of analysis to do! The default behavior of the summary function is to output general commentary that helps analyze the information stored in the likertr object. Each time a section is output from the summary function with pre-written commentary, it begins with "LIKERTR OBJECT SUMMARY REPORT."
+
+```{r, eval = FALSE}
+summary(likert_analysis)
+```
+If digging through all the summary content seems overwhelming, you can look at each summary section separately.
+
+### The General Data:
+```{r, include = TRUE}
+summary(likert_analysis,
+  efa_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
+```
+
+### Exploratory Factor Analysis:
+
+Exploratory Factor Analysis (EFA) is the process of analyzing data to discover underlying factors shown by correlations within the data. With survey data, an example would be asking a customer if they would buy a product again and if they would recommend it to a friend to find out their true opinion of the product. 
+
+Pre-EFA Diagnostics
+
+  * Bartlett's test of sphericity determines whether the variables in general are correlated enough to justify EFA.
+
+  * MSAi values from the KMO test determine whether the individual variables share sufficient variance with the rest of the data.
+
+
+EFA Results
+
+  * Parallel Analysis: Parallel analysis determines the recommended number of factors to use in EFA by comparing the variance explained by factors in the observed data to the variance explained by factors in randomly generated data. Our package allows users to either specify the number of factors or use the recommended amount.
+
+  * Factor Loadings: The factor loadings are weights showing how each factor is formed using the survey questions. This shows which questions have a large effect on each factor. All of the loadings are standardized to be between -1 and 1.
+
+  * Variance Explained: This section shows how much variance each factor explains and then shows the cumulative variance explained by each factor and the factors before.
+
+  * Communality: As for communality, we want variables with a high communality because that means they contribute strongly to the common factors. The summary output makes recommendations to drop variables with especially low communalitites.
+
+  * Factor Correlation Matrix: The factor correlation matrix shows how correlated the common factors are. The goal is to have unique common factors that represent different underlying characteristics of the data, so high correlations can indicate redundant factors.
+
+  * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
+
+```{r, include = TRUE}
+summary(likert_analysis,
+  data_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
+```
+
+### Reliability, Internal Consistency, and Item Importance:
+
+#### Cronbach’s Alpha ($\alpha$)
+
+Cronbach’s alpha is the most common measure of internal consistency. It calculates the average correlation among all items. It is a measure of how well survey questions/items represent the same underlying factor.
+
+Alpha values range from 0 to 1. Higher values indicate greater agreement or correlation between items. In other words, knowing the response on one question is a good indicator of the response to the others. This shows that all survey items are related by an underlying factor. Conversely, lower values indicate less agreement or correlation between items. Knowing the response on one question gives little information of the response to the others. Low values indicate that the survey items are unlikely to be related. Too high values of Cronbach's Alpha can indicate redundant questions.
+
+Cronbach’s Alpha can also be used to eliminate questions that do not represent the same factor by calculating Cronbach’s Alpha after removing each question. If the alpha value increases when a question is removed, this question may not be measuring the same thing as the other question and could be considered for removal. In the output provided by **`summary()`**, the overall Cronbach's is given along with the value calculated excluding each question. If the value of alpha increases when a question is omitted, that line is marked with an asterisk (\*). 
+
+If you believe that your data tests multiple distinct factors (e.g. a hotel satifaction survey asks questions about both cleanliness of pool facilities and breakfast food quality, which can be reasonably assumed not be correlated), it is desireable to calculate Cronbach's alpha separately for these groups of quesitons. To do this, an optional argument "groups" can be provided to the **`likertr()`** function (see function documentation for specific details on this argument's requirements).
+
+#### McDonald’s Omega ($\omega$)
+
+McDonald’s Omega is a more robust alternative to Cronbach’s alpha. It uses factor loadings from a factor analysis to estimate reliability, acknowledging that some items are better indicators of a trait than others. There are two common values of Omega, both of which are provided in the output of **`summary()`**:
+
+- Omega Total ($\omega_t$): This represents the total reliability of the scale. It measures the proportion of variance in the total score that is accounted for by all underlying factors (both the general trait and any specific sub-groups). Omega total measures the reliability of the test as a whole.
+- Omega Hierarchical ($\omega_h$): This is a much stricter measure of unidimensionality.It measures the proportion of variance accounted for by a single general factor while controlling for specific group factors (sub-scales). If $\omega_t$ is high but $\omega_h$ is low, it suggests your scale is reliable but is actually measuring multiple distinct things rather than one single "big" concept.
+
+#### Relative Importance Index (RII)
+
+RII is used to rank the importance of items in Likert survey data. It results in a value between 0 and 1. While specific importance cutoffs are project specific, in general, values of RII can be interpreted as
+
+| RII | Importance of Question | 
+|----------|----------|
+| 0.8 - 1.0 |	Very High |
+| 0.6 - 0.8	| High |
+| 0.4 - 0.6	| Moderate |
+| 0.2 - 0.4	| Low	|
+| 0.0 - 0.2	| Very Low |
+
+In the output provided by **`summary()`**, questions are listed by RII in descending order.
+
+The equation for the RII of a likert survey question is:
+
+$$RII = \frac{\sum W}{A \times N}$$
+
+Where $W$ is the weight given to the item by respondents, $A$ is the highest weight, and $N$ is the total number of respondents.
+
+#### Output on Example Data
+
+```{r, include = TRUE}
+summary(likert_analysis,
+  data_summary = FALSE, efa_summary = FALSE,
+  inference_summary = FALSE
+)
+```
+
+### Inference Results:
+There are two different tests that can be performed in the inference section depending on the arguments passed to the function. If the argument groups is passed then the groups being compared will be the answers to the different question groups. If the index number of a factor variable is passed to the category argument, then the inference will be between the different levels of the factor variable.
+
+Inference will perform either a Mann-Whitney U or Kruskal-Wallis test depending on the number of groups (<2 or >2). Both test the null hypothesis that the answers to different groups of questions are independent of each other.
+
+If no arguments are passed to groups or category then the inference summary does not output. See the Changing the Default Settings section to see an example where inference runs.
+
+```{r, include = TRUE}
+summary(likert_analysis,
+  data_summary = FALSE,
+  efa_summary = FALSE, reliability_summary = FALSE
+)
+```
+
+## The Plot Function
+The plot() generic function with a likert object outputs five graphs:
+
+   * Stacked bar chart: A standard bar chart where each row represents a question, and each colored segment (representing response categories) is stacked to reach 100% of the responses. This is best for comparing the total distribution of responses across different items or groups.
+
+   * Diverging bar chart: Similar to a stacked bar, but the bars are aligned around a central neutral point. Negative responses extend to the left, and positive responses extend to the right. This shows which questions have the strongest lean (positive or negative) or have clear polar responses.
+
+   * Ridge plot: A series of overlapping density curves that show the distribution of responses along a continuous-looking scale. This is best for visualizing how the "shape" of opinions changes across many different questions.
+
+   * Heat map: A color-coded grid showing the correlations between variables. Instead of correlations of exact responses, this matrix contains correlations of the underlying continuous variables (true anxiety, true stress. etc.). As for interpretation,
+      * Lots of very low coefficients in the matrix indicate low factorability
+      * Lots of very high loadings indicate redundant variables
+
+   * Parallel analysis scree plot: A line graph showing the amount of variance that is explained (measured in eigenvalues) by factors for different types of data.
+      * The actual data is the observed data that you are analyzing
+      * The simulated data is randomly simulated data with the same number of variables and sample size as your data
+      * The resampled data is randomly simulated data that uses the same distributions for each of your variables, this will be more accurate for datasets with very messy, non-normal variables
+      
+     This plot helps users decide the number of factors to include in a final EFA. The conventional use is to keep factors until the observed data eigenvalues drop below the random data eigenvalues. This means that you only want factors that explain more than factors in totally random data would. 
+
+
+```{r, include = TRUE}
+plot(likert_analysis)
+```
+
+## Changing the Default Settings
+If you want more control over the analysis that is happening in likertr, other arguments can be specified. These arguments include:
+
+    * n_fact: Optional argument for the number of factors to be used in the Exploratory Factor Analysis (EFA). If not given, this argument will be decided using parallel analysis.
+
+    * na_drop: Strategy for handling `NA` values. If `FALSE` (default), missing values are replaced with the scale midpoint; if TRUE, `NA` responses are dropped.
+
+    * ipsatize_decision: If `TRUE`, returns a version of the data centered by respondent (person-mean centering); if FALSE (default), no ipsatized data is returned.
+
+    * small_n_drop: If TRUE, questions/groups with fewer than 20 responses are dropped; if FALSE (default), a warning is given and the analysis continues.
+
+    * groups: A numeric vector specifying groups of questions, (default of `numeric(0)`). The vector must be the same length as the number of items (columns) in the dataframe.
+
+    * category: A value corresponding to a column index referencing a factor variable to split data on for inference, (default of `NA`).
+
+    * flip: If flip is TRUE, then items are automatically flipped to have positive correlations on the general factor; if FALSE (default), no changes occur to correlation signs.
+
+    * plot: A decision (default FALSE) of whether or not to call omega.diagram, a technically plotting function to visualize the groupings of McDonald's Omega. 
+
+Data Cleaning:
+This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
+
+```{r, echo = TRUE, results = 'hide'}
+clean_analysis <- likertr(small_data,
+  na_drop = TRUE,
+  ipsatize_decision = TRUE,
+  small_n_drop = TRUE
+)
+
+summary(clean_analysis,
+  efa_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
+```
+
+Inference Analysis:
+Below is an example of doing inference by passing the gender column (column 1) to the category argument to test whether the different genders had significantly different answers to each other.
+
+```{r, echo = TRUE, results = 'hide'}
+inference_analysis <- likertr(small_data,
+  na_drop = TRUE,
+  ipsatize_decision = TRUE,
+  small_n_drop = TRUE,
+  category = 1
+)
+
+summary(inference_analysis,
+  data_summary = FALSE,
+  efa_summary = FALSE, reliability_summary = FALSE
+)
+```
+
+## Conclusion
+By integrating these specialized tools into a single, cohesive workflow, likertr ensures that your Likert-scale analysis is both statistically rigorous and visually compelling. Instead of requiring multiple disjointed packages or a deep expertise in various complicated principles, the package provides a streamlined object-oriented framework that respects the ordinal nature of your data at every step. From initial cleaning and bias handling to advanced structural validation and inference, likertr allows researchers to move effortlessly from raw survey responses to high-impact, reproducible insights. Whether you are validating a new scale or communicating final results to stakeholders, this package provides the tools to treat human sentiment data with the statistical respect it deserves.
+
+
+
