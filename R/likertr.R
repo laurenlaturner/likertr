@@ -9,11 +9,11 @@
 #'
 #' @param data a dataframe where each column is a likert survey question (item)
 #'     and each row is a response.
-#' @param na_drop Character. Strategy for handling `NA` values; if "neutral",
-#'   missing values are replaced with the scale midpoint.
 #' @param n_fact Integer. Optional argument for the number of factors to be used
 #'   in the Exploratory Factor Analysis (EFA). If not given, this argument will
 #'   be decided using parallel analysis.
+#' @param na_drop Logical. Strategy for handling `NA` values; if `FALSE`,
+#'   missing values are replaced with the scale midpoint.
 #' @param ipsatize_decision Logical. If `TRUE`, returns a version of the data
 #'   centered by respondent (person-mean centering).
 #' @param small_n_drop Logical. If TRUE, questions/groups with
@@ -38,8 +38,8 @@
 #' # Group 1: Items 1-2, Group 2: Items 3-5
 #' results <- likertr(
 #'   data = data,
-#'   na_drop = "neutral",
 #'   n_fact = 1,
+#'   na_drop = TRUE,
 #'   groups = c(1, 1, 2, 2, 2),
 #'   ipsatize_decision = TRUE
 #' )
@@ -49,8 +49,8 @@
 
 likertr <- function(
   data,
-  na_drop = FALSE,
   n_fact,
+  na_drop = FALSE,
   ipsatize_decision = FALSE,
   small_n_drop = FALSE,
   groups = numeric(0),
