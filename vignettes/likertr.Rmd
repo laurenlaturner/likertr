@@ -51,7 +51,6 @@ Lets preview the data:
 ```{r, include = TRUE}
 small_data <- data[c(1, 3:7, 11:15)]
 str(small_data)
-
 ```
 ## Creating a Likertr object
 The most basic way to use this package is to put a data set into the likertr function and let the defaults do their work.
@@ -87,7 +86,10 @@ If digging through all the summary content seems overwhelming, you can look at e
 
 ### The General Data:
 ```{r, include = TRUE}
-summary(likert_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+summary(likert_analysis,
+  efa_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
 ```
 
 ### Exploratory Factor Analysis:
@@ -116,7 +118,10 @@ EFA Results
   * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
 
 ```{r, include = TRUE}
-summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+summary(likert_analysis,
+  data_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
 ```
 
 ### Reliability, Internal Consistency, and Item Importance:
@@ -161,7 +166,10 @@ Where $W$ is the weight given to the item by respondents, $A$ is the highest wei
 #### Output on Example Data
 
 ```{r, include = TRUE}
-summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
+summary(likert_analysis,
+  data_summary = FALSE, efa_summary = FALSE,
+  inference_summary = FALSE
+)
 ```
 
 ### Inference Results:
@@ -172,7 +180,10 @@ Inference will perform either a Mann-Whitney U or Kruskal-Wallis test depending 
 If no arguments are passed to groups or category then the inference summary does not output. See the Changing the Default Settings section to see an example where inference runs.
 
 ```{r, include = TRUE}
-summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
+summary(likert_analysis,
+  data_summary = FALSE,
+  efa_summary = FALSE, reliability_summary = FALSE
+)
 ```
 
 ## The Plot Function
@@ -219,33 +230,39 @@ If you want more control over the analysis that is happening in likertr, other a
 
     * plot: A decision (default FALSE) of whether or not to call omega.diagram, a technically plotting function to visualize the groupings of McDonald's Omega. 
 
-<<<<<<< HEAD
 Data Cleaning:
 This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
 
 ```{r, echo = TRUE, results = 'hide'}
-clean_analysis <- likertr(small_data, 
-                          na_drop = TRUE, 
-                          ipsatize_decision = TRUE,
-                          small_n_drop = TRUE)
+clean_analysis <- likertr(small_data,
+  na_drop = TRUE,
+  ipsatize_decision = TRUE,
+  small_n_drop = TRUE
+)
 
-summary(clean_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+summary(clean_analysis,
+  efa_summary = FALSE,
+  reliability_summary = FALSE, inference_summary = FALSE
+)
 ```
 
 Inference Analysis:
 Below is an example of doing inference by passing the gender column (column 1) to the category argument to test whether the different genders had significantly different answers to each other.
 
 ```{r, echo = TRUE, results = 'hide'}
-inference_analysis <- likertr(small_data, 
-                          na_drop = TRUE, 
-                          ipsatize_decision = TRUE,
-                          small_n_drop = TRUE,
-                          category = 1)
+inference_analysis <- likertr(small_data,
+  na_drop = TRUE,
+  ipsatize_decision = TRUE,
+  small_n_drop = TRUE,
+  category = 1
+)
 
-summary(inference_analysis, data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
+summary(inference_analysis,
+  data_summary = FALSE,
+  efa_summary = FALSE, reliability_summary = FALSE
+)
 ```
 
-<<<<<<< HEAD
 =======
 ## Conclusion
 By integrating these specialized tools into a single, cohesive workflow, likertr ensures that your Likert-scale analysis is both statistically rigorous and visually compelling. Instead of requiring multiple disjointed packages or a deep expertise in various complicated principles, the package provides a streamlined object-oriented framework that respects the ordinal nature of your data at every step. From initial cleaning and bias handling to advanced structural validation and inference, likertr allows researchers to move effortlessly from raw survey responses to high-impact, reproducible insights. Whether you are validating a new scale or communicating final results to stakeholders, this package provides the tools to treat human sentiment data with the statistical respect it deserves.

@@ -13,8 +13,8 @@ efa_summary <- function(object) {
   cat(paste(
     "Bartlett's Test of Sphericity P-value:",
     sph_p_val,
-    "\n")
-  )
+    "\n"
+  ))
   if (sph_p_val > 0.05) {
     cat(paste(
       "Non-significant (p<0.05) p-value indicates that variables may not be",
