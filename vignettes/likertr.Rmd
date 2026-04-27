@@ -232,34 +232,7 @@ clean_analysis <- likertr(small_data,
 summary(clean_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
 
-EFA Analysis:
-This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
-
-```{r, echo = TRUE, results = 'hide'}
-efa_analysis <- likertr(small_data, 
-                          na_drop = TRUE, 
-                          ipsatize_decision = TRUE,
-                          small_n_drop = TRUE)
-
-summary(efa_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
-```
-
-Reliability Analysis:
-This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
-
-```{r, echo = TRUE, results = 'hide'}
-reliability_analysis <- likertr(small_data, 
-                          na_drop = TRUE, 
-                          ipsatize_decision = TRUE,
-                          small_n_drop = TRUE)
-
-summary(efa_analysis, data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
-```
-
 Inference Analysis:
-This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
-
-
 Below is an example of doing inference by passing the gender column (column 1) to the category argument to test whether the different genders had significantly different answers to each other.
 
 ```{r, echo = TRUE, results = 'hide'}
