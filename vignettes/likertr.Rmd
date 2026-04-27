@@ -212,18 +212,52 @@ If you want more control over the analysis that is happening in likertr, other a
 
 <<<<<<< HEAD
 Data Cleaning:
-
+This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
 
 ```{r, echo = TRUE, results = 'hide'}
-# Perform likert analysis replacing NA values with the midpoint, 
-# center respondents answers around their mean answer, and drop columns with 
-# less than 20 sample sizes.
 clean_analysis <- likertr(small_data, 
                           na_drop = TRUE, 
                           ipsatize_decision = TRUE,
                           small_n_drop = TRUE)
+
+summary(clean_analysis, efa_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
 ```
 
+EFA Analysis:
+This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
+
+```{r, echo = TRUE, results = 'hide'}
+efa_analysis <- likertr(small_data, 
+                          na_drop = TRUE, 
+                          ipsatize_decision = TRUE,
+                          small_n_drop = TRUE)
+
+summary(efa_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+```
+
+Reliability Analysis:
+This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
+
+```{r, echo = TRUE, results = 'hide'}
+reliability_analysis <- likertr(small_data, 
+                          na_drop = TRUE, 
+                          ipsatize_decision = TRUE,
+                          small_n_drop = TRUE)
+
+summary(efa_analysis, data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
+```
+
+Inference Analysis:
+This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
+
+```{r, echo = TRUE, results = 'hide'}
+inference_analysis <- likertr(small_data, 
+                          na_drop = TRUE, 
+                          ipsatize_decision = TRUE,
+                          small_n_drop = TRUE)
+
+summary(inference_analysis, data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
+```
 
 <<<<<<< HEAD
 =======
