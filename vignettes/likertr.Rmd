@@ -91,9 +91,7 @@ summary(likert_analysis, efa_summary = FALSE, reliability_summary = FALSE, infer
 ```
 
 ### Exploratory Factor Analysis:
-```{r, include = TRUE}
-summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
-```
+
 Exploratory Factor Analysis (EFA) is the process of analyzing data to discover underlying factors shown by correlations within the data. With survey data, an example would be asking a customer if they would buy a product again and if they would recommend it to a friend to find out their true opinion of the product. 
 
 Pre-EFA Diagnostics
@@ -117,6 +115,9 @@ EFA Results
 
   * Measures of Fit: The RMSEA, TLI, and CFI are all different measures of model fit. Taking all three into consideration gives users a more robust assessment of the effectiveness of the EFA. It is useful to know that TLI is a similar measure to CFI, but penalizes complex models more harshly.
 
+```{r, include = TRUE}
+summary(likert_analysis, data_summary = FALSE, reliability_summary = FALSE, inference_summary = FALSE)
+```
 
 ### Reliability, Internal Consistency, and Item Importance:
 
@@ -156,6 +157,8 @@ The equation for the RII of a likert survey question is:
 $$RII = \frac{\sum W}{A \times N}$$
 
 Where $W$ is the weight given to the item by respondents, $A$ is the highest weight, and $N$ is the total number of respondents.
+
+#### Output on Example Data
 
 ```{r, include = TRUE}
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_summary = FALSE)
