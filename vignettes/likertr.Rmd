@@ -165,6 +165,12 @@ summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, inference_s
 ```
 
 ### Inference Results:
+There are two different tests that can be performed in the inference section depending on the arguments passed to the function. If the argument groups is passed then the groups being compared will be the answers to the different question groups. If the index number of a factor variable is passed to the category argument, then the inference will be between the different levels of the factor variable.
+
+Inference will perform either a Mann-Whitney U or Kruskal-Wallis test depending on the number of groups (<2 or >2). Both test the null hypothesis that the answers to different groups of questions are independent of each other.
+
+If no arguments are passed to groups or category then the inference summary does not output. See the Changing the Default Settings section to see an example where inference runs.
+
 ```{r, include = TRUE}
 summary(likert_analysis,  data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
 ```
@@ -253,11 +259,15 @@ summary(efa_analysis, data_summary = FALSE, efa_summary = FALSE, inference_summa
 Inference Analysis:
 This is an example of an analysis replacing NA values with the midpoint, center respondents answers around their mean answer, and drop columns with less than 20 sample sizes.
 
+
+Below is an example of doing inference by passing the gender column (column 1) to the category argument to test whether the different genders had significantly different answers to each other.
+
 ```{r, echo = TRUE, results = 'hide'}
 inference_analysis <- likertr(small_data, 
                           na_drop = TRUE, 
                           ipsatize_decision = TRUE,
-                          small_n_drop = TRUE)
+                          small_n_drop = TRUE,
+                          category = 1)
 
 summary(inference_analysis, data_summary = FALSE, efa_summary = FALSE, reliability_summary = FALSE)
 ```
