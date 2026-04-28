@@ -75,7 +75,7 @@ move from raw data to insights:
 ``` r
 library(likertr)
 
-load("data/data.rda")
+data("data")
 
 # Create 'likertr' object
 analysis <- likertr(data)
@@ -94,9 +94,10 @@ summary(analysis)
 #> Pre-EFA (Exploratory Factor Analysis) Diagnostics
 #> ================================================
 #> 
-#> Bartlett's sphericity test does not show problematic results 
+#> Bartlett's Test of Sphericity P-value: 0 
+#> Significant (p<0.05) p-value does not show problematic results
 #> 
-#> The KMO test does not show problematic results 
+#> All MSAi values from the KMO test are greater than 0.6, so each variable shares sufficient variance with the rest of the data for EFA 
 #> 
 #> Polychoric correlation matrix results can be viewed using the 'plot' function
 #>  - Lots of very low coefficients in the matrix indicate low factorability
@@ -111,7 +112,8 @@ summary(analysis)
 #> 
 #> Check parallel analysis Scree plot using 'plot' function for more details
 #> 
-#> EFA Loadings (Standardized):
+#> 
+#> Factor Loadings (Standardized):
 #>         MR2     MR1     MR4     MR3     MR5     MR6
 #> Q1  -0.0323 -0.0352  0.0426  0.6105 -0.0517  0.1320
 #> Q2   0.0177 -0.0169  0.0136  0.6658  0.0879 -0.0555
@@ -152,12 +154,10 @@ summary(analysis)
 #>    Q23 
 #> 0.1367 
 #> 
-#> 
-#> The following variables have communality values less than 0.2,
-#>  which means that very little of their variance is explained by
-#>  the common factors and they should be considered for removal:
+#> The following variables have communality values less than 0.2, which means that very little of their variance is explained by the common factors and they should be considered for removal:
 #>    Q14    Q22    Q23 
 #> 0.1590 0.0973 0.1367 
+#> 
 #> 
 #> Factor Correlation Matrix:
 #>        MR2    MR1    MR4    MR3    MR5    MR6
@@ -179,8 +179,7 @@ summary(analysis)
 #> CFI: 0.9172 
 #> This CFI value indicates an acceptable model fit
 #> 
-#> Keep in mind that the interpretation of many of these statistics
-#>  will depend on the context of your analysis
+#> Keep in mind that the interpretation of many of these statistics will depend on the context of your analysis
 #> 
 #> ================================================
 #> Cronbach's Alpha
@@ -217,28 +216,28 @@ summary(analysis)
 #> Relative Importance Index (RII)
 #> ================================================
 #> 
+#> Q22 :      0.6513064 
 #> Q1 :      0.5990499 
-#> Q2 :      0.5505938 
-#> Q3 :      0.508076 
 #> Q4 :      0.5567696 
-#> Q5 :      0.5320665 
-#> Q6 :      0.5251781 
+#> Q21 :      0.5508314 
+#> Q2 :      0.5505938 
 #> Q7 :      0.539905 
 #> Q8 :      0.5394299 
-#> Q9 :      0.5163895 
-#> Q10 :      0.5092637 
-#> Q11 :      0.4988124 
-#> Q12 :      0.5002375 
-#> Q13 :      0.4964371 
-#> Q14 :      0.5023753 
-#> Q15 :      0.4888361 
-#> Q16 :      0.4971496 
-#> Q17 :      0.5028504 
-#> Q18 :      0.484323 
-#> Q19 :      0.515677 
+#> Q5 :      0.5320665 
 #> Q20 :      0.527791 
-#> Q21 :      0.5508314 
-#> Q22 :      0.6513064 
+#> Q6 :      0.5251781 
+#> Q9 :      0.5163895 
+#> Q19 :      0.515677 
+#> Q10 :      0.5092637 
+#> Q3 :      0.508076 
+#> Q17 :      0.5028504 
+#> Q14 :      0.5023753 
+#> Q12 :      0.5002375 
+#> Q11 :      0.4988124 
+#> Q16 :      0.4971496 
+#> Q13 :      0.4964371 
+#> Q15 :      0.4888361 
+#> Q18 :      0.484323 
 #> Q23 :      0.4790974 
 #> 
 #> ================================================
@@ -258,4 +257,4 @@ summary(analysis)
 plot(analysis)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" /><img src="man/figures/README-example-2.png" width="100%" /><img src="man/figures/README-example-3.png" width="100%" /><img src="man/figures/README-example-4.png" width="100%" /><img src="man/figures/README-example-5.png" width="100%" />
+<img src="man/figures/README-example-1.png" alt="" width="100%" /><img src="man/figures/README-example-2.png" alt="" width="100%" /><img src="man/figures/README-example-3.png" alt="" width="100%" /><img src="man/figures/README-example-4.png" alt="" width="100%" /><img src="man/figures/README-example-5.png" alt="" width="100%" />
